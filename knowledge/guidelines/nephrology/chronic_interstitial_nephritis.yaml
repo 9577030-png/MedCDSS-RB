@@ -1,0 +1,10 @@
+id: chronic_interstitial_nephritis
+thresholds:
+  egfr:
+    max: 60
+  bicarbonate:
+    max: 22
+  sodium:
+    min: 145
+recommendations:
+- Консультация профильного специалиста

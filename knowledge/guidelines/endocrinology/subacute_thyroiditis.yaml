@@ -1,0 +1,12 @@
+id: subacute_thyroiditis
+thresholds:
+  esr:
+    min: 30
+  crp:
+    min: 10
+  tsh:
+    max: 0.4
+  free_t4:
+    min: 22
+recommendations:
+- Консультация профильного специалиста

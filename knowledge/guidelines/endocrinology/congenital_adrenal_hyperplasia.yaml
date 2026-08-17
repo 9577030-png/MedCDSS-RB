@@ -1,0 +1,6 @@
+id: congenital_adrenal_hyperplasia
+thresholds:
+  17_oh_progesterone:
+    min: 6
+recommendations:
+- Консультация профильного специалиста

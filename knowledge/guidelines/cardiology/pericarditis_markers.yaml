@@ -1,0 +1,8 @@
+id: pericarditis_markers
+thresholds:
+  crp:
+    min: 50
+  esr:
+    min: 30
+recommendations:
+- Консультация профильного специалиста

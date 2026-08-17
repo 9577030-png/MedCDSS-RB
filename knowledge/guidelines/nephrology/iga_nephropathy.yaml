@@ -1,0 +1,10 @@
+id: iga_nephropathy
+thresholds:
+  urine_erythrocytes:
+    min: 3
+  urine_protein:
+    min: 150
+  immunoglobulin_a:
+    min: 4.0
+recommendations:
+- Консультация профильного специалиста

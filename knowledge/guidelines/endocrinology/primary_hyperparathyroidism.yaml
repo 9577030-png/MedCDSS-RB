@@ -1,0 +1,10 @@
+id: primary_hyperparathyroidism
+thresholds:
+  calcium_total:
+    min: 2.55
+  vitamin_d:
+    max: 30
+  pth:
+    min: 6.9
+recommendations:
+- Консультация профильного специалиста

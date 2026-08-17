@@ -1,0 +1,10 @@
+id: acute_coronary_syndrome
+thresholds:
+  troponin_i:
+    min: 40
+  troponin_t:
+    min: 14
+  ck_mb:
+    min: 25
+recommendations:
+- Консультация профильного специалиста

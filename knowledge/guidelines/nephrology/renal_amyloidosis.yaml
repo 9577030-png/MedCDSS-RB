@@ -1,0 +1,8 @@
+id: renal_amyloidosis
+thresholds:
+  urine_protein:
+    min: 300
+  egfr:
+    max: 60
+recommendations:
+- Консультация профильного специалиста

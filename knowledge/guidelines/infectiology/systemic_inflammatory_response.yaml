@@ -1,0 +1,10 @@
+id: systemic_inflammatory_response
+thresholds:
+  wbc:
+    min: 12
+  crp:
+    min: 10
+  esr:
+    min: 30
+recommendations:
+- Консультация профильного специалиста

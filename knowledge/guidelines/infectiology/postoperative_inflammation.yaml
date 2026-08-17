@@ -1,0 +1,10 @@
+id: postoperative_inflammation
+thresholds:
+  crp:
+    min: 100
+  esr:
+    min: 30
+  wbc:
+    min: 11
+recommendations:
+- Консультация профильного специалиста

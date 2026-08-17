@@ -1,0 +1,10 @@
+id: atheroembolic_kidney_disease
+thresholds:
+  eosinophils_percent:
+    min: 5
+  creatinine:
+    min: 150
+  egfr:
+    max: 60
+recommendations:
+- Консультация профильного специалиста

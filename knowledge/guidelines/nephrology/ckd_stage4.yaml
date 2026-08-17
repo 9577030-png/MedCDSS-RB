@@ -1,0 +1,10 @@
+id: ckd_stage4
+thresholds:
+  egfr:
+    min: 15
+  creatinine:
+    min: 300
+  urea:
+    min: 20
+recommendations:
+- Консультация профильного специалиста

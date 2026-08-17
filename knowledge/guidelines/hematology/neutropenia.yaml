@@ -1,0 +1,6 @@
+id: neutropenia
+thresholds:
+  neutrophils_percent:
+    max: 40
+recommendations:
+- Консультация профильного специалиста

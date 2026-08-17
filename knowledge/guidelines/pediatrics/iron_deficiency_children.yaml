@@ -1,0 +1,8 @@
+id: iron_deficiency_children
+thresholds:
+  ferritin:
+    max: 12
+  hemoglobin:
+    max: 110
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: scc_elevated
+thresholds:
+  scc_antigen:
+    min: 1.5
+recommendations:
+- Консультация профильного специалиста

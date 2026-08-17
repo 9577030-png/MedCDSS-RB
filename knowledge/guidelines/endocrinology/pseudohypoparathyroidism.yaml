@@ -1,0 +1,10 @@
+id: pseudohypoparathyroidism
+thresholds:
+  calcium_total:
+    max: 2.15
+  phosphate:
+    min: 1.5
+  pth:
+    min: 6.9
+recommendations:
+- Консультация профильного специалиста

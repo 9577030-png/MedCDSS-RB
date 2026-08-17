@@ -1,0 +1,10 @@
+id: ankylosing_spondylitis
+thresholds:
+  hla_b27:
+    min: 1
+  crp:
+    min: 5
+  esr:
+    min: 20
+recommendations:
+- Консультация профильного специалиста

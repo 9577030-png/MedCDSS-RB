@@ -1,0 +1,6 @@
+id: acute_myocardial_infarction_troponin_t
+thresholds:
+  troponin_t:
+    min: 100
+recommendations:
+- Консультация профильного специалиста

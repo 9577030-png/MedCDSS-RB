@@ -1,0 +1,10 @@
+id: bacterial_infection_risk
+thresholds:
+  crp:
+    min: 10
+  wbc:
+    min: 11
+  neutrophils_percent:
+    min: 70
+recommendations:
+- Консультация профильного специалиста

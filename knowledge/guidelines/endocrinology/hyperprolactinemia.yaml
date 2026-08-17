@@ -1,0 +1,6 @@
+id: hyperprolactinemia
+thresholds:
+  prolactin:
+    min: 500
+recommendations:
+- Консультация профильного специалиста

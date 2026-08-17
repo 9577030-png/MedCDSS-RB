@@ -1,0 +1,6 @@
+id: thrombocytopenia_critical
+thresholds:
+  platelets:
+    max: 20
+recommendations:
+- Консультация профильного специалиста

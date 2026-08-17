@@ -1,0 +1,6 @@
+id: ck_mb_elevated
+thresholds:
+  ck_mb:
+    min: 25
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: prolactinoma
+thresholds:
+  prolactin:
+    min: 200
+recommendations:
+- Консультация профильного специалиста

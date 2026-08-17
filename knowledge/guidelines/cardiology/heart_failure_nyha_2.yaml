@@ -1,0 +1,8 @@
+id: heart_failure_nyha_2
+thresholds:
+  bnp:
+    min: 100
+  nt_probnp:
+    min: 300
+recommendations:
+- Консультация профильного специалиста

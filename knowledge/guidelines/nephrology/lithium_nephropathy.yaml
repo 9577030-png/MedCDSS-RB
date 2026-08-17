@@ -1,0 +1,10 @@
+id: lithium_nephropathy
+thresholds:
+  egfr:
+    max: 60
+  sodium:
+    min: 145
+  potassium:
+    max: 3.5
+recommendations:
+- Консультация профильного специалиста

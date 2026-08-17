@@ -1,0 +1,6 @@
+id: zinc_deficiency
+thresholds:
+  zinc:
+    max: 10
+recommendations:
+- Консультация профильного специалиста

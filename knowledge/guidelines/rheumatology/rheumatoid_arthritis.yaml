@@ -1,0 +1,12 @@
+id: rheumatoid_arthritis
+thresholds:
+  rheumatoid_factor:
+    min: 14
+  anti_ccp:
+    min: 17
+  crp:
+    min: 5
+  esr:
+    min: 20
+recommendations:
+- Консультация профильного специалиста

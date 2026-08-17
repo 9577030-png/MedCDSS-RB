@@ -1,0 +1,6 @@
+id: leukocytosis_moderate
+thresholds:
+  wbc:
+    min: 11
+recommendations:
+- Консультация профильного специалиста

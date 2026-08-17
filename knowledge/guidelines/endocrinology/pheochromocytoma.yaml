@@ -1,0 +1,8 @@
+id: pheochromocytoma
+thresholds:
+  metanephrines:
+    min: 0.5
+  normetanephrine:
+    min: 0.9
+recommendations:
+- Консультация профильного специалиста

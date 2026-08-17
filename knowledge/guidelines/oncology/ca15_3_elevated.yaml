@@ -1,0 +1,6 @@
+id: ca15_3_elevated
+thresholds:
+  ca153:
+    min: 30
+recommendations:
+- Консультация профильного специалиста

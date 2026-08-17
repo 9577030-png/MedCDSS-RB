@@ -1,0 +1,6 @@
+id: paget_disease
+thresholds:
+  alkaline_phosphatase:
+    min: 200
+recommendations:
+- Консультация профильного специалиста

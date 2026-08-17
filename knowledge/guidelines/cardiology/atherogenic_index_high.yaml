@@ -1,0 +1,8 @@
+id: atherogenic_index_high
+thresholds:
+  cholesterol_total:
+    min: 5.0
+  hdl:
+    max: 1.0
+recommendations:
+- Консультация профильного специалиста

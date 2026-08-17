@@ -1,0 +1,6 @@
+id: folate_deficiency
+thresholds:
+  folate:
+    max: 4.0
+recommendations:
+- Консультация профильного специалиста

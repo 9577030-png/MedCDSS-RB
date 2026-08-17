@@ -1,0 +1,10 @@
+id: primary_hyperaldosteronism
+thresholds:
+  potassium:
+    max: 3.5
+  aldosterone:
+    min: 20
+  renin:
+    max: 1.0
+recommendations:
+- Консультация профильного специалиста

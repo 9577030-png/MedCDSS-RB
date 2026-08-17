@@ -1,0 +1,8 @@
+id: chronic_heart_failure
+thresholds:
+  bnp:
+    min: 100
+  nt_probnp:
+    min: 125
+recommendations:
+- Консультация профильного специалиста

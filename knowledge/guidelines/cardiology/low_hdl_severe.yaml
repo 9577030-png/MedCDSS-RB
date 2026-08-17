@@ -1,0 +1,6 @@
+id: low_hdl_severe
+thresholds:
+  hdl_cholesterol:
+    max: 0.8
+recommendations:
+  - "Консультация профильного специалиста"

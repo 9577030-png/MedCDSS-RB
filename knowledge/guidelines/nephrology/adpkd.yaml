@@ -1,0 +1,10 @@
+id: adpkd
+thresholds:
+  blood_pressure_systolic:
+    min: 140
+  egfr:
+    max: 60
+  creatinine:
+    min: 110
+recommendations:
+- Консультация профильного специалиста

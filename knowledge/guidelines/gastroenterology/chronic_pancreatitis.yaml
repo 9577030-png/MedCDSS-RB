@@ -1,0 +1,6 @@
+id: chronic_pancreatitis
+thresholds:
+  pancreatic_elastase:
+    max: 200
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: thrombocytosis_extreme
+thresholds:
+  platelets:
+    min: 1000
+recommendations:
+- Консультация профильного специалиста

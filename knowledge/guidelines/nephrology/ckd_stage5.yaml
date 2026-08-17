@@ -1,0 +1,10 @@
+id: ckd_stage5
+thresholds:
+  egfr:
+    max: 14
+  creatinine:
+    min: 500
+  urea:
+    min: 30
+recommendations:
+- Консультация профильного специалиста

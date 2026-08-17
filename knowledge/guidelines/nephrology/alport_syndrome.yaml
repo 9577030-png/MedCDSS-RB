@@ -1,0 +1,10 @@
+id: alport_syndrome
+thresholds:
+  urine_erythrocytes:
+    min: 5
+  urine_protein:
+    min: 150
+  egfr:
+    max: 60
+recommendations:
+- Консультация профильного специалиста

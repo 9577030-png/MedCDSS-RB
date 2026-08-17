@@ -1,0 +1,8 @@
+id: adrenal_insufficiency
+thresholds:
+  cortisol_serum:
+    max: 140
+  acth:
+    max: 10
+recommendations:
+- Консультация профильного специалиста

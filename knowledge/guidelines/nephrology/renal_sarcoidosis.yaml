@@ -1,0 +1,10 @@
+id: renal_sarcoidosis
+thresholds:
+  calcium_total:
+    min: 2.55
+  egfr:
+    max: 60
+  alkaline_phosphatase:
+    min: 130
+recommendations:
+- Консультация профильного специалиста

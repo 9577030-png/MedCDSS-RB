@@ -1,0 +1,6 @@
+id: hyperestrogenemia_male
+thresholds:
+  estradiol:
+    min: 160
+recommendations:
+- Консультация профильного специалиста

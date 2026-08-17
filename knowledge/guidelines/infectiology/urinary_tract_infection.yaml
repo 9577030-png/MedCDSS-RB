@@ -1,0 +1,8 @@
+id: urinary_tract_infection
+thresholds:
+  urine_leukocytes:
+    min: 5
+  urine_protein:
+    min: 150
+recommendations:
+- Консультация профильного специалиста

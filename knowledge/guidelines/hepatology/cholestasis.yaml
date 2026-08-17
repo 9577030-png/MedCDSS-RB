@@ -1,0 +1,10 @@
+id: cholestasis
+thresholds:
+  alkaline_phosphatase:
+    min: 200
+  ggt:
+    min: 120
+  bilirubin_direct:
+    min: 10
+recommendations:
+- Консультация профильного специалиста

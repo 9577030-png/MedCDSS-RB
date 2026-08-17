@@ -1,0 +1,10 @@
+id: acute_tubulointerstitial_nephritis
+thresholds:
+  urine_leukocytes:
+    min: 10
+  creatinine:
+    min: 150
+  eosinophils_percent:
+    min: 5
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: anemia_children
+thresholds:
+  hemoglobin:
+    max: 110
+recommendations:
+- Консультация профильного специалиста

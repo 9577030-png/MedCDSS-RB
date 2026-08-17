@@ -1,0 +1,6 @@
+id: prolactin_very_high
+thresholds:
+  prolactin:
+    min: 1000
+recommendations:
+- Консультация профильного специалиста

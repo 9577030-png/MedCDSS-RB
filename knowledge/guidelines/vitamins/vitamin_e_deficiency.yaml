@@ -1,0 +1,6 @@
+id: vitamin_e_deficiency
+thresholds:
+  vitamin_e:
+    max: 5.5
+recommendations:
+- Консультация профильного специалиста

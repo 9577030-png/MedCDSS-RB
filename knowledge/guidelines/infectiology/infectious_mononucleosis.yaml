@@ -1,0 +1,8 @@
+id: infectious_mononucleosis
+thresholds:
+  ebv_vca_igm:
+    min: 1
+  lymphocytes_percent:
+    min: 45
+recommendations:
+- Консультация профильного специалиста

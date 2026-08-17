@@ -1,0 +1,10 @@
+id: insulinoma
+thresholds:
+  glucose:
+    max: 3.9
+  insulin:
+    min: 25
+  c_peptide:
+    min: 3.5
+recommendations:
+- Консультация профильного специалиста

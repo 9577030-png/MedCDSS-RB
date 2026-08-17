@@ -1,0 +1,10 @@
+id: acute_rejection
+thresholds:
+  creatinine:
+    min: 200
+  urine_protein:
+    min: 300
+  egfr:
+    max: 30
+recommendations:
+- Консультация профильного специалиста

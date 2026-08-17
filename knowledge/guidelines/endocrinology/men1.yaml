@@ -1,0 +1,10 @@
+id: men1
+thresholds:
+  calcium_total:
+    min: 2.55
+  prolactin:
+    min: 500
+  insulin:
+    min: 25
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,10 @@
+id: focal_segmental_glomerulosclerosis
+thresholds:
+  urine_protein:
+    min: 300
+  egfr:
+    max: 60
+  creatinine:
+    min: 110
+recommendations:
+- Консультация профильного специалиста

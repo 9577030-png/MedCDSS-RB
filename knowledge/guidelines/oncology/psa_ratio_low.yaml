@@ -1,0 +1,6 @@
+id: psa_ratio_low
+thresholds:
+  psa_ratio:
+    max: 25
+recommendations:
+- Консультация профильного специалиста

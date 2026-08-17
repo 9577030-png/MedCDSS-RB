@@ -1,0 +1,7 @@
+id: acute_kidney_injury
+condition: any
+thresholds:
+  creatinine:
+    min: 150
+recommendations:
+  - "Консультация профильного специалиста"

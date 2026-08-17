@@ -1,0 +1,6 @@
+id: acth_high
+thresholds:
+  acth:
+    min: 60
+recommendations:
+- Консультация профильного специалиста

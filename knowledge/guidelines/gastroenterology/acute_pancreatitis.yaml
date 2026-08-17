@@ -1,0 +1,8 @@
+id: acute_pancreatitis
+thresholds:
+  amylase:
+    min: 300
+  lipase:
+    min: 200
+recommendations:
+- Консультация профильного специалиста

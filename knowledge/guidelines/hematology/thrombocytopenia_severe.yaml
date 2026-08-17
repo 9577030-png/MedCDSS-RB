@@ -1,0 +1,6 @@
+id: thrombocytopenia_severe
+thresholds:
+  platelets:
+    max: 50
+recommendations:
+- Консультация профильного специалиста

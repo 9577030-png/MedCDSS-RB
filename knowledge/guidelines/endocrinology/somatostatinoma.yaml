@@ -1,0 +1,8 @@
+id: somatostatinoma
+thresholds:
+  glucose:
+    min: 7.0
+scoring:
+  glucose: 1   # вес 1 вместо 5    
+recommendations:
+- Консультация профильного специалиста

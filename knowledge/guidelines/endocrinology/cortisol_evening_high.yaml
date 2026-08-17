@@ -1,0 +1,6 @@
+id: cortisol_evening_high
+thresholds:
+  cortisol_serum:
+    min: 250
+recommendations:
+- Консультация профильного специалиста

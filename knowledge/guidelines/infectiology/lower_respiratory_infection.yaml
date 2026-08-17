@@ -1,0 +1,10 @@
+id: lower_respiratory_infection
+thresholds:
+  crp:
+    min: 50
+  wbc:
+    min: 11
+  procalcitonin:
+    min: 0.5
+recommendations:
+- Консультация профильного специалиста

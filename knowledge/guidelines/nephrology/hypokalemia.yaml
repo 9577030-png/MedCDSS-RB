@@ -1,0 +1,6 @@
+id: hypokalemia
+thresholds:
+  potassium:
+    max: 3.5
+recommendations:
+- Консультация профильного специалиста

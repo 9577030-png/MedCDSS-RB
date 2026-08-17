@@ -1,0 +1,6 @@
+id: vitamin_b12_deficiency_moderate
+thresholds:
+  vitamin_b12:
+    min: 300
+recommendations:
+- Консультация профильного специалиста

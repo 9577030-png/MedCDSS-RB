@@ -1,0 +1,6 @@
+id: hypomagnesemia
+thresholds:
+  magnesium:
+    max: 0.66
+recommendations:
+- Консультация профильного специалиста

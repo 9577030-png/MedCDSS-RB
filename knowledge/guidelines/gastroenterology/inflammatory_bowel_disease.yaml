@@ -1,0 +1,10 @@
+id: inflammatory_bowel_disease
+thresholds:
+  calprotectin:
+    min: 100
+  albumin:
+    max: 35
+  ferritin:
+    max: 30
+recommendations:
+- Консультация профильного специалиста

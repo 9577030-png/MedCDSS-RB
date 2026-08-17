@@ -1,0 +1,6 @@
+id: hypermagnesemia
+thresholds:
+  magnesium:
+    min: 1.07
+recommendations:
+- Консультация профильного специалиста

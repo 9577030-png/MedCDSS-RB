@@ -1,0 +1,12 @@
+id: crohns_disease
+thresholds:
+  fecal_calprotectin:
+    min: 120
+  crp:
+    min: 10
+  albumin:
+    max: 35
+  ferritin:
+    max: 30
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: bnp_elevated
+thresholds:
+  bnp:
+    min: 100
+recommendations:
+- Консультация профильного специалиста

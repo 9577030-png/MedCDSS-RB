@@ -1,0 +1,10 @@
+id: nsaid_nephropathy
+thresholds:
+  egfr:
+    max: 60
+  sodium:
+    min: 145
+  creatinine:
+    min: 110
+recommendations:
+- Консультация профильного специалиста

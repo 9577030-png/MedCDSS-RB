@@ -1,0 +1,8 @@
+id: fabry_disease
+thresholds:
+  urine_protein:
+    min: 150
+  egfr:
+    max: 60
+recommendations:
+- Консультация профильного специалиста

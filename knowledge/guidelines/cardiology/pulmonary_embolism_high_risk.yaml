@@ -1,0 +1,8 @@
+id: pulmonary_embolism_high_risk
+thresholds:
+  d_dimer:
+    min: 2.0
+  troponin_i:
+    min: 40
+recommendations:
+- Консультация профильного специалиста

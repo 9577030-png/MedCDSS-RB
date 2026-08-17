@@ -1,0 +1,6 @@
+id: neutrophilia
+thresholds:
+  neutrophils_percent:
+    min: 70
+recommendations:
+- Консультация профильного специалиста

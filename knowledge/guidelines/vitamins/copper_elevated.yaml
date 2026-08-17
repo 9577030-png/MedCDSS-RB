@@ -1,0 +1,6 @@
+id: copper_elevated
+thresholds:
+  copper:
+    min: 24
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,12 @@
+id: anemia_chronic_disease
+condition: all
+thresholds:
+  hemoglobin:
+    max: 120          # для женщин, для мужчин можно 130, но для простоты оставим 120 (можно сделать gender-specific позже)
+  ferritin:
+    min: 100
+  crp:                # опционально, но желательно
+    min: 5
+recommendations:
+  - "Консультация профильного специалиста"
+  - "Определение причины хронического воспаления"

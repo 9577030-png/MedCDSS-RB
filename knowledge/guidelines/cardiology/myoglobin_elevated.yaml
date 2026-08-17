@@ -1,0 +1,6 @@
+id: myoglobin_elevated
+thresholds:
+  myoglobin:
+    min: 106
+recommendations:
+- Консультация профильного специалиста

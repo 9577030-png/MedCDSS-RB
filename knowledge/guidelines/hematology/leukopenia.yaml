@@ -1,0 +1,6 @@
+id: leukopenia
+thresholds:
+  wbc:
+    max: 4.0
+recommendations:
+- Консультация профильного специалиста

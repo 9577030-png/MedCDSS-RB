@@ -1,0 +1,8 @@
+id: hemolytic_anemia
+thresholds:
+  ldh:
+    min: 250
+  indirect_bilirubin:
+    min: 17
+recommendations:
+- Консультация профильного специалиста

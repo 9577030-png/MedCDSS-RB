@@ -1,0 +1,8 @@
+id: membranous_nephropathy
+thresholds:
+  urine_protein:
+    min: 3500
+  albumin:
+    max: 30
+recommendations:
+- Консультация профильного специалиста

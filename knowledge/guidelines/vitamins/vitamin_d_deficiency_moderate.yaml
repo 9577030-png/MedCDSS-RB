@@ -1,0 +1,6 @@
+id: vitamin_d_deficiency_moderate
+thresholds:
+  vitamin_d:
+    min: 30
+recommendations:
+- Консультация профильного специалиста

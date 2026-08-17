@@ -1,0 +1,10 @@
+id: cholelithiasis
+thresholds:
+  bilirubin_total:
+    min: 21
+  alkaline_phosphatase:
+    min: 130
+  ggt:
+    min: 60
+recommendations:
+- Консультация профильного специалиста

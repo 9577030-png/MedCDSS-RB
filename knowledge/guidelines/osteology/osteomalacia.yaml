@@ -1,0 +1,12 @@
+id: osteomalacia
+thresholds:
+  vitamin_d:
+    max: 20
+  phosphate:
+    max: 0.8
+  calcium_total:
+    max: 2.15
+  alkaline_phosphatase:
+    min: 130
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: primary_obesity
+thresholds:
+  bmi:
+    min: 30
+recommendations:
+- Консультация профильного специалиста

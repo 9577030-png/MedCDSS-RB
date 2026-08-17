@@ -1,0 +1,8 @@
+id: hypogonadism_male
+thresholds:
+  testosterone_total:
+    max: 10
+  lh:
+    min: 8.6
+recommendations:
+- Консультация профильного специалиста

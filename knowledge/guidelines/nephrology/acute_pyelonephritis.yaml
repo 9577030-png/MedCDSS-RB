@@ -1,0 +1,12 @@
+id: acute_pyelonephritis
+thresholds:
+  urine_leukocytes:
+    min: 10
+  urine_nitrites:
+    min: 0
+  crp:
+    min: 10
+  creatinine:
+    min: 110
+recommendations:
+- Консультация профильного специалиста

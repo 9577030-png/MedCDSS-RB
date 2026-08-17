@@ -1,0 +1,6 @@
+id: hyponatremia
+thresholds:
+  sodium:
+    max: 135
+recommendations:
+- Консультация профильного специалиста

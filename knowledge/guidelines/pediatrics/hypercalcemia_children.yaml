@@ -1,0 +1,6 @@
+id: hypercalcemia_children
+thresholds:
+  calcium_total:
+    min: 2.55
+recommendations:
+- Консультация профильного специалиста

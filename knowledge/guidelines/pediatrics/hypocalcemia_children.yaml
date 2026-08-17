@@ -1,0 +1,6 @@
+id: hypocalcemia_children
+thresholds:
+  calcium_total:
+    max: 2.15
+recommendations:
+- Консультация профильного специалиста

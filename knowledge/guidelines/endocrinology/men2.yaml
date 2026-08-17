@@ -1,0 +1,8 @@
+id: men2
+thresholds:
+  calcitonin:
+    min: 10
+  metanephrines:
+    min: 0.5
+recommendations:
+- Консультация профильного специалиста

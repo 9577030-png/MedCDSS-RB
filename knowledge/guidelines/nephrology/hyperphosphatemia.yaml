@@ -1,0 +1,6 @@
+id: hyperphosphatemia
+thresholds:
+  phosphate:
+    min: 1.5
+recommendations:
+- Консультация профильного специалиста

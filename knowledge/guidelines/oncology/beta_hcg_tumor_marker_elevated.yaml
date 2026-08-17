@@ -1,0 +1,6 @@
+id: beta_hcg_tumor_marker_elevated
+thresholds:
+  beta_hcg_tumor_marker:
+    min: 5
+recommendations:
+- Консультация профильного специалиста

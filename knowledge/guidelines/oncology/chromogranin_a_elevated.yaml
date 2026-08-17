@@ -1,0 +1,6 @@
+id: chromogranin_a_elevated
+thresholds:
+  chromogranin_a:
+    min: 100
+recommendations:
+- Консультация профильного специалиста

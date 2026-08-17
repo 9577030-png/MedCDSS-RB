@@ -1,0 +1,6 @@
+id: iodine_deficiency
+thresholds:
+  iodine_urine:
+    max: 100
+recommendations:
+- Консультация профильного специалиста

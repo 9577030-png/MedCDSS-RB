@@ -1,0 +1,6 @@
+id: nse_elevated
+thresholds:
+  nse:
+    min: 16.3
+recommendations:
+- Консультация профильного специалиста

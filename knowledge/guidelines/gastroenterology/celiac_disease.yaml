@@ -1,0 +1,8 @@
+id: celiac_disease
+thresholds:
+  tga_iga:
+    min: 20
+  total_iga:
+    max: 0.5
+recommendations:
+- Консультация профильного специалиста

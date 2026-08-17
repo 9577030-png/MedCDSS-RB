@@ -1,0 +1,10 @@
+id: acute_glomerulonephritis
+thresholds:
+  urine_protein:
+    min: 150
+  urine_erythrocytes:
+    min: 3
+  creatinine:
+    min: 110
+recommendations:
+- Консультация профильного специалиста

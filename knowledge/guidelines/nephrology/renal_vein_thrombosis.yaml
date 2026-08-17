@@ -1,0 +1,10 @@
+id: renal_vein_thrombosis
+thresholds:
+  urine_erythrocytes:
+    min: 5
+  creatinine:
+    min: 150
+  d_dimer:
+    min: 0.5
+recommendations:
+- Консультация профильного специалиста

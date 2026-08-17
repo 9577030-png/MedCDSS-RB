@@ -1,0 +1,10 @@
+id: gouty_nephropathy
+thresholds:
+  uric_acid:
+    min: 420
+  egfr:
+    max: 60
+  creatinine:
+    min: 110
+recommendations:
+- Консультация профильного специалиста

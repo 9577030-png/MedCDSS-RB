@@ -1,0 +1,6 @@
+id: ferritin_elevated_children
+thresholds:
+  ferritin:
+    min: 400
+recommendations:
+- Консультация профильного специалиста

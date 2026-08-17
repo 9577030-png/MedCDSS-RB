@@ -1,0 +1,8 @@
+id: cushing_syndrome
+thresholds:
+  cortisol_serum:
+    min: 690
+  acth:
+    min: 60
+recommendations:
+- Консультация профильного специалиста

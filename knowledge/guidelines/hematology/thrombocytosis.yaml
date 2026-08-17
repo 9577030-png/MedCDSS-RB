@@ -1,0 +1,6 @@
+id: thrombocytosis
+thresholds:
+  platelets:
+    min: 400
+recommendations:
+- Консультация профильного специалиста

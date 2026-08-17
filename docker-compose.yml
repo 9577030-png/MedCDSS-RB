@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: medcdss_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./knowledge:/app/knowledge
+      - ./fonts:/app/fonts
+    environment:
+      - DB_PATH=/app/data/history.db
+      - LOG_LEVEL=INFO
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-in-production}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    restart: unless-stopped
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    container_name: medcdss_ui
+    ports:
+      - "8501:8501"
+    environment:
+      - API_BASE=http://api:8000
+    depends_on:
+      - api
+    restart: unless-stopped

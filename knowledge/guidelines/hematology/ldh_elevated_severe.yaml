@@ -1,0 +1,6 @@
+id: ldh_elevated_severe
+thresholds:
+  ldh:
+    min: 250
+recommendations:
+- Консультация профильного специалиста

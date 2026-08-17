@@ -1,0 +1,8 @@
+id: cystinuria
+thresholds:
+  urine_erythrocytes:
+    min: 5
+  creatinine:
+    min: 110
+recommendations:
+- Консультация профильного специалиста

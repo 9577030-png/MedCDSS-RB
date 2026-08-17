@@ -1,0 +1,8 @@
+id: acromegaly
+thresholds:
+  igf1:
+    min: 250
+  growth_hormone:
+    min: 5
+recommendations:
+- Консультация профильного специалиста

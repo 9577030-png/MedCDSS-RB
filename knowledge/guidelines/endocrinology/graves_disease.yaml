@@ -1,0 +1,8 @@
+id: graves_disease
+thresholds:
+  tsh:
+    max: 0.4
+  free_t4:
+    min: 22
+recommendations:
+- Консультация профильного специалиста

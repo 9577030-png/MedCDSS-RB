@@ -1,0 +1,6 @@
+id: hyperkalemia_critical
+thresholds:
+  potassium:
+    min: 6.5
+recommendations:
+- Консультация профильного специалиста

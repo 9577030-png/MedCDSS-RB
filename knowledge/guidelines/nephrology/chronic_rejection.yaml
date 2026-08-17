@@ -1,0 +1,10 @@
+id: chronic_rejection
+thresholds:
+  egfr:
+    max: 60
+  creatinine:
+    min: 150
+  urine_protein:
+    min: 150
+recommendations:
+- Консультация профильного специалиста

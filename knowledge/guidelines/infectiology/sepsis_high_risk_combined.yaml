@@ -1,0 +1,10 @@
+id: sepsis_high_risk_combined
+thresholds:
+  procalcitonin:
+    min: 0.5
+  crp:
+    min: 50
+  wbc:
+    min: 15
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,8 @@
+id: uti_children
+thresholds:
+  urine_leukocytes:
+    min: 5
+  urine_nitrites:
+    min: 0
+recommendations:
+- Консультация профильного специалиста

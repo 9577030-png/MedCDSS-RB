@@ -1,0 +1,14 @@
+id: pcos
+thresholds:
+  glucose:
+    min: 5.6
+  insulin:
+    min: 25
+  testosterone_total:
+    min: 35
+  lh:
+    min: 8.6
+  fsh:
+    max: 1.5
+recommendations:
+- Консультация профильного специалиста

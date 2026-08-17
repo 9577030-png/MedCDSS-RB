@@ -1,0 +1,6 @@
+id: vitamin_a_deficiency
+thresholds:
+  vitamin_a:
+    max: 1.0
+recommendations:
+- Консультация профильного специалиста

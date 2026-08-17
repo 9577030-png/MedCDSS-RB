@@ -1,0 +1,6 @@
+id: hiv_infection
+thresholds:
+  hiv_rna:
+    min: 1000
+recommendations:
+- Консультация профильного специалиста

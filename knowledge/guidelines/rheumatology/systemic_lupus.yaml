@@ -1,0 +1,16 @@
+id: systemic_lupus
+thresholds:
+  ana_screening:
+    min: 1
+  anti_ds_dna:
+    min: 10
+  complement_c3:
+    max: 0.75
+  complement_c4:
+    max: 0.1
+  urine_protein:
+    min: 150
+  urine_erythrocytes:
+    min: 5
+recommendations:
+- Консультация профильного специалиста

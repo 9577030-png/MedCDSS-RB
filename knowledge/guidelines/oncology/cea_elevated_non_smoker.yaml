@@ -1,0 +1,6 @@
+id: cea_elevated_non_smoker
+thresholds:
+  cea:
+    min: 3
+recommendations:
+- Консультация профильного специалиста

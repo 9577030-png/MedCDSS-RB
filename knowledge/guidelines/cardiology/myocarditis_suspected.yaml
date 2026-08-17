@@ -1,0 +1,10 @@
+id: myocarditis_suspected
+thresholds:
+  troponin_i:
+    min: 40
+  crp:
+    min: 10
+  esr:
+    min: 20
+recommendations:
+- Консультация профильного специалиста

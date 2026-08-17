@@ -1,0 +1,6 @@
+id: albumin_low_children
+thresholds:
+  albumin:
+    max: 35
+recommendations:
+- Консультация профильного специалиста

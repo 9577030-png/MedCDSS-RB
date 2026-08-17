@@ -1,0 +1,6 @@
+id: cyfra_21_1_elevated
+thresholds:
+  cyfra_21_1:
+    min: 3.3
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: hypernatremia_children
+thresholds:
+  sodium:
+    min: 145
+recommendations:
+- Консультация профильного специалиста

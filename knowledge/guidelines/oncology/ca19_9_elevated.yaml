@@ -1,0 +1,6 @@
+id: ca19_9_elevated
+thresholds:
+  ca19_9:
+    min: 37
+recommendations:
+- Консультация профильного специалиста

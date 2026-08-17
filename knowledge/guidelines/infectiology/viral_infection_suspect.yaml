@@ -1,0 +1,8 @@
+id: viral_infection_suspect
+thresholds:
+  lymphocytes_percent:
+    min: 45
+  crp:
+    min: 5
+recommendations:
+- Консультация профильного специалиста

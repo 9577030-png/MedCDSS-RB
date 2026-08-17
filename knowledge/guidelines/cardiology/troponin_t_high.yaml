@@ -1,0 +1,6 @@
+id: troponin_t_high
+thresholds:
+  troponin_t:
+    min: 14
+recommendations:
+- Консультация профильного специалиста

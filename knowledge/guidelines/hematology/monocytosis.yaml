@@ -1,0 +1,6 @@
+id: monocytosis
+thresholds:
+  monocytes_percent:
+    min: 10
+recommendations:
+- Консультация профильного специалиста

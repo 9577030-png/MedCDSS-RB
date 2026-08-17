@@ -1,0 +1,6 @@
+id: hyponatremia_children
+thresholds:
+  sodium:
+    max: 136
+recommendations:
+- Консультация профильного специалиста

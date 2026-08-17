@@ -1,0 +1,6 @@
+id: heart_failure_decompensation
+thresholds:
+  bnp:
+    min: 500
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: leukocytosis_extreme
+thresholds:
+  wbc:
+    min: 25
+recommendations:
+- Консультация профильного специалиста

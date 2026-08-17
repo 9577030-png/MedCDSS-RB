@@ -1,0 +1,10 @@
+id: primary_hypogonadism_female
+thresholds:
+  estradiol:
+    max: 40
+  fsh:
+    min: 12.4
+  lh:
+    min: 8.6
+recommendations:
+- Консультация профильного специалиста

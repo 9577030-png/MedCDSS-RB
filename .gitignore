@@ -1,0 +1,47 @@
+@"
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+venv/
+env/
+.venv/
+
+# Базы данных
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# Конфиги с секретами
+.env
+.env.local
+*.local
+
+# Отладочные файлы
+debug_*.txt
+error_*.txt
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Тесты и покрытие
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Docker
+.pytest_cache/
+"@ | Out-File -FilePath .gitignore -Encoding utf8
+ 

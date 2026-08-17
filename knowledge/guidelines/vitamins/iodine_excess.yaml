@@ -1,0 +1,6 @@
+id: iodine_excess
+thresholds:
+  iodine_urine:
+    min: 300
+recommendations:
+- Консультация профильного специалиста

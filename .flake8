@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 120
+extend-ignore = E203, W503
+per-file-ignores =
+    # В domain/logic/ запрещаем магические числа (кроме 0,1,-1,2,100)
+    domain/logic/*: WPS111
+    # Остальным папкам даём свободу
+    tests/*: WPS111

@@ -1,0 +1,6 @@
+id: vitamin_b12_deficiency_severe
+thresholds:
+  vitamin_b12:
+    max: 200
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: psa_elevated_age_50
+thresholds:
+  psa_total:
+    min: 3.5
+recommendations:
+- Консультация профильного специалиста

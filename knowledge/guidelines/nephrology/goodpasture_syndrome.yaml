@@ -1,0 +1,10 @@
+id: goodpasture_syndrome
+thresholds:
+  urine_erythrocytes:
+    min: 5
+  urine_protein:
+    min: 200
+  creatinine:
+    min: 150
+recommendations:
+- Консультация профильного специалиста

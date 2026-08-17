@@ -1,0 +1,6 @@
+id: free_androgen_index_high
+thresholds:
+  free_androgen_index:
+    min: 150
+recommendations:
+- Консультация профильного специалиста

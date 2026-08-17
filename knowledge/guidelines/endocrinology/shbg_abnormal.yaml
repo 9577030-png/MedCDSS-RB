@@ -1,0 +1,6 @@
+id: shbg_abnormal
+thresholds:
+  shbg:
+    min: 54
+recommendations:
+- Консультация профильного специалиста

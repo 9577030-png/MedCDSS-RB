@@ -1,0 +1,6 @@
+id: troponin_i_high
+thresholds:
+  troponin_i:
+    min: 40
+recommendations:
+- Консультация профильного специалиста

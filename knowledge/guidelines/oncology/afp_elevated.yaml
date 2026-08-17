@@ -1,0 +1,6 @@
+id: afp_elevated
+thresholds:
+  afp_tumor_marker:
+    min: 10
+recommendations:
+- Консультация профильного специалиста

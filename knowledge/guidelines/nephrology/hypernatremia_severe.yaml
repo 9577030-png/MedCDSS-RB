@@ -1,0 +1,6 @@
+id: hypernatremia_severe
+thresholds:
+  sodium:
+    min: 160
+recommendations:
+- Консультация профильного специалиста

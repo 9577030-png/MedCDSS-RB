@@ -1,0 +1,8 @@
+id: diabetes_insipidus
+thresholds:
+  sodium:
+    min: 145
+  osmolality_serum:
+    min: 295
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,8 @@
+id: syphilis_active
+thresholds:
+  rpr_syphilis:
+    min: 1
+  tpha_syphilis:
+    min: 1
+recommendations:
+- Консультация профильного специалиста

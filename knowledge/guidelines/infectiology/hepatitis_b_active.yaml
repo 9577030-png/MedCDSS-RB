@@ -1,0 +1,10 @@
+id: hepatitis_b_active
+thresholds:
+  hbsag:
+    min: 1
+  hbv_dna:
+    min: 2000
+  alt:
+    min: 40
+recommendations:
+- Консультация профильного специалиста

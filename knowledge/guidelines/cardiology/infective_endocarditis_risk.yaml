@@ -1,0 +1,10 @@
+id: infective_endocarditis_risk
+thresholds:
+  crp:
+    min: 100
+  esr:
+    min: 40
+  procalcitonin:
+    min: 0.5
+recommendations:
+- Консультация профильного специалиста

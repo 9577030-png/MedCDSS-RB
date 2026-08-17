@@ -1,0 +1,6 @@
+id: hypokalemia_severe
+thresholds:
+  potassium:
+    max: 2.5
+recommendations:
+- Консультация профильного специалиста

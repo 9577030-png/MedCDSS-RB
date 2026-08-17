@@ -1,0 +1,8 @@
+id: hyperandrogenism_female
+thresholds:
+  testosterone_total:
+    min: 2.0
+  dhea_s:
+    min: 15
+recommendations:
+- Консультация профильного специалиста

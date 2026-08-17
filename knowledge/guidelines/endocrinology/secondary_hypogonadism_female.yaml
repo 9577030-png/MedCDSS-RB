@@ -1,0 +1,12 @@
+id: secondary_hypogonadism_female
+thresholds:
+  estradiol:
+    max: 40
+  fsh:
+    max: 1.5
+  lh:
+    max: 1.7
+  prolactin:
+    min: 500
+recommendations:
+- Консультация профильного специалиста

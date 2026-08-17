@@ -1,0 +1,6 @@
+id: hypocalcemia_severe
+thresholds:
+  calcium_total:
+    max: 1.5
+recommendations:
+- Консультация профильного специалиста

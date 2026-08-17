@@ -1,0 +1,8 @@
+id: acute_kidney_injury_stage3
+thresholds:
+  creatinine:
+    min: 350
+  egfr:
+    max: 15
+recommendations:
+- Консультация профильного специалиста

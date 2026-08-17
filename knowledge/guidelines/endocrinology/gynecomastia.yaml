@@ -1,0 +1,10 @@
+id: gynecomastia
+thresholds:
+  estradiol:
+    min: 160
+  prolactin:
+    min: 500
+  testosterone_total:
+    max: 10
+recommendations:
+- Консультация профильного специалиста

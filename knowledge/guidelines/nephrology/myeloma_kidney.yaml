@@ -1,0 +1,10 @@
+id: myeloma_kidney
+thresholds:
+  urine_protein:
+    min: 300
+  creatinine:
+    min: 150
+  egfr:
+    max: 60
+recommendations:
+- Консультация профильного специалиста

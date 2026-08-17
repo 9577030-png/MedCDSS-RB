@@ -1,0 +1,10 @@
+id: hepatitis_c_active
+thresholds:
+  anti_hcv:
+    min: 1
+  hcv_rna:
+    min: 0
+  alt:
+    min: 40
+recommendations:
+- Консультация профильного специалиста

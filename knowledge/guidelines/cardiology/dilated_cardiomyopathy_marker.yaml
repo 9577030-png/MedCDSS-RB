@@ -1,0 +1,6 @@
+id: dilated_cardiomyopathy_marker
+thresholds:
+  nt_probnp:
+    min: 1000
+recommendations:
+- Консультация профильного специалиста

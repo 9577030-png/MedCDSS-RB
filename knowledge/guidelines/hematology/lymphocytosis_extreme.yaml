@@ -1,0 +1,6 @@
+id: lymphocytosis_extreme
+thresholds:
+  lymphocytes_percent:
+    min: 45
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,10 @@
+id: lupus_nephritis
+thresholds:
+  urine_protein:
+    min: 150
+  urine_erythrocytes:
+    min: 5
+  immunoglobulin_g:
+    min: 16.0
+recommendations:
+- Консультация профильного специалиста

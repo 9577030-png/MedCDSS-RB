@@ -1,0 +1,6 @@
+id: basophilia
+thresholds:
+  basophils_percent:
+    min: 1
+recommendations:
+- Консультация профильного специалиста

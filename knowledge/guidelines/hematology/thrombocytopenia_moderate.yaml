@@ -1,0 +1,6 @@
+id: thrombocytopenia_moderate
+thresholds:
+  platelets:
+    min: 50
+recommendations:
+- Консультация профильного специалиста

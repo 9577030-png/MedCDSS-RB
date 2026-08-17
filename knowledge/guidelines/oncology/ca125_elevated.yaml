@@ -1,0 +1,6 @@
+id: ca125_elevated
+thresholds:
+  ca125:
+    min: 35
+recommendations:
+- Консультация профильного специалиста

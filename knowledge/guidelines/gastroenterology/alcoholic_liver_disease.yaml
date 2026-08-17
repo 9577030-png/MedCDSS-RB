@@ -1,0 +1,12 @@
+id: alcoholic_liver_disease
+thresholds:
+  ggt:
+    min: 80
+  ast:
+    min: 60
+  alt:
+    min: 40
+  ethanol_blood:
+    min: 0.5
+recommendations:
+- Консультация профильного специалиста

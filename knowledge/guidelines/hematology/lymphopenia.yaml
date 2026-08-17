@@ -1,0 +1,6 @@
+id: lymphopenia
+thresholds:
+  lymphocytes_percent:
+    max: 20
+recommendations:
+- Консультация профильного специалиста

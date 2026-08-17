@@ -1,0 +1,12 @@
+id: vasculitis
+thresholds:
+  urine_protein:
+    min: 150
+  urine_erythrocytes:
+    min: 5
+  crp:
+    min: 5
+  esr:
+    min: 20
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: leukocytosis_children
+thresholds:
+  wbc:
+    min: 12
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: myocardial_infarction_severe
+thresholds:
+  troponin_i:
+    min: 200
+recommendations:
+- Консультация профильного специалиста

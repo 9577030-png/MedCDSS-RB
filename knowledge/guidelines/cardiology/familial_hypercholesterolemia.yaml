@@ -1,0 +1,8 @@
+id: familial_hypercholesterolemia
+thresholds:
+  cholesterol_total:
+    min: 6.2
+  ldl_cholesterol:
+    min: 4.0
+recommendations:
+- Консультация профильного специалиста

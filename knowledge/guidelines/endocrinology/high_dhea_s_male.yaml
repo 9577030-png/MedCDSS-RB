@@ -1,0 +1,6 @@
+id: high_dhea_s_male
+thresholds:
+  dhea_s:
+    min: 15
+recommendations:
+- Консультация профильного специалиста

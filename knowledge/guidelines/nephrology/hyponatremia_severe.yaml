@@ -1,0 +1,6 @@
+id: hyponatremia_severe
+thresholds:
+  sodium:
+    max: 120
+recommendations:
+- Консультация профильного специалиста

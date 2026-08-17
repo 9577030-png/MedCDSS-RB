@@ -1,0 +1,10 @@
+id: procalcitonin_bacterial
+name: "Прокальцитонин для диагностики бактериальной инфекции"
+category: "infectiology"
+thresholds:
+  procalcitonin:
+    min: 0.5
+recommendations:
+  - "Рекомендована антибиотикотерапия"
+  - "Консультация инфекциониста"
+

@@ -1,0 +1,6 @@
+id: d_dimer_elevated
+thresholds:
+  d_dimer:
+    min: 0.5
+recommendations:
+- Консультация профильного специалиста

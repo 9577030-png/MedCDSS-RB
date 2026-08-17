@@ -1,0 +1,10 @@
+id: chronic_pyelonephritis
+thresholds:
+  egfr:
+    max: 60
+  urine_leukocytes:
+    min: 5
+  creatinine:
+    min: 110
+recommendations:
+- Консультация профильного специалиста

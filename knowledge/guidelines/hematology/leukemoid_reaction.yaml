@@ -1,0 +1,6 @@
+id: leukemoid_reaction
+thresholds:
+  wbc:
+    min: 50
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: macrocytic_anemia
+thresholds:
+  mcv:
+    min: 100
+recommendations:
+- Консультация профильного специалиста

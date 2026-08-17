@@ -1,0 +1,6 @@
+id: selenium_deficiency
+thresholds:
+  selenium_reference:
+    max: 70
+recommendations:
+- Консультация профильного специалиста

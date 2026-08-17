@@ -1,0 +1,10 @@
+id: hypoparathyroidism
+thresholds:
+  calcium_total:
+    max: 2.15
+  phosphate:
+    min: 1.5
+  pth:
+    max: 1.6
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,6 @@
+id: vitamin_d_deficiency_children
+thresholds:
+  vitamin_d:
+    max: 20
+recommendations:
+- Консультация профильного специалиста

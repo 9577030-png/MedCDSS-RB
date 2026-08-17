@@ -1,0 +1,14 @@
+id: hypopituitarism
+thresholds:
+  tsh:
+    max: 0.4
+  cortisol_serum:
+    max: 140
+  testosterone_total:
+    max: 10
+  estradiol:
+    max: 40
+  igf1:
+    max: 100
+recommendations:
+- Консультация профильного специалиста

@@ -1,0 +1,14 @@
+id: endocrine_infertility
+thresholds:
+  fsh:
+    min: 12.4
+  lh:
+    min: 8.6
+  estradiol:
+    min: 160
+  testosterone_total:
+    min: 35
+  prolactin:
+    min: 500
+recommendations:
+- Консультация профильного специалиста

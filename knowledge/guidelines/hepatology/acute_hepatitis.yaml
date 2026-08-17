@@ -1,0 +1,10 @@
+id: acute_hepatitis
+thresholds:
+  alt:
+    min: 100
+  ast:
+    min: 100
+  bilirubin_total:
+    min: 34
+recommendations:
+- Консультация профильного специалиста

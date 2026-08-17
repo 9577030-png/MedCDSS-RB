@@ -1,0 +1,6 @@
+id: ca72_4_elevated
+thresholds:
+  ca72_4:
+    min: 6.9
+recommendations:
+- Консультация профильного специалиста

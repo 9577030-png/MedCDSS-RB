@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import os
 os.environ["DB_PATH"] = ":memory:"
+=======
+>>>>>>> ed8075f3be8b2941b2b3ec7cbe79ab1cec3ff151
 import streamlit as st
 import pandas as pd
 from pathlib import Path
@@ -309,4 +312,3 @@ elif analyze_btn:
 # ----- Футер -----
 st.markdown("---")
 st.caption("Система интерпретации лабораторных данных v1.0 | Демо-версия")
-

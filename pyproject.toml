@@ -5,8 +5,8 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "MedCDSS-RB"
 version = "0.1.0"
-description = "Medical Clinical Decision Support System — Rule-Based Expert Engine"
-authors = [{name = "Your Name", email = "you@example.com"}]
+description = "Rule-based laboratory data interpretation system"
+authors = [{name = "Sergei Smirnov", email = "9577030@gmail.com"}]
 dependencies = [
     "fastapi>=0.100.0",
     "uvicorn>=0.23.0",

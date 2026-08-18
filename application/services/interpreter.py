@@ -1,4 +1,6 @@
 ﻿import yaml
+import ast
+import operator
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from domain.entities.parameter import Parameter
@@ -157,85 +159,83 @@ class ClinicalInterpreter:
                 continue
         return 'не классифицировано'
 
-    import ast
-    import operator
     def _check_condition(self, condition: str, param_dict: Dict[str, float], patient_info: Dict[str, Any]) -> bool:
-       if not condition:
-           return True
-
-    # Сбор доступных переменных (только числа, строки, булевы)
-    allowed_vars = {}
-    for k, v in {**param_dict, **patient_info}.items():
-        if isinstance(v, (int, float, str, bool)):
-            allowed_vars[k] = v
-
-    # Разрешённые операторы
-    operators = {
-        ast.Add: operator.add,
-        ast.Sub: operator.sub,
-        ast.Mult: operator.mul,
-        ast.Div: operator.truediv,
-        ast.Mod: operator.mod,
-        ast.Eq: operator.eq,
-        ast.NotEq: operator.ne,
-        ast.Lt: operator.lt,
-        ast.LtE: operator.le,
-        ast.Gt: operator.gt,
-        ast.GtE: operator.ge,
-        ast.And: operator.and_,
-        ast.Or: operator.or_,
-        ast.Not: operator.not_,
-        ast.USub: operator.neg,
-        ast.UAdd: operator.pos,
-    }
-
-    def _eval_node(node):
-        if isinstance(node, ast.Constant):
-            return node.value
-        elif isinstance(node, ast.Name):
-            if node.id in allowed_vars:
-                return allowed_vars[node.id]
-            raise ValueError(f"Unknown variable: {node.id}")
-        elif isinstance(node, ast.BinOp):
-            left = _eval_node(node.left)
-            right = _eval_node(node.right)
-            op_type = type(node.op)
-            if op_type not in operators:
-                raise ValueError(f"Unsupported operator: {op_type}")
-            return operators[op_type](left, right)
-        elif isinstance(node, ast.Compare):
-            left = _eval_node(node.left)
-            for op, comp in zip(node.ops, node.comparators):
-                right = _eval_node(comp)
-                op_type = type(op)
-                if op_type not in operators:
-                    raise ValueError(f"Unsupported comparison: {op_type}")
-                if not operators[op_type](left, right):
-                    return False
-                left = right
+        if not condition:
             return True
-        elif isinstance(node, ast.BoolOp):
-            values = [_eval_node(v) for v in node.values]
-            if isinstance(node.op, ast.And):
-                return all(values)
-            elif isinstance(node.op, ast.Or):
-                return any(values)
-            else:
-                raise ValueError("Unsupported boolean operator")
-        elif isinstance(node, ast.UnaryOp):
-            operand = _eval_node(node.operand)
-            op_type = type(node.op)
-            if op_type not in operators:
-                raise ValueError(f"Unsupported unary operator: {op_type}")
-            return operators[op_type](operand)
-        elif isinstance(node, ast.Attribute):
-            # Запрещаем доступ к атрибутам (безопасность)
-            raise ValueError("Attribute access not allowed")
-        else:
-            raise ValueError(f"Unsupported AST node: {type(node).__name__}")
 
-    try:
-        parsed = ast.parse(condition, mode='eval')
-        return bool(_eval_node(parsed.body))
-    except Exception:
-        return False
+        # Сбор доступных переменных (только числа, строки, булевы)
+        allowed_vars = {}
+        for k, v in {**param_dict, **patient_info}.items():
+            if isinstance(v, (int, float, str, bool)):
+                allowed_vars[k] = v
+
+        # Разрешённые операторы
+        operators = {
+            ast.Add: operator.add,
+            ast.Sub: operator.sub,
+            ast.Mult: operator.mul,
+            ast.Div: operator.truediv,
+            ast.Mod: operator.mod,
+            ast.Eq: operator.eq,
+            ast.NotEq: operator.ne,
+            ast.Lt: operator.lt,
+            ast.LtE: operator.le,
+            ast.Gt: operator.gt,
+            ast.GtE: operator.ge,
+            ast.And: operator.and_,
+            ast.Or: operator.or_,
+            ast.Not: operator.not_,
+            ast.USub: operator.neg,
+            ast.UAdd: operator.pos,
+        }
+
+        def _eval_node(node):
+            if isinstance(node, ast.Constant):
+                return node.value
+            elif isinstance(node, ast.Name):
+                if node.id in allowed_vars:
+                    return allowed_vars[node.id]
+                raise ValueError(f"Unknown variable: {node.id}")
+            elif isinstance(node, ast.BinOp):
+                left = _eval_node(node.left)
+                right = _eval_node(node.right)
+                op_type = type(node.op)
+                if op_type not in operators:
+                    raise ValueError(f"Unsupported operator: {op_type}")
+                return operators[op_type](left, right)
+            elif isinstance(node, ast.Compare):
+                left = _eval_node(node.left)
+                for op, comp in zip(node.ops, node.comparators):
+                    right = _eval_node(comp)
+                    op_type = type(op)
+                    if op_type not in operators:
+                        raise ValueError(f"Unsupported comparison: {op_type}")
+                    if not operators[op_type](left, right):
+                        return False
+                    left = right
+                return True
+            elif isinstance(node, ast.BoolOp):
+                values = [_eval_node(v) for v in node.values]
+                if isinstance(node.op, ast.And):
+                    return all(values)
+                elif isinstance(node.op, ast.Or):
+                    return any(values)
+                else:
+                    raise ValueError("Unsupported boolean operator")
+            elif isinstance(node, ast.UnaryOp):
+                operand = _eval_node(node.operand)
+                op_type = type(node.op)
+                if op_type not in operators:
+                    raise ValueError(f"Unsupported unary operator: {op_type}")
+                return operators[op_type](operand)
+            elif isinstance(node, ast.Attribute):
+                # Запрещаем доступ к атрибутам (безопасность)
+                raise ValueError("Attribute access not allowed")
+            else:
+                raise ValueError(f"Unsupported AST node: {type(node).__name__}")
+
+        try:
+            parsed = ast.parse(condition, mode='eval')
+            return bool(_eval_node(parsed.body))
+        except Exception:
+            return False

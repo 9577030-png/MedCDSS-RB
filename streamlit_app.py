@@ -144,7 +144,7 @@ st.session_state.current_page = page
 # СТРАНИЦА АНАЛИЗА
 # =====================================================
 if page == "Анализ":
-    st.title("🩺 Медицинская система поддержки принятия решений")
+    st.title("🧪 Система интерпретации лабораторных данных")
     st.markdown("Введите данные пациента и лабораторные показатели для получения клинического заключения.")
 
     with st.sidebar:
@@ -360,7 +360,7 @@ if page == "Анализ":
                                     st.markdown(f"- **{rf.get('condition', '')}** → {rf.get('text', '')}")
                             treatment_hints = insight.get("treatment_hints", [])
                             if treatment_hints:
-                                st.markdown("#### 💊 Шпаргалка по тактике")
+                                st.markdown("#### 💊 Советы по тактике")
                                 for hint in treatment_hints:
                                     st.markdown(f"- **{hint.get('step', '')}** — {hint.get('note', '')}")
                             references = insight.get("references", [])
@@ -373,7 +373,7 @@ if page == "Анализ":
 
                 conclusion = data.get("conclusion", "")
                 if conclusion:
-                    with st.expander("📄 Полное текстовое заключение (без дублирующих рекомендаций)"):
+                    with st.expander("📄 Полное текстовое заключение "):
                         lines = conclusion.split("\n")
                         filtered = []
                         skip = False
@@ -408,7 +408,7 @@ if page == "Анализ":
                         file_name=f"report_{st.session_state.patient_id}.pdf",
                         mime="application/pdf"
                     )
-                    st.success("PDF готов! Кнопка сохранения появилась ниже.")
+                    st.success("PDF готов! Кнопка сохранения ниже.")
                 elif pdf_resp.status_code == 401:
                     st.error("❌ Сессия истекла. Войдите заново.")
                     st.session_state.token = None
@@ -530,4 +530,4 @@ elif page == "Администрирование":
                     st.error(f"Ошибка сохранения: {save_resp.text}")
 
 st.markdown("---")
-st.caption("Medical AI Decision Support System v1.0 | API: localhost:8000")
+st.caption("Система интерпретации лабораторных данных v1.0 | API: localhost:8000")

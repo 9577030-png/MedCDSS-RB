@@ -45,7 +45,7 @@ except Exception as e:
 
 app = FastAPI(
     title=settings.APP_NAME,
-    description="API для анализа лабораторных данных",
+    description="Система интерпретации лабораторных данных",
     version=settings.APP_VERSION
 )
 

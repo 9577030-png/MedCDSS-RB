@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import streamlit as st
 import pandas as pd
 from pathlib import Path
@@ -307,3 +308,4 @@ elif analyze_btn:
 # ----- Футер -----
 st.markdown("---")
 st.caption("Система интерпретации лабораторных данных v1.0 | Демо-версия")
+

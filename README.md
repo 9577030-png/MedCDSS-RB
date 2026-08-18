@@ -5,6 +5,7 @@ markdown
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.141-green.svg)](https://fastapi.tiangolo.com/)
 [![Docker](https://img.shields.io/badge/docker-✓-blue.svg)](https://www.docker.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-UI-orange.svg)](https://streamlit.io/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Streamlit-red.svg)](https://medcdss-rb-cpymu7xlthwiptat8mirag.streamlit.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CI](https://github.com/9577030-png/MedCDSS-RB/actions/workflows/ci.yml/badge.svg)](https://github.com/9577030-png/MedCDSS-RB/actions)
 
@@ -64,6 +65,7 @@ text
 ## 🚀 Быстрый старт
 
 ### Запуск с Docker (рекомендуется)
+**Живое демо:** [https://medcdss-rb-cpymu7xlthwiptat8mirag.streamlit.app/](https://medcdss-rb-cpymu7xlthwiptat8mirag.streamlit.app/)
 
 ```bash
 git clone https://github.com/9577030-png/MedCDSS-RB.git

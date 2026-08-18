@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+import os
+os.environ["DB_PATH"] = ":memory:"
 import streamlit as st
 import pandas as pd
 from pathlib import Path

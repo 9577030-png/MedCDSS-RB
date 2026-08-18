@@ -1,52 +1,95 @@
-<<<<<<< HEAD
-import os
-os.environ["DB_PATH"] = ":memory:"
-=======
->>>>>>> ed8075f3be8b2941b2b3ec7cbe79ab1cec3ff151
 import streamlit as st
 import pandas as pd
 from pathlib import Path
 import sys
+import os
 import yaml
 
 # Добавляем корень проекта в PYTHONPATH
 sys.path.insert(0, str(Path(__file__).parent))
 
-# Импорты из проекта
-from infrastructure.bootstrap.di_container import DIContainer
+# ---------- Импорты компонентов (без SQLite) ----------
 from domain.entities.patient import PatientProfile
 from domain.value_objects.gender import Gender
+from domain.value_objects.risk_level import RiskLevel
+from domain.value_objects.severity import Severity
+from domain.entities.finding import ClinicalFinding
+from domain.entities.recommendation import Recommendation
+from domain.entities.report import AnalysisReport
+
 from infrastructure.adapters.parsers.regex_parser import RegexParser
+from infrastructure.adapters.loaders.yaml_threshold_loader import YamlThresholdLoader
+from infrastructure.adapters.loaders.yaml_recommendation_loader import YamlRecommendationLoader
+from infrastructure.adapters.loaders._merged_guideline_provider import MergedGuidelineProvider
+from infrastructure.adapters.loaders.yaml_guideline_provider import YamlGuidelineProvider
+from infrastructure.adapters.loaders.clinical_logic_loader import ClinicalLogicLoader
+
+from application.services.inference_engine import InferenceEngine
+from application.services.action_mapper import ActionMapper
+from application.services.report_builder import ReportBuilder
+from application.services.post_processor import PostProcessor
 from application.services.interpreter import ClinicalInterpreter
 
-# ---------- Настройка страницы ----------
-st.set_page_config(
-    page_title="Система интерпретации лабораторных данных",
-    page_icon="🧪",
-    layout="wide"
-)
+# ---------- Настройки ----------
+# Заменяем настройки БД на :memory: (чтобы не было ошибок)
+os.environ["DB_PATH"] = ":memory:"
 
-# ---------- Инициализация ----------
+# ---------- Инициализация компонентов ----------
 @st.cache_resource
-def init_container():
-    return DIContainer(probability_threshold=0.3)
+def init_services():
+    """Инициализирует все сервисы без SQLite."""
+    threshold_loader = YamlThresholdLoader()
+    recommendation_loader = YamlRecommendationLoader()
+    logic_loader = ClinicalLogicLoader()
+    
+    merged_provider = MergedGuidelineProvider(threshold_loader)
+    guideline_provider = YamlGuidelineProvider(merged_provider)
+    
+    inference_engine = InferenceEngine(guideline_provider, threshold_loader)
+    action_mapper = ActionMapper(recommendation_loader)
+    report_builder = ReportBuilder()
+    post_processor = PostProcessor(logic_loader=logic_loader, probability_threshold=0.3)
+    
+    return {
+        "inference_engine": inference_engine,
+        "action_mapper": action_mapper,
+        "report_builder": report_builder,
+        "post_processor": post_processor,
+        "parser": RegexParser(),
+        "interpreter": ClinicalInterpreter("knowledge/configs/clinical_interpretations.yaml"),
+    }
 
-@st.cache_resource
-def init_interpreter():
-    return ClinicalInterpreter("knowledge/configs/clinical_interpretations.yaml")
+services = init_services()
+parser = services["parser"]
+inference_engine = services["inference_engine"]
+action_mapper = services["action_mapper"]
+report_builder = services["report_builder"]
+post_processor = services["post_processor"]
+interpreter = services["interpreter"]
 
-container = init_container()
-interpreter = init_interpreter()
+# ---------- Функция анализа ----------
+def run_analysis(patient: PatientProfile, raw_text: str):
+    """Запускает полный пайплайн анализа (без истории)."""
+    try:
+        # 1. Парсинг
+        parameters = parser.parse(raw_text)
+        
+        # 2. Инференс
+        findings = inference_engine.infer(patient, parameters)
+        
+        # 3. Действия
+        actions = action_mapper.map_to_actions(findings)
+        
+        # 4. Отчёт
+        report = report_builder.build(findings, actions)
+        
+        # 5. Постобработка
+        result = post_processor.process(report)
+        
+        return result
+    except Exception as e:
+        raise e
 
-# ---------- Session State ----------
-if "added_params" not in st.session_state:
-    st.session_state.added_params = []
-if "analysis_result" not in st.session_state:
-    st.session_state.analysis_result = None
-if "raw_text" not in st.session_state:
-    st.session_state.raw_text = ""
-
-# ---------- Функции ----------
 def map_gender(gender_str: str) -> Gender:
     g = gender_str.lower()
     if g == "male":
@@ -55,7 +98,9 @@ def map_gender(gender_str: str) -> Gender:
         return Gender.FEMALE
     return Gender.MALE
 
-def load_parameter_list():
+# ---------- Загрузка параметров ----------
+@st.cache_data
+def load_parameters():
     """Загружает список параметров из aliases.yaml"""
     try:
         aliases_path = Path("knowledge/laboratory/aliases.yaml")
@@ -68,15 +113,22 @@ def load_parameter_list():
             for syn in synonyms:
                 all_names.add(syn)
         return sorted(all_names)
-    except Exception as e:
-        st.warning(f"Не удалось загрузить список параметров: {e}")
+    except:
         return ["глюкоза", "креатинин", "гемоглобин", "ферритин", "калий", "натрий", "АЛТ", "АСТ", "ТТГ", "витамин D", "ЛПНП", "триглицериды", "ЛПВП", "мочевая кислота"]
 
-parameters_list = load_parameter_list()
+parameters_list = load_parameters()
+
+# ---------- Session State ----------
+if "added_params" not in st.session_state:
+    st.session_state.added_params = []
+if "analysis_result" not in st.session_state:
+    st.session_state.analysis_result = None
+if "raw_text" not in st.session_state:
+    st.session_state.raw_text = ""
 
 # ---------- Интерфейс ----------
+st.set_page_config(page_title="Система интерпретации лабораторных данных", layout="wide")
 st.title("🧪 Система интерпретации лабораторных данных")
-st.markdown("Введите данные пациента и лабораторные показатели для получения клинического заключения.")
 
 # Боковая панель
 with st.sidebar:
@@ -138,22 +190,19 @@ with st.sidebar:
     analyze_btn = st.button("🔍 Анализировать", type="primary", use_container_width=True)
 
 # ---------- Основная область ----------
-# Отладочный вывод
-with st.expander("📝 Сформированный текст для анализа", expanded=False):
-    st.code(st.session_state.raw_text or "(пусто)", language="text")
-
 if analyze_btn and st.session_state.raw_text.strip():
     try:
+        gender_enum = map_gender(gender)
         patient = PatientProfile(
             id=patient_id,
-            gender=map_gender(gender),
+            gender=gender_enum,
             age=age,
             complaints=[c.strip() for c in complaints.split(",") if c.strip()],
             medications=[m.strip() for m in medications.split(",") if m.strip()]
         )
 
         with st.spinner("Выполняется анализ..."):
-            result = container.pipeline.run_with_postprocessing(patient, st.session_state.raw_text)
+            result = run_analysis(patient, st.session_state.raw_text)
 
         if result:
             st.session_state.analysis_result = result
@@ -189,7 +238,7 @@ if analyze_btn and st.session_state.raw_text.strip():
                     st.markdown(
                         f"""
                         <div style="border-left: 5px solid {card_color}; padding-left: 15px; margin-bottom: 10px;">
-                            <strong>{label}</strong>
+                            <strong>{label}</strong> 
                             <span style="background-color:{card_color}; color:white; padding:2px 8px; border-radius:12px; font-size:0.8rem;">{risk}</span>
                             { '⚕️ (комбинированный)' if combined else '' }
                             <br>
@@ -240,16 +289,13 @@ if analyze_btn and st.session_state.raw_text.strip():
 
             # ----- Клинические инсайты -----
             try:
-                parser = RegexParser()
                 parameters = parser.parse(st.session_state.raw_text)
                 insights = interpreter.interpret(diagnoses, parameters, patient)
-
                 if insights:
                     st.markdown("### 🧠 Клинические инсайты (подробная интерпретация)")
                     for diag_id, insight in insights.items():
-                        label = getattr(insight, 'label', diag_id) if hasattr(insight, 'label') else diag_id
+                        label = getattr(insight, 'label', diag_id)
                         with st.expander(f"**{label}** (ID: {diag_id})"):
-                            # Критерии
                             if hasattr(insight, 'criteria') and insight.criteria:
                                 st.markdown("#### 📊 Критерии диагноза")
                                 df_data = []
@@ -262,32 +308,24 @@ if analyze_btn and st.session_state.raw_text.strip():
                                     })
                                 if df_data:
                                     st.dataframe(pd.DataFrame(df_data), use_container_width=True, hide_index=True)
-
-                            # Дифференциалы
                             if hasattr(insight, 'differentials') and insight.differentials:
                                 st.markdown("#### 🔍 Дифференциальная диагностика")
                                 for diff in insight.differentials:
                                     condition = getattr(diff, 'condition', '')
                                     text = getattr(diff, 'text', '')
                                     st.markdown(f"- **Условие:** `{condition}` → {text}")
-
-                            # Красные флаги
                             if hasattr(insight, 'red_flags') and insight.red_flags:
                                 st.markdown("#### ⚠️ Красные флаги")
                                 for rf in insight.red_flags:
                                     condition = getattr(rf, 'condition', '')
                                     text = getattr(rf, 'text', '')
                                     st.markdown(f"- **{condition}** → {text}")
-
-                            # Лечебные подсказки
                             if hasattr(insight, 'treatment_hints') and insight.treatment_hints:
                                 st.markdown("#### 💊 Шпаргалка по тактике")
                                 for hint in insight.treatment_hints:
                                     step = getattr(hint, 'step', '')
                                     note = getattr(hint, 'note', '')
                                     st.markdown(f"- **{step}** — {note}")
-
-                            # Ссылки
                             if hasattr(insight, 'references') and insight.references:
                                 st.markdown("#### 📚 Ссылки")
                                 for ref in insight.references:

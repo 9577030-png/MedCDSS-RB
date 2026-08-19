@@ -40,24 +40,24 @@ class PostProcessor:
         significant = self._apply_exclusions(significant)
         logger.info(f"After exclusions: {len(significant)}")
 
-        # 3. Жёсткий фильтр по белому списку (загружен из конфига)
-        filtered = []
-        # Если есть СД2, оставляем только СД2 и severe_hyperglycemia
-        if any(f.id == "diabetes_mellitus_type_2" for f in significant):
-            allowed = {"diabetes_mellitus_type_2", "severe_hyperglycemia"}
-            filtered = [f for f in significant if f.id in allowed]
-        # Если есть ЖДА, оставляем только её
-        elif any(f.id == "iron_deficiency" for f in significant):
-            allowed = {"iron_deficiency"}
-            filtered = [f for f in significant if f.id in allowed]
-        # Иначе оставляем только диагнозы из белого списка
-        else:
-            filtered = [f for f in significant if f.id in self.allowed_primary]
+        # 3. Жёсткий фильтр по белому списку – ВРЕМЕННО ОТКЛЮЧЕН
+        # Пропускаем все находки без фильтрации
+        filtered = significant
+        logger.info(f"After white-list filter (disabled): {len(filtered)}")
+
+        # Старый код фильтрации (закомментирован)
+        # filtered = []
+        # if any(f.id == "diabetes_mellitus_type_2" for f in significant):
+        #     allowed = {"diabetes_mellitus_type_2", "severe_hyperglycemia"}
+        #     filtered = [f for f in significant if f.id in allowed]
+        # elif any(f.id == "iron_deficiency" for f in significant):
+        #     allowed = {"iron_deficiency"}
+        #     filtered = [f for f in significant if f.id in allowed]
+        # else:
+        #     filtered = [f for f in significant if f.id in self.allowed_primary]
+        # logger.info(f"After white-list filter: {len(filtered)}")
 
         significant = filtered
-        logger.info(f"After white-list filter: {len(significant)}")
-        for f in significant:
-            logger.info(f"  Kept: {f.id}")
 
         # 4. Группировка по системам (используем загруженный словарь)
         grouped = self._build_grouped(significant)

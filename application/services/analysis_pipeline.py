@@ -1,5 +1,5 @@
 import logging
-from typing import List, Union, Dict, Any
+from typing import List, Dict, Any, Optional
 from domain.entities.patient import PatientProfile
 from domain.entities.parameter import Parameter
 from domain.entities.report import AnalysisReport
@@ -11,15 +11,14 @@ from application.services.action_mapper import ActionMapper
 from application.services.report_builder import ReportBuilder
 from application.services.post_processor import PostProcessor
 from domain.exceptions import MedicalAIError
+from infrastructure.cache.redis_cache import RedisCache
+from infrastructure.repositories.audit_repository import AuditRepository
+from domain.interfaces import RuleRepository
+from application.validators.physiological_validator import PhysiologicalValidator
 
 logger = logging.getLogger(__name__)
 
 class AnalysisPipeline:
-    """
-    Главный оркестратор анализа. Управляет всем процессом:
-    парсинг → вывод → построение действий → постобработка.
-    """
-
     def __init__(
         self,
         parser: ParserInterface,
@@ -28,7 +27,11 @@ class AnalysisPipeline:
         report_builder: ReportBuilder,
         history_repo: HistoryRepository,
         renderer: RendererInterface,
-        post_processor: PostProcessor = None
+        post_processor: Optional[PostProcessor] = None,
+        cache: Optional[RedisCache] = None,
+        audit_repo: Optional[AuditRepository] = None,
+        rule_repo: Optional[RuleRepository] = None,
+        validator: Optional[PhysiologicalValidator] = None
     ):
         self.parser = parser
         self.inference_engine = inference_engine
@@ -37,68 +40,106 @@ class AnalysisPipeline:
         self.history_repo = history_repo
         self.renderer = renderer
         self.post_processor = post_processor or PostProcessor()
-        logger.info("AnalysisPipeline initialized with post-processor")
+        self.cache = cache
+        self.audit_repo = audit_repo
+        self.rule_repo = rule_repo
+        self.validator = validator
 
-    def run(self, patient: PatientProfile, raw_text: str) -> str:
-        """
-        Стандартный запуск – возвращает отрендеренный текст (для консоли).
-        """
-        logger.info(f"Starting standard run for patient {patient.id}")
-        report = self._run_core(patient, raw_text)
-        rendered = self.renderer.render(report)
-        logger.info("Standard run completed")
-        return rendered
+    def _get_rules_version(self) -> str:
+        if self.rule_repo:
+            active = self.rule_repo.get_active_versions()
+            version_str = ",".join(f"{r.rule_id}:{r.version_id}" for r in sorted(active, key=lambda x: x.rule_id))
+            import hashlib
+            return hashlib.md5(version_str.encode()).hexdigest()
+        return "unknown"
 
-    def run_structured(self, patient: PatientProfile, raw_text: str) -> AnalysisReport:
-        """
-        Возвращает объект отчёта без рендеринга (для API).
-        """
-        logger.info(f"Starting structured run for patient {patient.id}")
-        report = self._run_core(patient, raw_text)
-        logger.info("Structured run completed")
-        return report
-
-    def run_with_postprocessing(self, patient: PatientProfile, raw_text: str) -> Dict[str, Any]:
-        """
-        Запускает анализ и возвращает структурированное заключение с группировкой,
-        диагнозами, рекомендациями и общей оценкой риска.
-        """
-        logger.info(f"Starting post-processed run for patient {patient.id}")
-        report = self._run_core(patient, raw_text)
-        result = self.post_processor.process(report)
-        logger.info("Post-processed run completed")
-        return result
-
-    def _run_core(self, patient: PatientProfile, raw_text: str) -> AnalysisReport:
-        """
-        Внутренний метод – выполняет основные шаги анализа без постобработки.
-        """
-        logger.info(f"Core analysis for patient {patient.id}")
+    def run_structured(self, patient: PatientProfile, raw_text: str, user_id: int = None) -> AnalysisReport:
+        logger.info(f"Structured run for patient {patient.id}")
         try:
-            # 1. Парсинг
-            parameters = self.parser.parse(raw_text)
-            logger.debug(f"Parsed {len(parameters)} parameters")
+            # 1. Валидация
+            if self.validator:
+                parameters = self.parser.parse(raw_text)
+                errors = self.validator.validate([{"name": p.name, "value": p.value} for p in parameters])
+                if errors:
+                    raise MedicalAIError(f"Validation errors: {', '.join(errors)}")
 
-            # 2. Вывод (inference) – поиск находок
-            findings = self.inference_engine.infer(patient, parameters)
-            logger.info(f"Found {len(findings)} findings")
+            # 2. Кэш (с обработкой ошибок)
+            if self.cache:
+                try:
+                    rules_version = self._get_rules_version()
+                    parameters = self.parser.parse(raw_text)
+                    cached_result = self.cache.get(patient, parameters, rules_version)
+                    if cached_result:
+                        logger.info("Cache hit for patient")
+                        report = AnalysisReport(
+                            findings=[ClinicalFinding(**f) for f in cached_result.get("findings", [])],
+                            actions=[Recommendation(**a) for a in cached_result.get("actions", [])],
+                            explanation=cached_result.get("explanation", "")
+                        )
+                        self.history_repo.save(patient.id, report)
+                        if self.audit_repo and user_id:
+                            self.audit_repo.log(
+                                patient_id=patient.id,
+                                user_id=user_id,
+                                request_data={"raw_text": raw_text, "patient": patient},
+                                result_summary={"findings": [f.id for f in report.findings]},
+                                rules_version=rules_version
+                            )
+                        return report
+                except Exception as e:
+                    logger.warning(f"Cache error (will continue without cache): {e}")
 
-            # 3. Построение действий (рекомендации)
-            actions = self.action_mapper.map_to_actions(findings)
-            logger.debug(f"Mapped {len(actions)} actions")
+            # 3. Полный анализ
+            report = self._run_core(patient, raw_text)
 
-            # 4. Сборка отчёта
-            report = self.report_builder.build(findings, actions)
+            # 4. Сохранение в кэш (с обработкой ошибок)
+            if self.cache:
+                try:
+                    parameters = self.parser.parse(raw_text)
+                    rules_version = self._get_rules_version()
+                    cache_data = {
+                        "findings": [{"id": f.id, "title": f.title, "probability": f.probability,
+                                      "risk": f.risk.value, "evidence": f.evidence, "description": f.description} for f in report.findings],
+                        "actions": [{"doctor_specialty": a.doctor_specialty, "urgency": a.urgency.value,
+                                     "additional_tests": a.additional_tests} for a in report.actions],
+                        "explanation": report.explanation
+                    }
+                    self.cache.set(patient, parameters, rules_version, cache_data)
+                except Exception as e:
+                    logger.warning(f"Failed to save to cache: {e}")
 
-            # 5. Сохранение в историю
-            self.history_repo.save(patient.id, report)
+            # 5. Аудит
+            if self.audit_repo and user_id:
+                rules_version = self._get_rules_version()
+                self.audit_repo.log(
+                    patient_id=patient.id,
+                    user_id=user_id,
+                    request_data={"raw_text": raw_text, "patient": patient},
+                    result_summary={"findings": [f.id for f in report.findings]},
+                    rules_version=rules_version
+                )
 
-            logger.info("Core analysis completed successfully")
             return report
 
         except MedicalAIError as e:
-            logger.error(f"Domain error during analysis: {e}")
+            logger.error(f"Domain error: {e}")
             raise
         except Exception as e:
-            logger.error(f"Unexpected error during analysis: {e}", exc_info=True)
+            logger.error(f"Unexpected error: {e}", exc_info=True)
             raise
+
+    def _run_core(self, patient: PatientProfile, raw_text: str) -> AnalysisReport:
+        parameters = self.parser.parse(raw_text)
+        findings = self.inference_engine.infer(patient, parameters)
+        actions = self.action_mapper.map_to_actions(findings)
+        report = self.report_builder.build(findings, actions)
+        self.history_repo.save(patient.id, report)
+        return report
+
+    def run(self, patient: PatientProfile, raw_text: str, user_id: int = None) -> str:
+        report = self.run_structured(patient, raw_text, user_id)
+        return self.renderer.render(report)
+
+    def run_with_postprocessing(self, patient: PatientProfile, raw_text: str, user_id: int = None) -> Dict[str, Any]:
+        report = self.run_structured(patient, raw_text, user_id)
+        return self.post_processor.process(report)

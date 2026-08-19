@@ -11,9 +11,10 @@ logger = logging.getLogger(__name__)
 class RegexParser(ParserInterface):
     def __init__(self):
         self.normalizer = ParameterNormalizer()
-        # Разрешаем буквы (латиница/кириллица), цифры и подчёркивание
+        # Разрешаем только буквы (латиница/кириллица), пробелы и подчёркивания в имени.
+        # Числа не допускаются в имени – они будут частью значения.
         self.pattern = re.compile(
-            r'(?P<name>[A-Za-zА-Яа-я0-9_]+)\s*[:=]?\s*(?P<value>-?[\d.]+)\s*(?P<unit>[A-Za-z/%]+)?'
+            r'(?P<name>[A-Za-zА-Яа-я_ ]+)\s*(?P<value>-?[\d.]+)\s*(?P<unit>[A-Za-z/%]+)?'
         )
         logger.info("RegexParser initialized")
 

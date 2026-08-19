@@ -1,0 +1,31 @@
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, JSON, Enum
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+from domain.rule_version import RulePriority
+
+Base = declarative_base()
+
+class RuleVersionModel(Base):
+    __tablename__ = "rule_versions"
+    version_id = Column(Integer, primary_key=True, autoincrement=True)
+    rule_id = Column(String(100), index=True)
+    name = Column(String(255))
+    conditions = Column(JSON)
+    actions = Column(JSON)
+    priority = Column(Enum(RulePriority))
+    conflicts_with = Column(JSON)  # список строк
+    supports = Column(JSON)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    created_by = Column(String(100))
+    is_active = Column(Boolean, default=False)
+    comment = Column(String(500), nullable=True)
+
+class AuditLogModel(Base):
+    __tablename__ = "audit_logs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    patient_id = Column(String(100))
+    user_id = Column(Integer)  # или имя пользователя
+    request_data = Column(JSON)  # входные параметры
+    result_summary = Column(JSON)  # краткий результат (диагнозы, риск)
+    rules_version = Column(String(50))  # идентификатор версии правил (можно хеш)
+    timestamp = Column(DateTime, default=datetime.utcnow)

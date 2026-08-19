@@ -1,6 +1,6 @@
 """
 Доменные исключения для медицинской системы поддержки принятия решений.
-Все исключения наследуются от MedicalAIError, чтобы их можно было легко перехватывать.
+Все исключения наследуются от MedicalAIError.
 """
 
 class MedicalAIError(Exception):
@@ -11,7 +11,12 @@ class MedicalAIError(Exception):
 # --- Ошибки валидации данных пациента ---
 
 class InvalidPatientDataError(MedicalAIError):
-    """Ошибка в данных пациента (например, отрицательный возраст, неверный пол)."""
+    """Ошибка в данных пациента (отрицательный возраст, неверный пол)."""
+    pass
+
+
+class InvalidParameterError(MedicalAIError):
+    """Некорректный лабораторный параметр (отрицательное значение, неизвестная единица)."""
     pass
 
 
@@ -19,11 +24,6 @@ class InvalidPatientDataError(MedicalAIError):
 
 class ParsingError(MedicalAIError):
     """Ошибка при разборе входного текста (некорректный формат)."""
-    pass
-
-
-class InvalidParameterError(MedicalAIError):
-    """Некорректный параметр (отрицательное значение, неизвестная единица и т.д.)."""
     pass
 
 
@@ -47,12 +47,27 @@ class GuidelineLoadError(ConfigurationError):
 # --- Ошибки выполнения анализа ---
 
 class InferenceError(MedicalAIError):
-    """Ошибка во время вывода (логика)."""
+    """Ошибка во время логического вывода."""
+    pass
+
+
+class ConflictResolutionError(MedicalAIError):
+    """Ошибка при разрешении конфликтов между находками."""
     pass
 
 
 class RepositoryError(MedicalAIError):
-    """Ошибка при работе с хранилищем."""
+    """Ошибка при работе с репозиторием (БД, файлы)."""
+    pass
+
+
+class VersionNotFoundError(RepositoryError):
+    """Запрошенная версия правила не найдена."""
+    pass
+
+
+class CacheError(MedicalAIError):
+    """Ошибка при работе с кэшем."""
     pass
 
 

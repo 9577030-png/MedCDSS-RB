@@ -15,6 +15,8 @@ from reportlab.lib.units import mm
 from reportlab.lib.utils import simpleSplit
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+
+# Доменные и инфраструктурные модули
 from domain.value_objects.gender import Gender
 from domain.entities.patient import PatientProfile
 from infrastructure.bootstrap.di_container import DIContainer
@@ -27,8 +29,11 @@ from config import settings
 from infrastructure.logging_config import setup_logging
 from dataclasses import asdict
 
-# Импорт нового интерпретатора (переименован в interpreter)
+# Импорт интерпретатора
 from application.services.interpreter import ClinicalInterpreter
+
+# Импорт моделей для админки (необязательно, но можно вынести)
+from domain.rule_version import RuleVersion, RulePriority
 
 setup_logging(level=settings.LOG_LEVEL)
 logger = logging.getLogger(__name__)
@@ -49,14 +54,15 @@ app = FastAPI(
     version=settings.APP_VERSION
 )
 
-# Глобальный контейнер (используется во всех эндпоинтах)
+# ---------- ГЛОБАЛЬНЫЙ КОНТЕЙНЕР (расширенный) ----------
 container = DIContainer(probability_threshold=0.3)
 
-# Глобальный интерпретатор (новый)
+# ---------- ГЛОБАЛЬНЫЙ ИНТЕРПРЕТАТОР ----------
 interpreter = ClinicalInterpreter(
     os.path.join(settings.KNOWLEDGE_DIR, "configs", "clinical_interpretations.yaml")
 )
 
+# ---------- АУТЕНТИФИКАЦИЯ ----------
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
@@ -86,7 +92,7 @@ def require_admin(current_user = Depends(get_current_user)):
         )
     return current_user
 
-# --- Модели ---
+# ---------- МОДЕЛИ ----------
 class PatientRequest(BaseModel):
     id: str
     gender: str
@@ -113,7 +119,6 @@ class ConfigFileRequest(BaseModel):
     path: str
     content: str
 
-# ===== Модель для структурированного ответа (без probability) =====
 class StructuredDiagnosisResponse(BaseModel):
     id: str
     label: str
@@ -127,8 +132,9 @@ class StructuredAnalysisResponse(BaseModel):
     recommendations_by_specialty: dict
     overall_risk_level: str
     conclusion: str
-    clinical_insights: Optional[Dict[str, Any]] = None  # может быть словарь с инсайтами
+    clinical_insights: Optional[Dict[str, Any]] = None
 
+# ---------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ----------
 def map_gender(gender_str: str) -> Gender:
     g = gender_str.lower()
     if g == "male":
@@ -138,8 +144,7 @@ def map_gender(gender_str: str) -> Gender:
     else:
         raise ValueError(f"Invalid gender: {gender_str}")
 
-# --- Эндпоинты ---
-
+# ---------- СУЩЕСТВУЮЩИЕ ЭНДПОИНТЫ ----------
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(form_data.username, form_data.password, container.user_repo)
@@ -255,15 +260,11 @@ async def analyze(
         logger.exception("Unexpected error")
         raise HTTPException(status_code=500, detail="Internal server error")
 
-# ================================================================
-# ГЛАВНЫЙ ЭНДПОИНТ – ИСПОЛЬЗУЕТ ГЛОБАЛЬНЫЙ КОНТЕЙНЕР
-# ================================================================
 @app.post("/analyze_structured", response_model=StructuredAnalysisResponse)
 async def analyze_structured(
     request: AnalysisRequest,
     current_user = Depends(get_current_user)
 ):
-    # Используем глобальный контейнер, созданный в начале файла
     try:
         gender = map_gender(request.patient.gender)
         patient = PatientProfile(
@@ -277,14 +278,14 @@ async def analyze_structured(
         # 1. Анализ
         result = container.pipeline.run_with_postprocessing(patient, request.raw_text)
 
-        # 2. Извлекаем все данные
+        # 2. Извлекаем данные
         raw_diagnoses = result.get("diagnoses", [])
         grouped_findings = result.get("grouped_findings", {})
         recommendations_by_specialty = result.get("recommendations_by_specialty", {})
         overall_risk_level = result.get("overall_risk_level", "Норма")
         conclusion = result.get("conclusion", "")
 
-        # 3. Преобразуем диагнозы в словари (без probability)
+        # 3. Преобразуем диагнозы
         diagnoses_list = []
         for d in raw_diagnoses:
             if isinstance(d, dict):
@@ -304,14 +305,14 @@ async def analyze_structured(
         # 4. Парсим параметры
         parameters = container.parser.parse(request.raw_text)
 
-        # 5. Генерируем инсайты (интерпретатор)
+        # 5. Генерируем инсайты
         insights = interpreter.interpret(
             diagnoses=diagnoses_list,
             parameters=parameters,
             patient=patient
         )
 
-        # 6. Преобразуем grouped_findings в словари (для ответа)
+        # 6. Преобразуем grouped_findings
         grouped_dict = {}
         for system, items in grouped_findings.items():
             grouped_dict[system] = []
@@ -339,7 +340,7 @@ async def analyze_structured(
                 else:
                     rec_dict[specialty].append(r)
 
-        # 8. Формируем список объектов StructuredDiagnosisResponse (без probability)
+        # 8. StructuredDiagnosisResponse
         structured_diagnoses = [
             StructuredDiagnosisResponse(
                 id=d["id"],
@@ -351,7 +352,6 @@ async def analyze_structured(
             for d in diagnoses_list
         ]
 
-        # 9. Собираем ответ
         response_data = StructuredAnalysisResponse(
             diagnoses=structured_diagnoses,
             grouped_findings=grouped_dict,
@@ -361,13 +361,16 @@ async def analyze_structured(
             clinical_insights=insights
         )
 
-        # Отладка (можно оставить или убрать)
+        # Отладка
         with open("debug_structured.txt", "w", encoding="utf-8") as f:
             import json
             json.dump(response_data.dict(), f, ensure_ascii=False, indent=2, default=str)
 
         return response_data
 
+    except MedicalAIError as e:
+        logger.error(f"Domain error: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         import traceback
         with open("error_trace.txt", "w", encoding="utf-8") as f:
@@ -377,9 +380,18 @@ async def analyze_structured(
 
 @app.post("/reload_config")
 async def reload_config(admin = Depends(require_admin)):
+    """
+    Перезагружает конфигурацию (старый способ) и создаёт новые версии правил из YAML (без активации).
+    """
     try:
         container.reload_configuration()
-        return {"status": "ok", "message": "Configuration reloaded successfully"}
+        # Дополнительно загружаем новые версии из YAML (но не активируем)
+        new_versions = container.version_manager.hot_reload(created_by="admin")
+        return {
+            "status": "ok",
+            "message": "Configuration reloaded successfully",
+            "new_versions_created": len(new_versions)
+        }
     except Exception as e:
         logger.error(f"Failed to reload configuration: {e}")
         raise HTTPException(status_code=500, detail=f"Reload failed: {str(e)}")
@@ -390,7 +402,6 @@ async def health():
 
 @app.post("/debug_pipeline")
 async def debug_pipeline(request: AnalysisRequest):
-    # Этот эндпоинт использует глобальный контейнер
     try:
         gender = map_gender(request.patient.gender)
         patient = PatientProfile(
@@ -547,3 +558,96 @@ async def export_pdf(
     except Exception as e:
         logger.exception("Unexpected error")
         raise HTTPException(status_code=500, detail="Internal server error")
+
+# ---------- НОВЫЕ ЭНДПОИНТЫ ДЛЯ УПРАВЛЕНИЯ ВЕРСИЯМИ ----------
+class ActivateVersionRequest(BaseModel):
+    rule_id: str
+    version_id: int
+
+class ReloadRulesResponse(BaseModel):
+    loaded: int
+    versions: List[Dict[str, Any]]
+
+@app.post("/admin/rules/reload", response_model=ReloadRulesResponse)
+async def reload_rules(admin = Depends(require_admin)):
+    """
+    Перезагружает все правила из YAML-файлов, создавая новые версии (неактивные).
+    """
+    try:
+        new_versions = container.version_manager.hot_reload(created_by="admin")
+        return ReloadRulesResponse(
+            loaded=len(new_versions),
+            versions=[
+                {
+                    "rule_id": v.rule_id,
+                    "version_id": v.version_id,
+                    "is_active": v.is_active,
+                    "created_at": v.created_at.isoformat()
+                }
+                for v in new_versions
+            ]
+        )
+    except Exception as e:
+        logger.error(f"Failed to reload rules: {e}")
+        raise HTTPException(status_code=500, detail=f"Reload failed: {str(e)}")
+
+@app.post("/admin/rules/activate")
+async def activate_version(request: ActivateVersionRequest, admin = Depends(require_admin)):
+    """
+    Активирует указанную версию правила (деактивирует все остальные версии этого правила).
+    """
+    try:
+        container.version_manager.activate_version(request.rule_id, request.version_id)
+        return {"status": "ok", "rule_id": request.rule_id, "version_id": request.version_id}
+    except Exception as e:
+        logger.error(f"Failed to activate version: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/admin/rules/history/{rule_id}")
+async def get_rule_history(rule_id: str, admin = Depends(require_admin)):
+    """
+    Возвращает историю всех версий правила.
+    """
+    try:
+        history = container.version_manager.get_history(rule_id)
+        if not history:
+            raise HTTPException(status_code=404, detail="Rule not found")
+        return [
+            {
+                "version_id": v.version_id,
+                "created_at": v.created_at.isoformat(),
+                "is_active": v.is_active,
+                "comment": v.comment,
+                "created_by": v.created_by
+            }
+            for v in history
+        ]
+    except Exception as e:
+        logger.error(f"Failed to get history: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/admin/rules/active")
+async def get_active_rules(admin = Depends(require_admin)):
+    """
+    Возвращает список всех активных версий правил.
+    """
+    try:
+        active = container.rule_repo.get_active_versions()
+        return [
+            {
+                "rule_id": r.rule_id,
+                "version_id": r.version_id,
+                "name": r.name,
+                "priority": r.priority.name,
+                "created_at": r.created_at.isoformat()
+            }
+            for r in active
+        ]
+    except Exception as e:
+        logger.error(f"Failed to get active rules: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ---------- ЗАПУСК ----------
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

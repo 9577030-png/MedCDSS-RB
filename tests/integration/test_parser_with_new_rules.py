@@ -25,5 +25,6 @@ def test_parser_handles_t4():
     text = "T4 10 pmol/L"
     params = parser.parse(text)
     assert len(params) == 1
-    assert params[0].name == "t4"
+    # Должно распарситься как free_t4 со значением 10.0
+    assert params[0].name == "free_t4"
     assert params[0].value == 10.0

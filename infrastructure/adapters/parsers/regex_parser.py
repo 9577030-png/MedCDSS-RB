@@ -11,12 +11,15 @@ logger = logging.getLogger(__name__)
 class RegexParser(ParserInterface):
     def __init__(self):
         self.normalizer = ParameterNormalizer()
-        # Разрешаем только буквы (латиница/кириллица), пробелы и подчёркивания в имени.
-        # Числа не допускаются в имени – они будут частью значения.
-        self.pattern = re.compile(
+        # Паттерн для имени с возможными цифрами в конце (без пробелов) – например, T4, B12
+        self.pattern_with_digits = re.compile(
+            r'(?P<name>[A-Za-zА-Яа-я_]+[0-9]+)\s*(?P<value>-?[\d.]+)\s*(?P<unit>[A-Za-z/%]+)?'
+        )
+        # Паттерн для имени с пробелами и без цифр – например, гликированный гемоглобин
+        self.pattern_with_spaces = re.compile(
             r'(?P<name>[A-Za-zА-Яа-я_ ]+)\s*(?P<value>-?[\d.]+)\s*(?P<unit>[A-Za-z/%]+)?'
         )
-        logger.info("RegexParser initialized")
+        logger.info("RegexParser initialized with dual patterns")
 
     def parse(self, raw_text: str) -> List[Parameter]:
         logger.info("Parsing raw text")
@@ -29,7 +32,11 @@ class RegexParser(ParserInterface):
         logger.debug(f"Processing {len(lines)} lines")
 
         for line in lines:
-            match = self.pattern.search(line)
+            # Сначала пробуем паттерн с цифрами
+            match = self.pattern_with_digits.search(line)
+            if not match:
+                # Если не сработал, пробуем паттерн с пробелами
+                match = self.pattern_with_spaces.search(line)
             if not match:
                 logger.warning(f"Could not parse line: {line}")
                 continue

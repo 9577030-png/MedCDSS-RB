@@ -13,7 +13,7 @@ class InferenceEngine:
     def __init__(self, rule_repo: RuleRepository, threshold_provider, guideline_provider):
         self.rule_repo = rule_repo
         self.threshold_provider = threshold_provider
-        self.guideline_provider = guideline_provider  # для обратной совместимости
+        self.guideline_provider = guideline_provider  # для обратной совместимости (не используется)
         self.conflict_resolver = ConflictResolver()
 
     def _evaluate_condition(self, condition: Dict[str, Any], param_dict: Dict[str, float], patient_gender) -> bool:
@@ -63,7 +63,7 @@ class InferenceEngine:
                         }
                         risk = risk_map.get(cond['risk'].upper(), risk)
                     finding = ClinicalFinding(
-                        id=rule.rule_id,
+                        id=cond.get('id', rule.rule_id),  # <-- ИСПРАВЛЕНО: используем ID из условия
                         title=cond.get('label', rule.name),
                         probability=prob,
                         risk=risk,

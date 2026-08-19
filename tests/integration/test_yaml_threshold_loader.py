@@ -4,35 +4,36 @@ from domain.entities.threshold import Threshold
 from domain.value_objects.unit import Unit
 from domain.value_objects.risk_level import RiskLevel
 
-
 @pytest.mark.integration
 def test_load_global_thresholds():
     loader = YamlThresholdLoader()
     thresholds = loader.get_global_thresholds()
 
-    # Проверяем наличие ключей из вашего файла
-    assert "Hb" in thresholds
-    assert "MCV" in thresholds
-    assert "Ferritin" in thresholds
+    # Теперь используется каноническое имя 'hemoglobin'
+    assert "hemoglobin" in thresholds
+    assert "mcv" in thresholds
+    assert "ferritin" in thresholds
 
-    hb = thresholds["Hb"]
+    hb = thresholds["hemoglobin"]
     assert isinstance(hb, Threshold)
-    assert hb.parameter_name == "Hb"
-    assert hb.low == 120
-    assert hb.high == 160
+    assert hb.parameter_name == "hemoglobin"
+    # В clinical_thresholds.yaml для мужчин low=130, high=170
+    assert hb.low == 130
+    assert hb.high == 170
     assert hb.unit == Unit("g/L")
     assert hb.risk_level == RiskLevel.HIGH
 
-    mcv = thresholds["MCV"]
+    mcv = thresholds["mcv"]
     assert mcv.low == 80
     assert mcv.high == 100
     assert mcv.unit == Unit("fL")
 
-    ferritin = thresholds["Ferritin"]
+    ferritin = thresholds["ferritin"]
     assert ferritin.low == 30
-    assert ferritin.high == 300
-    assert ferritin.unit == Unit("ug/L")
-
+    # Исправлено: в clinical_thresholds.yaml для ферритина high=400 (а не 300)
+    assert ferritin.high == 400
+    assert ferritin.unit == Unit("ng/mL")
+    assert ferritin.risk_level == RiskLevel.HIGH
 
 @pytest.mark.integration
 def test_threshold_loader_returns_dict():

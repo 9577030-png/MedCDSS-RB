@@ -563,7 +563,10 @@
     - Free_t4
     - свободный тироксин
     - Свободный тироксин
+    - T4
+    - t4
     - free T4
+    - T   # <-- добавлено
   fructosamine:
     - fructosamine
     - Fructosamine

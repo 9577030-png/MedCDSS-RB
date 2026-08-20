@@ -111,12 +111,32 @@ class PostProcessor:
 
     def _apply_exclusions(self, findings: List[ClinicalFinding]) -> List[ClinicalFinding]:
         ids = {f.id for f in findings}
+
+        def _matches(base_id: str) -> bool:
+            # id находки бывает либо самим base_id (файл с одним параметром),
+            # либо "{base_id}_{parameter}" (файл с несколькими параметрами,
+            # см. domain/rule_version.py::_convert_old_format). exclusions/priority
+            # в clinical_logic.yaml всегда описаны в терминах base_id, поэтому
+            # проверяем оба варианта, а не только точное совпадение.
+            if base_id in ids:
+                return True
+            prefix = base_id + "_"
+            return any(fid.startswith(prefix) for fid in ids)
+
+        def _remove(base_id: str):
+            if base_id in ids:
+                to_remove.add(base_id)
+            prefix = base_id + "_"
+            for fid in ids:
+                if fid.startswith(prefix):
+                    to_remove.add(fid)
+
         to_remove = set()
         for rule in self.exclusions:
             if_condition = rule.get("if")
-            if if_condition in ids:
+            if _matches(if_condition):
                 for excluded in rule.get("then", []):
-                    to_remove.add(excluded)
+                    _remove(excluded)
         return [f for f in findings if f.id not in to_remove]
 
     def _build_grouped(self, findings: List[ClinicalFinding]) -> Dict[str, List[Dict]]:

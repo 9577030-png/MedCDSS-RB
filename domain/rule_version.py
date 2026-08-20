@@ -41,7 +41,7 @@ class RuleVersion:
             conditions = yaml_data["conditions"]
         else:
             # Конвертируем старый формат
-            conditions = cls._convert_old_format(yaml_data)
+            conditions = cls._convert_old_format(yaml_data, rule_id)
 
         # Извлекаем actions (рекомендации) из секции recommendations
         actions = []
@@ -66,18 +66,32 @@ class RuleVersion:
         )
 
     @staticmethod
-    def _convert_old_format(yaml_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _convert_old_format(yaml_data: Dict[str, Any], rule_id: str) -> List[Dict[str, Any]]:
         """
         Преобразует старый формат (thresholds/scoring) в список conditions.
         Поддерживает:
           - thresholds: { param: {min: X, max: Y} }
           - scoring: { param: weight }
+
+        ВАЖНО про id: каждому condition нужен СВОЙ уникальный id, иначе
+        InferenceEngine.infer() (cond.get('id', rule.rule_id)) присвоит всем
+        условиям одного файла один и тот же id -> findings схлопнутся в
+        неразличимые дубли в отчёте (см. разбор бага с acute_coronary_syndrome).
+
+        - top_id берём из yaml_data['id'] (чистое имя, например "acute_kidney_injury"),
+          а не из rule_id (это относительный путь вида "nephrology/acute_kidney_injury") -
+          иначе рвётся связь с diagnosis_labels/clinical_interpretations.yaml.
+        - если параметр в файле один - id условия = top_id (совпадает с диагнозом целиком).
+        - если параметров несколько - id условия = "{top_id}_{param}" (уникально для каждого).
         """
+        top_id = yaml_data.get("id", rule_id)
         conditions = []
         # Если есть thresholds
         if "thresholds" in yaml_data:
+            is_single = len(yaml_data["thresholds"]) == 1
             for param, spec in yaml_data["thresholds"].items():
-                cond = {"parameter": param}
+                cond_id = top_id if is_single else f"{top_id}_{param}"
+                cond = {"id": cond_id, "parameter": param}
                 if "min" in spec:
                     cond["min"] = spec["min"]
                 if "max" in spec:
@@ -93,8 +107,11 @@ class RuleVersion:
                 conditions.append(cond)
         # Если есть scoring_rules (старый формат)
         elif "scoring" in yaml_data:
+            is_single = len(yaml_data["scoring"]) == 1
             for param, weight in yaml_data["scoring"].items():
+                cond_id = top_id if is_single else f"{top_id}_{param}"
                 cond = {
+                    "id": cond_id,
                     "parameter": param,
                     "scoring": weight,
                     "risk": "MEDIUM",

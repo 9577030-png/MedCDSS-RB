@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import sessionmaker
 from typing import List, Optional
 from domain.rule_version import RuleVersion
@@ -8,8 +8,18 @@ from infrastructure.repositories.sqlalchemy_models import Base, RuleVersionModel
 class SQLAlchemyRuleRepository(RuleRepository):
     def __init__(self, db_url: str):
         self.engine = create_engine(db_url)
-        Base.metadata.create_all(self.engine)  # создаём таблицы, если их нет
+        Base.metadata.create_all(self.engine)
+        self._ensure_tier_column()
         self.Session = sessionmaker(bind=self.engine)
+
+    def _ensure_tier_column(self):
+        with self.engine.connect() as conn:
+            inspector = inspect(self.engine)
+            if "rule_versions" in inspector.get_table_names():
+                columns = [col["name"] for col in inspector.get_columns("rule_versions")]
+                if "tier" not in columns:
+                    conn.execute("ALTER TABLE rule_versions ADD COLUMN tier VARCHAR(20) DEFAULT 'basic'")
+                    conn.commit()
 
     def _to_domain(self, model: RuleVersionModel) -> RuleVersion:
         return RuleVersion(
@@ -24,7 +34,8 @@ class SQLAlchemyRuleRepository(RuleRepository):
             created_at=model.created_at,
             created_by=model.created_by,
             is_active=model.is_active,
-            comment=model.comment
+            comment=model.comment,
+            tier=model.tier
         )
 
     def save(self, rule_version: RuleVersion) -> RuleVersion:
@@ -39,7 +50,8 @@ class SQLAlchemyRuleRepository(RuleRepository):
                 supports=rule_version.supports,
                 created_by=rule_version.created_by,
                 is_active=rule_version.is_active,
-                comment=rule_version.comment
+                comment=rule_version.comment,
+                tier=rule_version.tier
             )
             session.add(model)
             session.commit()
@@ -65,9 +77,7 @@ class SQLAlchemyRuleRepository(RuleRepository):
 
     def activate_version(self, rule_id: str, version_id: int) -> None:
         with self.Session() as session:
-            # Деактивировать все версии этого правила
             session.query(RuleVersionModel).filter_by(rule_id=rule_id).update({"is_active": False})
-            # Активировать указанную
             session.query(RuleVersionModel).filter_by(version_id=version_id).update({"is_active": True})
             session.commit()
 

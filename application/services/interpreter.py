@@ -41,13 +41,18 @@ class ClinicalInterpreter:
         result = {}
         for diag in diagnoses:
             diag_id = diag.get('id')
-            if not diag_id or diag_id not in self.interpretations:
-                print(f"⚠️ Диагноз {diag_id} не найден в интерпретациях")
+            if not diag_id:
+                print(f"⚠️ Диагноз без ID: {diag}")
                 continue
-            diag_config = self.interpretations[diag_id]
+            # Извлекаем базовое имя (после последнего "/")
+            base_name = diag_id.split('/')[-1]
+            if base_name not in self.interpretations:
+                print(f"⚠️ Диагноз {diag_id} (базовое имя {base_name}) не найден в интерпретациях")
+                continue
+            diag_config = self.interpretations[base_name]
             insights = self._build_insights(diag_config, diag, param_dict, patient_info)
             result[diag_id] = insights
-            print(f"✅ Сгенерированы инсайты для {diag_id}")
+            print(f"✅ Сгенерированы инсайты для {diag_id} (базовое имя {base_name})")
 
         print(f"📦 Итого инсайтов: {len(result)}")
         return result
@@ -163,13 +168,11 @@ class ClinicalInterpreter:
         if not condition:
             return True
 
-        # Сбор доступных переменных (только числа, строки, булевы)
         allowed_vars = {}
         for k, v in {**param_dict, **patient_info}.items():
             if isinstance(v, (int, float, str, bool)):
                 allowed_vars[k] = v
 
-        # Разрешённые операторы
         operators = {
             ast.Add: operator.add,
             ast.Sub: operator.sub,
@@ -229,7 +232,6 @@ class ClinicalInterpreter:
                     raise ValueError(f"Unsupported unary operator: {op_type}")
                 return operators[op_type](operand)
             elif isinstance(node, ast.Attribute):
-                # Запрещаем доступ к атрибутам (безопасность)
                 raise ValueError("Attribute access not allowed")
             else:
                 raise ValueError(f"Unsupported AST node: {type(node).__name__}")

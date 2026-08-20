@@ -18,7 +18,9 @@ class VersionManager:
     def load_from_yaml(self, rule_id: str, yaml_path: Path, created_by: str = "system") -> RuleVersion:
         with open(yaml_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
-        tier = RuleTier.ENRICHED if self.interpretation_mapper.is_enriched(rule_id) else RuleTier.BASIC
+        # Определяем tier по имени файла (без расширения)
+        base_name = yaml_path.stem
+        tier = RuleTier.ENRICHED if self.interpretation_mapper.is_enriched(base_name) else RuleTier.BASIC
         version = RuleVersion.from_yaml(rule_id, data, created_by, tier=tier)
         return self.rule_repo.save(version)
 
@@ -34,6 +36,7 @@ class VersionManager:
     def hot_reload(self, created_by: str = "system") -> List[RuleVersion]:
         new_versions = []
         for yaml_file in self.config_dir.rglob("*.yaml"):
+            # Используем относительный путь как rule_id для сохранения в БД
             rule_id = str(yaml_file.relative_to(self.config_dir)).replace("\\", "/").replace(".yaml", "")
             try:
                 version = self.load_from_yaml(rule_id, yaml_file, created_by)

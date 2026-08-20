@@ -1,6 +1,10 @@
 id: congenital_adrenal_hyperplasia
-thresholds:
-  17_oh_progesterone:
-    min: 6
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: congenital_adrenal_hyperplasia
+  label: Congenital adrenal hyperplasia
+  parameter: 17_oh_progesterone
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 6

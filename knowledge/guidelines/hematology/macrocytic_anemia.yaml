@@ -1,6 +1,10 @@
 id: macrocytic_anemia
-thresholds:
-  mcv:
-    min: 100
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: macrocytic_anemia
+  label: Macrocytic anemia
+  parameter: mcv
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 100

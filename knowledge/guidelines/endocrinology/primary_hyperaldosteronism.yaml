@@ -1,10 +1,26 @@
 id: primary_hyperaldosteronism
-thresholds:
-  potassium:
-    max: 3.5
-  aldosterone:
-    min: 20
-  renin:
-    max: 1.0
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: primary_hyperaldosteronism_potassium
+  label: Potassium — отклонение от нормы
+  parameter: potassium
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 3.5
+- id: primary_hyperaldosteronism_aldosterone
+  label: Aldosterone — отклонение от нормы
+  parameter: aldosterone
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 20
+- id: primary_hyperaldosteronism_renin
+  label: Renin — отклонение от нормы
+  parameter: renin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 1.0

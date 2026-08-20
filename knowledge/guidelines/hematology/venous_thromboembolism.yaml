@@ -1,6 +1,10 @@
 id: venous_thromboembolism
-thresholds:
-  d_dimer:
-    min: 0.5
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: venous_thromboembolism
+  label: Venous thromboembolism
+  parameter: d_dimer
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 0.5

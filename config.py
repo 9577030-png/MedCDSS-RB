@@ -1,4 +1,5 @@
 import os
+import secrets
 from typing import Optional
 from pydantic_settings import BaseSettings
 
@@ -22,7 +23,8 @@ class Settings(BaseSettings):
 
     REDIS_URL: Optional[str] = None
 
-    SECRET_KEY: str = "your-secret-key-change-me"
+    # Генерируем секретный ключ, если он не задан через переменные окружения
+    SECRET_KEY: str = os.getenv("SECRET_KEY", secrets.token_urlsafe(32))
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
@@ -30,4 +32,4 @@ class Settings(BaseSettings):
         env_file = ".env"
         case_sensitive = True
 
-settings = Settings()   # <-- добавить эту строку
+settings = Settings()

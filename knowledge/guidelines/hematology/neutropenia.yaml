@@ -1,6 +1,10 @@
 id: neutropenia
-thresholds:
-  neutrophils_percent:
-    max: 40
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: neutropenia
+  label: Neutropenia
+  parameter: neutrophils_percent
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 40

@@ -1,12 +1,29 @@
 id: anemia_chronic_disease
-condition: all
-thresholds:
-  hemoglobin:
-    max: 120          # для женщин, для мужчин можно 130, но для простоты оставим 120 (можно сделать gender-specific позже)
-  ferritin:
-    min: 100
-  crp:                # опционально, но желательно
-    min: 5
-recommendations:
-  - "Консультация профильного специалиста"
-  - "Определение причины хронического воспаления"
+conditions:
+- id: anemia_chronic_disease_hemoglobin
+  label: Hemoglobin — отклонение от нормы
+  parameter: hemoglobin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  - Определение причины хронического воспаления
+  max: 120
+- id: anemia_chronic_disease_ferritin
+  label: Ferritin — отклонение от нормы
+  parameter: ferritin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  - Определение причины хронического воспаления
+  min: 100
+- id: anemia_chronic_disease_crp
+  label: Crp — отклонение от нормы
+  parameter: crp
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  - Определение причины хронического воспаления
+  min: 5

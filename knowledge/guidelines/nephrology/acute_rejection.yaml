@@ -1,10 +1,26 @@
 id: acute_rejection
-thresholds:
-  creatinine:
-    min: 200
-  urine_protein:
-    min: 300
-  egfr:
-    max: 30
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: acute_rejection_creatinine
+  label: Creatinine — отклонение от нормы
+  parameter: creatinine
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 200
+- id: acute_rejection_urine_protein
+  label: Urine protein — отклонение от нормы
+  parameter: urine_protein
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 300
+- id: acute_rejection_egfr
+  label: Egfr — отклонение от нормы
+  parameter: egfr
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 30

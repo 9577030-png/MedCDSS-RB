@@ -1,10 +1,26 @@
 id: primary_hypogonadism_female
-thresholds:
-  estradiol:
-    max: 40
-  fsh:
-    min: 12.4
-  lh:
-    min: 8.6
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: primary_hypogonadism_female_estradiol
+  label: Estradiol — отклонение от нормы
+  parameter: estradiol
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 40
+- id: primary_hypogonadism_female_fsh
+  label: Fsh — отклонение от нормы
+  parameter: fsh
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 12.4
+- id: primary_hypogonadism_female_lh
+  label: Lh — отклонение от нормы
+  parameter: lh
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 8.6

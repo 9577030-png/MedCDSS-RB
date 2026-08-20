@@ -1,8 +1,18 @@
 id: hemolytic_anemia
-thresholds:
-  ldh:
-    min: 250
-  indirect_bilirubin:
-    min: 17
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hemolytic_anemia_ldh
+  label: Ldh — отклонение от нормы
+  parameter: ldh
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 250
+- id: hemolytic_anemia_indirect_bilirubin
+  label: Indirect bilirubin — отклонение от нормы
+  parameter: indirect_bilirubin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 17

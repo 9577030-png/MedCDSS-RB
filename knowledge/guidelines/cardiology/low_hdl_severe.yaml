@@ -1,6 +1,10 @@
 id: low_hdl_severe
-thresholds:
-  hdl_cholesterol:
-    max: 0.8
-recommendations:
-  - "Консультация профильного специалиста"
+conditions:
+- id: low_hdl_severe
+  label: Low hdl severe
+  parameter: hdl_cholesterol
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 0.8

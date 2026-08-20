@@ -1,6 +1,10 @@
 id: hypocalcemia_severe
-thresholds:
-  calcium_total:
-    max: 1.5
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hypocalcemia_severe
+  label: Hypocalcemia severe
+  parameter: calcium_total
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 1.5

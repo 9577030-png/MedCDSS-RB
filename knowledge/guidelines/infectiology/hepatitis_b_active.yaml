@@ -1,10 +1,26 @@
 id: hepatitis_b_active
-thresholds:
-  hbsag:
-    min: 1
-  hbv_dna:
-    min: 2000
-  alt:
-    min: 40
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hepatitis_b_active_hbsag
+  label: Hbsag — отклонение от нормы
+  parameter: hbsag
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 1
+- id: hepatitis_b_active_hbv_dna
+  label: Hbv dna — отклонение от нормы
+  parameter: hbv_dna
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 2000
+- id: hepatitis_b_active_alt
+  label: Alt — отклонение от нормы
+  parameter: alt
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 40

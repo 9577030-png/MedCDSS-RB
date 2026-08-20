@@ -1,6 +1,10 @@
 id: hypercalcemia_severe
-thresholds:
-  calcium_total:
-    min: 3.5
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hypercalcemia_severe
+  label: Hypercalcemia severe
+  parameter: calcium_total
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 3.5

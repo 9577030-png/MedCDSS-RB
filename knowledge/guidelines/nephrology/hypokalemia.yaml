@@ -1,6 +1,10 @@
 id: hypokalemia
-thresholds:
-  potassium:
-    max: 3.5
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hypokalemia
+  label: Гипокалиемия
+  parameter: potassium
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 3.5

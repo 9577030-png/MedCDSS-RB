@@ -1,6 +1,10 @@
 id: hyponatremia_severe
-thresholds:
-  sodium:
-    max: 120
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hyponatremia_severe
+  label: Hyponatremia severe
+  parameter: sodium
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 120

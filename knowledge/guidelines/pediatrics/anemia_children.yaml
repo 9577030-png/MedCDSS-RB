@@ -1,6 +1,10 @@
 id: anemia_children
-thresholds:
-  hemoglobin:
-    max: 110
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: anemia_children
+  label: Anemia children
+  parameter: hemoglobin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 110

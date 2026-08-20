@@ -1,6 +1,10 @@
 id: nt_probnp_elevated
-thresholds:
-  nt_probnp:
-    min: 125
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: nt_probnp_elevated
+  label: Nt probnp elevated
+  parameter: nt_probnp
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 125

@@ -1,6 +1,10 @@
 id: primary_obesity
-thresholds:
-  bmi:
-    min: 30
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: primary_obesity
+  label: Primary obesity
+  parameter: bmi
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 30

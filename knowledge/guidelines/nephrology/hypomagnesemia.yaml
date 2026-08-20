@@ -1,6 +1,10 @@
 id: hypomagnesemia
-thresholds:
-  magnesium:
-    max: 0.66
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hypomagnesemia
+  label: Hypomagnesemia
+  parameter: magnesium
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 0.66

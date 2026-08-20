@@ -1,6 +1,10 @@
 id: myocardial_infarction_severe
-thresholds:
-  troponin_i:
-    min: 200
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: myocardial_infarction_severe
+  label: Myocardial infarction severe
+  parameter: troponin_i
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 200

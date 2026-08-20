@@ -16,8 +16,8 @@ def test_parser_handles_invalid_lines_gracefully():
     params = parser.parse(text)
     assert len(params) == 2
     names = [p.name for p in params]
-    # Теперь каноническое имя 'hb', а не 'hemoglobin'
-    assert "hb" in names
+    # Теперь каноническое имя 'hemoglobin' (а не 'hb')
+    assert "hemoglobin" in names
     assert "ferritin" in names
 
 def test_parser_handles_negative_values():

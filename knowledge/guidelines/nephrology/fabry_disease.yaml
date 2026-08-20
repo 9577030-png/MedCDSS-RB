@@ -1,8 +1,18 @@
 id: fabry_disease
-thresholds:
-  urine_protein:
-    min: 150
-  egfr:
-    max: 60
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: fabry_disease_urine_protein
+  label: Urine protein — отклонение от нормы
+  parameter: urine_protein
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 150
+- id: fabry_disease_egfr
+  label: Egfr — отклонение от нормы
+  parameter: egfr
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 60

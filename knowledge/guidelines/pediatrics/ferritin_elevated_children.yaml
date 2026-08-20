@@ -1,6 +1,10 @@
 id: ferritin_elevated_children
-thresholds:
-  ferritin:
-    min: 400
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: ferritin_elevated_children
+  label: Ferritin elevated children
+  parameter: ferritin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 400

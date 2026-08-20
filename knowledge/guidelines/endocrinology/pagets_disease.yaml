@@ -1,6 +1,10 @@
 id: pagets_disease
-thresholds:
-  alkaline_phosphatase:
-    min: 200
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: pagets_disease
+  label: Pagets disease
+  parameter: alkaline_phosphatase
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 200

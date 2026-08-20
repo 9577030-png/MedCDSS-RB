@@ -1,6 +1,10 @@
 id: isolated_hypertriglyceridemia
-thresholds:
-  triglycerides:
-    min: 5.6
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: isolated_hypertriglyceridemia
+  label: Isolated hypertriglyceridemia
+  parameter: triglycerides
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 5.6

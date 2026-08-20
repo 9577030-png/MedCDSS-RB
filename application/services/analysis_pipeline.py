@@ -3,6 +3,8 @@ from typing import List, Dict, Any, Optional
 from domain.entities.patient import PatientProfile
 from domain.entities.parameter import Parameter
 from domain.entities.report import AnalysisReport
+from domain.entities.finding import ClinicalFinding          # <-- добавлено
+from domain.entities.recommendation import Recommendation   # <-- добавлено
 from application.ports.parser_interface import ParserInterface
 from application.ports.history_repository import HistoryRepository
 from application.ports.renderer_interface import RendererInterface

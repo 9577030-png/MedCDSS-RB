@@ -1,10 +1,26 @@
 id: insulinoma
-thresholds:
-  glucose:
-    max: 3.9
-  insulin:
-    min: 25
-  c_peptide:
-    min: 3.5
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: insulinoma_glucose
+  label: Glucose — отклонение от нормы
+  parameter: glucose
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 3.9
+- id: insulinoma_insulin
+  label: Insulin — отклонение от нормы
+  parameter: insulin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 25
+- id: insulinoma_c_peptide
+  label: C peptide — отклонение от нормы
+  parameter: c_peptide
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 3.5

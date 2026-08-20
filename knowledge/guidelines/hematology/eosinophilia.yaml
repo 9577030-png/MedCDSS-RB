@@ -1,6 +1,10 @@
 id: eosinophilia
-thresholds:
-  eosinophils_percent:
-    min: 5
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: eosinophilia
+  label: Eosinophilia
+  parameter: eosinophils_percent
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 5

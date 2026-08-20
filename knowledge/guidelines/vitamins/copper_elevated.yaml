@@ -1,6 +1,10 @@
 id: copper_elevated
-thresholds:
-  copper:
-    min: 24
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: copper_elevated
+  label: Copper elevated
+  parameter: copper
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 24

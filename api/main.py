@@ -32,7 +32,7 @@ from dataclasses import asdict
 # Импорт интерпретатора
 from application.services.interpreter import ClinicalInterpreter
 
-# Импорт моделей для админки (необязательно, но можно вынести)
+# Импорт моделей для админки
 from domain.rule_version import RuleVersion, RulePriority
 
 setup_logging(level=settings.LOG_LEVEL)
@@ -48,6 +48,7 @@ except Exception as e:
     logger.warning(f"Не удалось загрузить шрифт DejaVuSans: {e}. Будет использован Helvetica.")
     FONT_NAME = 'Helvetica'
 
+# ---------- СОЗДАЁМ ПРИЛОЖЕНИЕ ----------
 app = FastAPI(
     title=settings.APP_NAME,
     description="Система интерпретации лабораторных данных",
@@ -56,6 +57,11 @@ app = FastAPI(
 
 # ---------- ГЛОБАЛЬНЫЙ КОНТЕЙНЕР (расширенный) ----------
 container = DIContainer(probability_threshold=0.3)
+
+# ---------- ПОДКЛЮЧАЕМ РОУТЕР АДМИНИСТРИРОВАНИЯ (после создания app и container) ----------
+from api.routes import admin
+admin.set_version_manager(container.version_manager)   # инициализируем глобальную переменную в admin.py
+app.include_router(admin.router)
 
 # ---------- ГЛОБАЛЬНЫЙ ИНТЕРПРЕТАТОР ----------
 interpreter = ClinicalInterpreter(
@@ -275,17 +281,14 @@ async def analyze_structured(
             medications=request.patient.medications or []
         )
 
-        # 1. Анализ
         result = container.pipeline.run_with_postprocessing(patient, request.raw_text)
 
-        # 2. Извлекаем данные
         raw_diagnoses = result.get("diagnoses", [])
         grouped_findings = result.get("grouped_findings", {})
         recommendations_by_specialty = result.get("recommendations_by_specialty", {})
         overall_risk_level = result.get("overall_risk_level", "Норма")
         conclusion = result.get("conclusion", "")
 
-        # 3. Преобразуем диагнозы
         diagnoses_list = []
         for d in raw_diagnoses:
             if isinstance(d, dict):
@@ -302,17 +305,14 @@ async def analyze_structured(
                     "description": getattr(d, "description", None)
                 })
 
-        # 4. Парсим параметры
         parameters = container.parser.parse(request.raw_text)
 
-        # 5. Генерируем инсайты
         insights = interpreter.interpret(
             diagnoses=diagnoses_list,
             parameters=parameters,
             patient=patient
         )
 
-        # 6. Преобразуем grouped_findings
         grouped_dict = {}
         for system, items in grouped_findings.items():
             grouped_dict[system] = []
@@ -327,7 +327,6 @@ async def analyze_structured(
                 else:
                     grouped_dict[system].append(item)
 
-        # 7. Преобразуем рекомендации
         rec_dict = {}
         for specialty, recs in recommendations_by_specialty.items():
             rec_dict[specialty] = []
@@ -340,7 +339,6 @@ async def analyze_structured(
                 else:
                     rec_dict[specialty].append(r)
 
-        # 8. StructuredDiagnosisResponse
         structured_diagnoses = [
             StructuredDiagnosisResponse(
                 id=d["id"],
@@ -361,7 +359,6 @@ async def analyze_structured(
             clinical_insights=insights
         )
 
-        # Отладка
         with open("debug_structured.txt", "w", encoding="utf-8") as f:
             import json
             json.dump(response_data.dict(), f, ensure_ascii=False, indent=2, default=str)
@@ -380,12 +377,8 @@ async def analyze_structured(
 
 @app.post("/reload_config")
 async def reload_config(admin = Depends(require_admin)):
-    """
-    Перезагружает конфигурацию (старый способ) и создаёт новые версии правил из YAML (без активации).
-    """
     try:
         container.reload_configuration()
-        # Дополнительно загружаем новые версии из YAML (но не активируем)
         new_versions = container.version_manager.hot_reload(created_by="admin")
         return {
             "status": "ok",
@@ -570,9 +563,6 @@ class ReloadRulesResponse(BaseModel):
 
 @app.post("/admin/rules/reload", response_model=ReloadRulesResponse)
 async def reload_rules(admin = Depends(require_admin)):
-    """
-    Перезагружает все правила из YAML-файлов, создавая новые версии (неактивные).
-    """
     try:
         new_versions = container.version_manager.hot_reload(created_by="admin")
         return ReloadRulesResponse(
@@ -593,9 +583,6 @@ async def reload_rules(admin = Depends(require_admin)):
 
 @app.post("/admin/rules/activate")
 async def activate_version(request: ActivateVersionRequest, admin = Depends(require_admin)):
-    """
-    Активирует указанную версию правила (деактивирует все остальные версии этого правила).
-    """
     try:
         container.version_manager.activate_version(request.rule_id, request.version_id)
         return {"status": "ok", "rule_id": request.rule_id, "version_id": request.version_id}
@@ -605,9 +592,6 @@ async def activate_version(request: ActivateVersionRequest, admin = Depends(requ
 
 @app.get("/admin/rules/history/{rule_id}")
 async def get_rule_history(rule_id: str, admin = Depends(require_admin)):
-    """
-    Возвращает историю всех версий правила.
-    """
     try:
         history = container.version_manager.get_history(rule_id)
         if not history:
@@ -628,9 +612,6 @@ async def get_rule_history(rule_id: str, admin = Depends(require_admin)):
 
 @app.get("/admin/rules/active")
 async def get_active_rules(admin = Depends(require_admin)):
-    """
-    Возвращает список всех активных версий правил.
-    """
     try:
         active = container.rule_repo.get_active_versions()
         return [

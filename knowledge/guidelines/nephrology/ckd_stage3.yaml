@@ -1,6 +1,10 @@
 id: ckd_stage3
-thresholds:
-  egfr:
-    max: 60
-recommendations:
+conditions:
+- id: ckd_stage3
+  label: Ckd stage3
+  parameter: egfr
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
   - Консультация профильного специалиста
+  max: 60

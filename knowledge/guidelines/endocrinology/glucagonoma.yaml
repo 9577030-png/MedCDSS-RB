@@ -1,8 +1,10 @@
 id: glucagonoma
-thresholds:
-  glucose:
-    min: 7.0
-scoring:
-  glucose: 1   # вес 1 вместо 5
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: glucagonoma
+  label: Glucagonoma
+  parameter: glucose
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 7.0

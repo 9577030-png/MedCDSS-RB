@@ -1,6 +1,10 @@
 id: hyperprolactinemia
-thresholds:
-  prolactin:
-    min: 500
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hyperprolactinemia
+  label: Hyperprolactinemia
+  parameter: prolactin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 500

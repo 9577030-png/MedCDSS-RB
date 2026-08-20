@@ -1,8 +1,18 @@
 id: viral_infection_suspect
-thresholds:
-  lymphocytes_percent:
-    min: 45
-  crp:
-    min: 5
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: viral_infection_suspect_lymphocytes_percent
+  label: Lymphocytes percent — отклонение от нормы
+  parameter: lymphocytes_percent
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 45
+- id: viral_infection_suspect_crp
+  label: Crp — отклонение от нормы
+  parameter: crp
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 5

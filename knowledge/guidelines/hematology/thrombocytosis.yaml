@@ -1,6 +1,10 @@
 id: thrombocytosis
-thresholds:
-  platelets:
-    min: 400
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: thrombocytosis
+  label: Thrombocytosis
+  parameter: platelets
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 400

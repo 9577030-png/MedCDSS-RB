@@ -1,6 +1,10 @@
 id: hyponatremia
-thresholds:
-  sodium:
-    max: 135
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hyponatremia
+  label: Гипонатриемия
+  parameter: sodium
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 135

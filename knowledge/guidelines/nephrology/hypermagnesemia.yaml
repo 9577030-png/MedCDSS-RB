@@ -1,6 +1,10 @@
 id: hypermagnesemia
-thresholds:
-  magnesium:
-    min: 1.07
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hypermagnesemia
+  label: Hypermagnesemia
+  parameter: magnesium
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 1.07

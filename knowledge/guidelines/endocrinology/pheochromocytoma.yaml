@@ -1,8 +1,18 @@
 id: pheochromocytoma
-thresholds:
-  metanephrines:
-    min: 0.5
-  normetanephrine:
-    min: 0.9
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: pheochromocytoma_metanephrines
+  label: Metanephrines — отклонение от нормы
+  parameter: metanephrines
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 0.5
+- id: pheochromocytoma_normetanephrine
+  label: Normetanephrine — отклонение от нормы
+  parameter: normetanephrine
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 0.9

@@ -1,6 +1,10 @@
 id: ca50_elevated
-thresholds:
-  ca50:
-    min: 20
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: ca50_elevated
+  label: Ca50 elevated
+  parameter: ca50
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 20

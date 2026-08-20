@@ -1,6 +1,10 @@
 id: basophilia
-thresholds:
-  basophils_percent:
-    min: 1
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: basophilia
+  label: Basophilia
+  parameter: basophils_percent
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 1

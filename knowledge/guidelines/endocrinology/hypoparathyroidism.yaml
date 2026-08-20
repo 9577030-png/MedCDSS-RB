@@ -1,10 +1,26 @@
 id: hypoparathyroidism
-thresholds:
-  calcium_total:
-    max: 2.15
-  phosphate:
-    min: 1.5
-  pth:
-    max: 1.6
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: hypoparathyroidism_calcium_total
+  label: Calcium total — отклонение от нормы
+  parameter: calcium_total
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 2.15
+- id: hypoparathyroidism_phosphate
+  label: Phosphate — отклонение от нормы
+  parameter: phosphate
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 1.5
+- id: hypoparathyroidism_pth
+  label: Pth — отклонение от нормы
+  parameter: pth
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 1.6

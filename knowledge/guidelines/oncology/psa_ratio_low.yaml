@@ -1,6 +1,10 @@
 id: psa_ratio_low
-thresholds:
-  psa_ratio:
-    max: 25
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: psa_ratio_low
+  label: Psa ratio low
+  parameter: psa_ratio
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 25

@@ -1,6 +1,10 @@
 id: monocytosis
-thresholds:
-  monocytes_percent:
-    min: 10
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: monocytosis
+  label: Monocytosis
+  parameter: monocytes_percent
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 10

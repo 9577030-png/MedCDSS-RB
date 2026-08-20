@@ -1,33 +1,47 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from typing import List
+from typing import List, Dict, Any
 from application.services.version_manager import VersionManager
-from domain.interfaces import RuleRepository
-from domain.rule_version import RuleVersion
 from domain.exceptions import VersionNotFoundError
 
 router = APIRouter(prefix="/admin/rules", tags=["admin"])
 
+# Глобальная переменная для хранения VersionManager (устанавливается из main.py)
+_version_manager: VersionManager = None
+
+def set_version_manager(vm: VersionManager):
+    """Вызывается из main.py для инициализации"""
+    global _version_manager
+    _version_manager = vm
+
+def get_version_manager() -> VersionManager:
+    if _version_manager is None:
+        raise HTTPException(status_code=500, detail="VersionManager not initialized")
+    return _version_manager
+
 class ReloadResponse(BaseModel):
     loaded: int
-    versions: List[dict]
+    versions: List[Dict[str, Any]]
 
 class ActivateRequest(BaseModel):
     rule_id: str
     version_id: int
 
-def get_version_manager(rule_repo: RuleRepository, config_dir: str) -> VersionManager:
-    # Здесь нужно получить экземпляр из глобальной зависимости
-    # Для простоты передаём через глобальную переменную или через фабрику
-    pass
-
-@router.post("/reload")
+@router.post("/reload", response_model=ReloadResponse)
 async def reload_rules(version_manager: VersionManager = Depends(get_version_manager)):
     """Перезагрузить все правила из YAML (создать новые версии)."""
     new_versions = version_manager.hot_reload(created_by="admin")
     return ReloadResponse(
         loaded=len(new_versions),
-        versions=[{"rule_id": v.rule_id, "version_id": v.version_id, "is_active": v.is_active} for v in new_versions]
+        versions=[
+            {
+                "rule_id": v.rule_id,
+                "version_id": v.version_id,
+                "is_active": v.is_active,
+                "created_at": v.created_at.isoformat()
+            }
+            for v in new_versions
+        ]
     )
 
 @router.put("/activate")
@@ -45,4 +59,29 @@ async def get_history(rule_id: str, version_manager: VersionManager = Depends(ge
     history = version_manager.get_history(rule_id)
     if not history:
         raise HTTPException(status_code=404, detail="Rule not found")
-    return [{"version_id": v.version_id, "created_at": v.created_at, "is_active": v.is_active, "comment": v.comment} for v in history]
+    return [
+        {
+            "version_id": v.version_id,
+            "created_at": v.created_at.isoformat(),
+            "is_active": v.is_active,
+            "comment": v.comment,
+            "created_by": v.created_by
+        }
+        for v in history
+    ]
+
+@router.get("/active")
+async def get_active_rules(version_manager: VersionManager = Depends(get_version_manager)):
+    """Получить список активных версий правил."""
+    active = version_manager.rule_repo.get_active_versions()
+    return [
+        {
+            "rule_id": r.rule_id,
+            "version_id": r.version_id,
+            "name": r.name,
+            "priority": r.priority.name,
+            "tier": r.tier.value,
+            "created_at": r.created_at.isoformat()
+        }
+        for r in active
+    ]

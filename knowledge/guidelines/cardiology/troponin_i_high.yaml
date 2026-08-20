@@ -1,6 +1,10 @@
 id: troponin_i_high
-thresholds:
-  troponin_i:
-    min: 40
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: troponin_i_high
+  label: Troponin i high
+  parameter: troponin_i
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 40

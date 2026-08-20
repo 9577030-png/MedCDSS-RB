@@ -1,10 +1,26 @@
 id: ckd_stage4
-thresholds:
-  egfr:
-    min: 15
-  creatinine:
-    min: 300
-  urea:
-    min: 20
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: ckd_stage4_egfr
+  label: Egfr — отклонение от нормы
+  parameter: egfr
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 15
+- id: ckd_stage4_creatinine
+  label: Creatinine — отклонение от нормы
+  parameter: creatinine
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 300
+- id: ckd_stage4_urea
+  label: Urea — отклонение от нормы
+  parameter: urea
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 20

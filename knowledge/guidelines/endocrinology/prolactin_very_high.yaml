@@ -1,6 +1,10 @@
 id: prolactin_very_high
-thresholds:
-  prolactin:
-    min: 1000
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: prolactin_very_high
+  label: Prolactin very high
+  parameter: prolactin
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  min: 1000

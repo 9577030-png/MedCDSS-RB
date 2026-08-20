@@ -1,6 +1,10 @@
 id: vitamin_d_deficiency_children
-thresholds:
-  vitamin_d:
-    max: 20
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: vitamin_d_deficiency_children
+  label: Vitamin d deficiency children
+  parameter: vitamin_d
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 20

@@ -1,6 +1,10 @@
 id: leukopenia
-thresholds:
-  wbc:
-    max: 4.0
-recommendations:
-- Консультация профильного специалиста
+conditions:
+- id: leukopenia
+  label: Leukopenia
+  parameter: wbc
+  scoring: 5
+  risk: MEDIUM
+  recommendations:
+  - Консультация профильного специалиста
+  max: 4.0

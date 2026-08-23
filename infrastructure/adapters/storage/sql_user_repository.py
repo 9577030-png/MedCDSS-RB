@@ -1,4 +1,5 @@
 import sqlite3
+import secrets
 import logging
 from typing import Optional, List
 from datetime import datetime
@@ -35,15 +36,24 @@ class SqlUserRepository(UserRepository):
         logger.debug("Users table ensured.")
 
     def _ensure_default_users(self):
-        for username, password, role in [
-            ("admin", "admin", "admin"),
-            ("doctor", "doctor", "doctor")
+        # НЕ используем фиксированные пароли по умолчанию (admin/admin и т.п.) -
+        # это открытая уязвимость, если кто-то забудет сменить пароль перед проды.
+        # Генерируем случайный пароль один раз при первом запуске и один раз
+        # показываем его в логе - дальше он нигде не хранится в открытом виде.
+        for username, role in [
+            ("admin", "admin"),
+            ("doctor", "doctor")
         ]:
             existing = self.get_by_username(username)
             if existing is None:
+                password = secrets.token_urlsafe(12)
                 hashed = pwd_context.hash(password)
                 self.create(username, hashed, role)
-                logger.info(f"Default user {username} created with role {role}")
+                logger.warning(
+                    f"Создан пользователь по умолчанию '{username}' (роль: {role}) "
+                    f"со сгенерированным паролем: {password} - сохраните его сейчас, "
+                    f"повторно нигде не показывается. Смените пароль после первого входа."
+                )
 
     def get_by_username(self, username: str) -> Optional[User]:
         conn = self._get_connection()

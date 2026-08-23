@@ -1,7 +1,6 @@
-```markdown
 # Конфигурация системы
 
-Все конфигурационные файлы находятся в папке `knowledge/`. Редактировать их можно как вручную, так и через веб-интерфейс администратора (раздел «Правила»).
+Все конфигурационные файлы находятся в папке `knowledge/`. Редактировать их можно вручную или через веб-интерфейс администратора (раздел «Правила»).
 
 ---
 
@@ -9,7 +8,7 @@
 
 **Путь:** `knowledge/configs/clinical_thresholds.yaml`
 
-Определяет нормальные и критические значения для каждого параметра. Поддерживает разделение по полу (ключи `male`/`female`).
+Определяет нормальные значения для параметров, которые используются в текстовых интерпретациях (`comment_template` в `clinical_interpretations.yaml`). Поддерживает разделение по полу (ключи `male`/`female`).
 
 **Пример:**
 
@@ -26,88 +25,84 @@ thresholds:
     risk_level: HIGH
   glucose:
     low: 3.9
-    high: 5.6
+    high: 5.5
     unit: "mmol/L"
     risk_level: HIGH
-Поля:
+```
 
-low – нижняя граница нормы (null, если нет)
+Значения из этого файла продублированы (для тех же 6 параметров) в `knowledge/configs/medical_data.json` в формате, который читает `MedicalReferenceLoader` — при изменении порога здесь стоит проверить и синхронизировать `medical_data.json`, чтобы не разойтись.
 
-high – верхняя граница нормы (null, если нет)
+---
 
-unit – единица измерения (должна совпадать с units.yaml)
+## 2. Клинические правила (`guidelines/`)
 
-risk_level – уровень риска (HIGH, MEDIUM, LOW, CRITICAL)
+**Путь:** `knowledge/guidelines/**/*.yaml`
 
-2. Клинические правила (guidelines/)
-Путь: knowledge/guidelines/**/*.yaml
+**Актуальный формат** — `conditions:`. Каждое условие проверяется независимо (логика «ИЛИ» между условиями одного файла — если нужна логика «И» между несколькими параметрами, оформляйте синдром как `combination` в `clinical_logic.yaml`, а не одним условием):
 
-Каждое правило описывает диагностический критерий.
-
-Пример (iron_deficiency.yaml):
-
-yaml
+```yaml
 id: iron_deficiency
 description: "Снижение ферритина, железа и/или повышение MCV указывает на железодефицитную анемию."
-scoring:
-  hemoglobin: 3
-  mcv: 2
-  ferritin: 5
-override_thresholds:
-  ferritin:
-    low: 30
-    risk_level: HIGH
-Поля:
-
-id – уникальный идентификатор
-
-description – текстовое описание для заключения
-
-scoring – веса для каждого параметра (сумма определяет вероятность)
-
-override_thresholds – переопределение глобальных порогов для этого правила
-
-Альтернативный формат (условия):
-
-yaml
-id: diabetes_mellitus_type_2
 conditions:
-  - parameter: glucose
-    min: 7.0
-    label: "Сахарный диабет 2 типа"
+  - id: iron_deficiency_ferritin
+    label: "Сниженный ферритин"
+    parameter: ferritin
+    max: 30
     scoring: 5
     risk: HIGH
-    description: "Уровень глюкозы ≥ 7.0 ммоль/л – диабет."
-3. Логика постобработки (clinical_logic.yaml)
-Путь: knowledge/configs/clinical_logic.yaml
+    recommendations:
+      - "Проверить сывороточное железо и ОЖСС"
+```
 
-Настройка группировки, исключений, приоритетов, комбинированных диагнозов и маппингов.
+**Поля условия:**
+- `id` — уникальный id находки (используется для меток, исключений, интерпретаций)
+- `label` — человекочитаемое название
+- `parameter` — имя лабораторного параметра (должно совпадать с каноническим именем после нормализации)
+- `min` / `max` — пороги срабатывания (можно оба сразу для диапазона)
+- `gender` — опционально, если условие специфично для пола
+- `scoring` — вес (влияет на вычисляемую вероятность, `probability = min(scoring/10, 1.0)`)
+- `risk` — `NORMAL` / `MEDIUM` / `HIGH` / `CRITICAL`
+- `recommendations` — список рекомендаций
 
-Группы и приоритеты
-yaml
+**Устаревший формат** (`thresholds:`/`scoring:`/`override_thresholds:`) по-прежнему поддерживается — `RuleVersion.from_yaml()` конвертирует его на лету через `_convert_old_format()`, чтобы не ломать уже существующие 230 файлов. Для новых правил используйте `conditions:` — устаревший формат сложнее читать и легче ошибиться в семантике `low`/`high`.
+
+---
+
+## 3. Логика постобработки (`clinical_logic.yaml`)
+
+**Путь:** `knowledge/configs/clinical_logic.yaml`
+
+Настройка группировки, исключений, приоритетов, комбинированных диагнозов и меток.
+
+**Группы и приоритеты:**
+```yaml
 groups:
   kidney_disease:
     - ckd_stage3
     - ckd_stage4
     - ckd_stage5
     - acute_kidney_injury
-    - chronic_kidney_disease
 
 priority:
   kidney_disease:
     - ckd_stage5
     - ckd_stage4
     - ckd_stage3
-Исключения
-yaml
+```
+
+**Исключения** (более специфичный диагноз вытесняет менее специфичный):
+```yaml
 exclusions:
   - if: ckd_stage5
     then:
       - ckd_stage4
       - ckd_stage3
       - chronic_kidney_disease
-Комбинированные диагнозы
-yaml
+```
+`if`/значения в `then` матчатся и по id самого правила (`ckd_stage5`), и по id отдельного условия внутри многопараметрового правила (`ckd_stage5_egfr`) — эквивалентность проверяется в `PostProcessor._apply_exclusions`.
+
+**Комбинированные диагнозы:**
+```yaml
 combinations:
   - id: primary_hyperparathyroidism
     label: "Первичный гиперпаратиреоз (предположительно)"
@@ -120,36 +115,34 @@ combinations:
     additional_tests:
       - PTH
       - Calcium 24h urine
-      - Parathyroid ultrasound
-Маппинги (новые секции)
-yaml
-# Метки диагнозов для отображения
+```
+
+**Метки и группировка:**
+```yaml
 diagnosis_labels:
   diabetes_mellitus_type_2: "Сахарный диабет 2 типа"
   iron_deficiency: "Железодефицитная анемия"
 
-# Группировка по системам органов
 system_groups:
   Эндокринная система:
     - diabetes_mellitus_type_2
-    - hypothyroidism
   Гематология:
     - iron_deficiency
-    - b12_deficiency
 
-# Белый список основных диагнозов
 allowed_primary:
   - diabetes_mellitus_type_2
   - iron_deficiency
-  - hypothyroidism
-4. Клинические инсайты (clinical_interpretations.yaml)
-Путь: knowledge/configs/clinical_interpretations.yaml
+```
 
-Содержит подробные интерпретации для каждого диагноза (шпаргалка для врача).
+---
 
-Пример:
+## 4. Клинические инсайты (`clinical_interpretations.yaml`)
 
-yaml
+**Путь:** `knowledge/configs/clinical_interpretations.yaml`
+
+Подробные интерпретации для enriched-уровня (шпаргалка для врача). Наличие записи здесь **и есть** критерий, по которому правило получает `tier: enriched` — отдельно нигде это не нужно проставлять.
+
+```yaml
 interpretations:
   diabetes_mellitus_type_2:
     id: diabetes_mellitus_type_2
@@ -162,38 +155,69 @@ interpretations:
         unit: "ммоль/л"
         condition: ">="
         comment_template: |
-          Критерий выполнен. Уровень {value} ммоль/л превышает порог (≥ 7.0).
+          Критерий выполнен. Уровень {value} ммоль/л превышает порог (≥ 7.0). {interpretation}
     differentials:
       - condition: "age < 45 AND c_peptide < 0.8"
         text: "Заподозрить LADA..."
     red_flags:
       - condition: "hba1c > 9.0"
-        text: "**Высокий риск декомпенсации.**"
+        text: "Высокий риск декомпенсации."
     treatment_hints:
       - step: "Метформин 500 мг × 2 раза в день"
         note: "Титровать до 2000 мг/сут."
     references:
       - "ADA Standards of Medical Care in Diabetes 2025"
-5. Алиасы параметров (aliases.yaml)
-Путь: knowledge/laboratory/aliases.yaml
+```
 
-Сопоставляет синонимы с каноническими именами.
+Если `comment_template` использует `{interpretation}` или `{additional}` — параметр должен быть описан в `medical_data.json`, иначе текст интерпретации будет пустым (не крашится, просто ничего не покажет).
 
-yaml
+---
+
+## 5. Референсы для текстовых интерпретаций (`medical_data.json`)
+
+**Путь:** `knowledge/configs/medical_data.json`
+
+Отдельный, минимальный справочник только для параметров, чьи `comment_template` используют `{interpretation}`/`{additional}` — не полная номенклатура лабораторных показателей.
+
+```json
+{
+  "norms": {
+    "ferritin": {
+      "name": "Ферритин",
+      "unit": "мкг/Л",
+      "group": "blood_count",
+      "norms": [
+        {"gender": "male", "min": 30, "max": 400},
+        {"gender": "female", "min": 15, "max": 150}
+      ],
+      "low": "снижен - признак истощения запасов железа.",
+      "high": "повышен - может отражать перегрузку железом либо воспаление."
+    }
+  }
+}
+```
+
+Значения должны быть согласованы с `clinical_thresholds.yaml` для тех же параметров — если правите порог в одном файле, проверьте другой.
+
+---
+
+## 6. Алиасы параметров (`laboratory/aliases.yaml`)
+
+Сопоставляет синонимы с каноническими именами (640 алиасов на текущий момент):
+
+```yaml
 aliases:
   hemoglobin:
     - Hb
     - HGB
     - Гемоглобин
-  glucose:
-    - Glu
-    - Сахар
-6. Единицы измерения (units.yaml)
-Путь: knowledge/laboratory/units.yaml
+```
 
-Определяет коэффициенты конвертации в базовую единицу.
+## 7. Единицы измерения (`laboratory/units.yaml`)
 
-yaml
+Коэффициенты конвертации в базовую единицу:
+
+```yaml
 units:
   "g/L":
     base: "g/L"
@@ -201,12 +225,11 @@ units:
   "mg/dL":
     base: "mmol/L"
     factor: 0.0555
-7. Рекомендации врачей (doctor_recommendations.yaml)
-Путь: knowledge/configs/doctor_recommendations.yaml
+```
 
-Связывает диагноз с рекомендациями.
+## 8. Рекомендации врачей (`doctor_recommendations.yaml`)
 
-yaml
+```yaml
 recommendations:
   iron_deficiency:
     doctor_specialty: Hematologist
@@ -214,14 +237,15 @@ recommendations:
     additional_tests:
       - Iron
       - TIBC
-Изменение конфигурации
-Ручное редактирование
-После изменения любого YAML-файла нажмите кнопку «Перезагрузить конфигурацию» в админ-интерфейсе или выполните POST /reload_config (только admin). Контейнер перезапускать не нужно.
+```
 
-Через интерфейс администратора
-Перейдите в раздел «Администрирование» → «Правила», выберите файл, отредактируйте и сохраните – система автоматически перезагрузит правила.
+---
 
-Через API
-bash
+## Применение изменений
+
+После правки любого YAML/JSON-файла — `POST /reload_config` (роль admin) или кнопка «Перезагрузить правила» в админ-панели. Перезапуск контейнера не требуется:
+
+```bash
 curl -X POST http://localhost:8000/reload_config \
   -H "Authorization: Bearer <admin_token>"
+```

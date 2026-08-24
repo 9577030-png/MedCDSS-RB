@@ -1,101 +1,135 @@
-import json
-import os
 import logging
-from typing import Optional, Tuple, Dict, Any
-from config import settings
+from typing import Dict, Any, Optional, List
 
 logger = logging.getLogger(__name__)
 
+
 class MedicalReferenceLoader:
-    """Загрузчик референсных значений и интерпретаций из medical_data.json."""
+    """
+    Загрузчик референсных интерпретаций для лабораторных показателей.
+    Данные могут быть загружены из YAML или словаря.
+    """
 
-    def __init__(self):
-        self.data = self._load()
-        self.norms = self.data.get("norms", {})
-        self.groups = self.data.get("groups", {})
-        self.metadata = self.data.get("metadata", {})
-        logger.info(f"MedicalReferenceLoader initialized: {len(self.norms)} parameters")
-
-    def _load(self) -> Dict:
-        path = os.path.join(settings.BASE_DIR, settings.KNOWLEDGE_DIR, "configs", "medical_data.json")
-        try:
-            with open(path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            logger.error(f"medical_data.json not found at {path}")
-            return {"norms": {}, "groups": {}}
-
-    def get_norm(self, param_name: str, gender: str, age: int) -> Tuple[Optional[float], Optional[float]]:
-        """Возвращает (min, max) для параметра с учётом пола и возраста."""
-        param = self.norms.get(param_name)
-        if not param:
-            return None, None
-        # Ищем подходящую норму
-        for rule in param.get("norms", []):
-            if "gender" in rule and rule["gender"] != gender:
-                continue
-            if "age_min" in rule and age < rule["age_min"]:
-                continue
-            if "age_max" in rule and age > rule["age_max"]:
-                continue
-            return rule.get("min"), rule.get("max")
-        # Если нет специфичной, берём base_min/base_max
-        return param.get("base_min"), param.get("base_max")
-
-    def get_unit(self, param_name: str) -> str:
-        param = self.norms.get(param_name)
-        return param.get("unit", "") if param else ""
-
-    def get_name(self, param_name: str) -> str:
-        param = self.norms.get(param_name)
-        return param.get("name", param_name) if param else param_name
-
-    def get_interpretation(self, param_name: str, value: float, gender: str, age: int) -> Dict[str, Any]:
+    def __init__(self, config_path: Optional[str] = None, data: Optional[Dict[str, Any]] = None):
         """
-        Возвращает статус ('low', 'normal', 'high', 'unknown') и соответствующий текст.
+        Инициализация загрузчика.
+        :param config_path: путь к YAML-файлу с референсными данными (опционально)
+        :param data: словарь с данными (если не указан путь)
         """
-        param = self.norms.get(param_name)
-        if not param:
-            return {"status": "unknown", "text": "Нет данных", "unit": ""}
-        min_val, max_val = self.get_norm(param_name, gender, age)
-        unit = param.get("unit", "")
-        if min_val is None or max_val is None:
-            return {"status": "unknown", "text": "Нет референсов", "unit": unit}
-        if value < min_val:
-            return {
-                "status": "low",
-                "text": param.get("low", f"Значение ниже нормы (< {min_val} {unit})"),
-                "unit": unit,
-                "min": min_val,
-                "max": max_val
-            }
-        elif value > max_val:
-            return {
-                "status": "high",
-                "text": param.get("high", f"Значение выше нормы (> {max_val} {unit})"),
-                "unit": unit,
-                "min": min_val,
-                "max": max_val
-            }
+        self._references: Dict[str, Any] = {}
+        if config_path:
+            self._load_from_yaml(config_path)
+        elif data:
+            self._references = data
         else:
+            logger.warning("MedicalReferenceLoader initialized without data")
+
+        # Кэш для быстрого доступа (имя параметра -> список диапазонов)
+        self._param_cache: Dict[str, List[Dict]] = {}
+        self._build_cache()
+
+        logger.info(f"MedicalReferenceLoader initialized: {len(self._references)} parameters")
+
+    def _load_from_yaml(self, path: str) -> None:
+        """Загрузка данных из YAML-файла."""
+        try:
+            import yaml
+            with open(path, 'r', encoding='utf-8') as f:
+                data = yaml.safe_load(f)
+            if data and isinstance(data, dict):
+                self._references = data.get('parameters', {})
+            else:
+                logger.warning(f"Invalid YAML structure in {path}")
+        except Exception as e:
+            logger.error(f"Failed to load medical references from {path}: {e}")
+            self._references = {}
+
+    def _build_cache(self) -> None:
+        """Строит кэш для быстрого поиска по имени параметра."""
+        for param_name, config in self._references.items():
+            intervals = config.get('intervals', [])
+            if intervals:
+                self._param_cache[param_name] = intervals
+
+    def get_interpretation(self, param_name: str, value: Any,
+                           gender: Optional[str] = None,
+                           age: Optional[float] = None) -> Dict[str, Any]:
+        """
+        Получить интерпретацию значения параметра с учётом пола и возраста.
+        :param param_name: каноническое имя параметра
+        :param value: числовое значение (может быть None)
+        :param gender: 'male' или 'female' (опционально)
+        :param age: возраст в годах (опционально)
+        :return: словарь с интерпретацией (ключи: status, comment, range и т.п.)
+        """
+        # ★★★ ИСПРАВЛЕНИЕ: если значение отсутствует, сразу возвращаем пустой результат ★★★
+        if value is None:
+            logger.debug(f"Value is None for parameter {param_name}, skipping interpretation")
+            return {}
+
+        intervals = self._param_cache.get(param_name)
+        if not intervals:
+            logger.debug(f"No intervals found for parameter {param_name}")
+            return {}
+
+        # Приводим value к числу, если это возможно
+        try:
+            numeric_value = float(value)
+        except (TypeError, ValueError):
+            logger.warning(f"Value {value} for {param_name} is not numeric, skipping interpretation")
+            return {}
+
+        # Фильтруем интервалы по полу и возрасту (если указаны)
+        applicable = []
+        for interval in intervals:
+            # Проверка пола
+            if 'gender' in interval and interval['gender']:
+                if gender and interval['gender'].lower() != gender.lower():
+                    continue
+            # Проверка возраста (если задан диапазон)
+            if 'age_min' in interval and age is not None:
+                if age < interval['age_min']:
+                    continue
+            if 'age_max' in interval and age is not None:
+                if age > interval['age_max']:
+                    continue
+            applicable.append(interval)
+
+        # Сортируем по приоритету: сначала точные совпадения (более узкие интервалы)
+        # Здесь можно применить эвристику, но для простоты перебираем все
+        for interval in applicable:
+            min_val = interval.get('min')
+            max_val = interval.get('max')
+
+            # ★★★ Защита от None в min/max ★★★
+            if min_val is not None and numeric_value < min_val:
+                continue
+            if max_val is not None and numeric_value > max_val:
+                continue
+
+            # Нашли подходящий интервал
             return {
-                "status": "normal",
-                "text": "В норме",
-                "unit": unit,
-                "min": min_val,
-                "max": max_val
+                'status': interval.get('status', 'normal'),
+                'comment': interval.get('comment', ''),
+                'range': f"{min_val or '…'} – {max_val or '…'}",
+                'risk_level': interval.get('risk', 'LOW'),
+                'recommendations': interval.get('recommendations', []),
             }
 
-    def get_group(self, param_name: str) -> str:
-        param = self.norms.get(param_name)
-        if not param:
-            return ""
-        group_key = param.get("group")
-        return self.groups.get(group_key, group_key)
+        # Если ни один интервал не подошёл (выход за пределы всех диапазонов)
+        # Можно попытаться определить крайний случай, но для простоты возвращаем общее
+        return {
+            'status': 'unknown',
+            'comment': f'Значение {numeric_value} вне заданных референсных интервалов для {param_name}',
+            'range': 'не определено',
+            'risk_level': 'MEDIUM',
+            'recommendations': ['Требуется уточнение референсных значений']
+        }
 
-    def get_all_params(self) -> Dict[str, Dict]:
-        """Возвращает все параметры с их данными."""
-        return self.norms
+    def get_all_parameters(self) -> List[str]:
+        """Возвращает список всех доступных имён параметров."""
+        return list(self._references.keys())
 
-    def get_groups(self) -> Dict[str, str]:
-        return self.groups
+    def get_parameter_config(self, param_name: str) -> Optional[Dict]:
+        """Возвращает полную конфигурацию параметра."""
+        return self._references.get(param_name)

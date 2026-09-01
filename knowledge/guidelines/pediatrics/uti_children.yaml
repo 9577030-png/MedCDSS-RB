@@ -15,4 +15,4 @@ conditions:
   risk: MEDIUM
   recommendations:
   - Консультация профильного специалиста
-  min: 0
+  min: 1

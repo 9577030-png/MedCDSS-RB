@@ -8,6 +8,7 @@ conditions:
   recommendations:
   - Консультация профильного специалиста
   min: 15
+  max: 29
 - id: ckd_stage4_creatinine
   label: Creatinine — отклонение от нормы
   parameter: creatinine

@@ -8,3 +8,4 @@ conditions:
   recommendations:
   - Консультация профильного специалиста
   min: 50
+  max: 150

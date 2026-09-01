@@ -18,10 +18,18 @@ class VersionManager:
     def load_from_yaml(self, rule_id: str, yaml_path: Path, created_by: str = "system") -> RuleVersion:
         with open(yaml_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
-        # Определяем tier по имени файла (без расширения)
+        # Строим правило один раз (это уже выполняет конвертацию старого формата
+        # thresholds/scoring -> conditions через RuleVersion.from_yaml), затем
+        # пересчитываем tier по РЕАЛЬНЫМ, уже сконвертированным id условий - а не
+        # только по ключам сырого YAML. Раньше здесь читался data.get('conditions', [])
+        # из сырого файла, что давало ложный 'basic' для любого файла, где conditions
+        # появляются только после программной конвертации (thresholds/scoring-схема,
+        # например knowledge/guidelines/nephrology/diabetic_nephropathy.yaml) - хотя
+        # сам текст интерпретации для этих id уже подключается корректно.
+        version = RuleVersion.from_yaml(rule_id, data, created_by, tier=RuleTier.BASIC)
         base_name = yaml_path.stem
-        tier = RuleTier.ENRICHED if self.interpretation_mapper.is_enriched(base_name) else RuleTier.BASIC
-        version = RuleVersion.from_yaml(rule_id, data, created_by, tier=tier)
+        candidate_ids = {base_name} | {c.get("id", base_name) for c in version.conditions}
+        version.tier = RuleTier.ENRICHED if any(self.interpretation_mapper.is_enriched(cid) for cid in candidate_ids) else RuleTier.BASIC
         return self.rule_repo.save(version)
 
     def activate_version(self, rule_id: str, version_id: int) -> None:

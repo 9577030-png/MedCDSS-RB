@@ -1,206 +1,120 @@
-# clinical_logic.yaml
-# Настройки логики постобработки
-
 probability_threshold:
   default: 0.3
   sepsis: 0.2
   ckd_stage5: 0.3
-
-# ========== НОВЫЕ СЕКЦИИ ДЛЯ МАППИНГОВ ==========
 diagnosis_labels:
-  diabetes_mellitus_type_2: "Сахарный диабет 2 типа"
-  severe_hyperglycemia: "Тяжёлая гипергликемия"
-  hypoglycemia: "Гипогликемия"
-  prediabetes: "Предиабет"
-  hypercholesterolemia: "Гиперхолестеринемия"
-  hypertriglyceridemia: "Гипертриглицеридемия"
-  low_hdl: "Низкий ХС ЛПВП"
-  hypertension: "Артериальная гипертензия"
-  obesity: "Ожирение"
-  vitamin_d_deficiency: "Дефицит витамина D"
-  hypothyroidism: "Гипотиреоз"
-  hyperthyroidism: "Гипертиреоз"
-  iron_deficiency: "Железодефицитная анемия"
-  gout: "Подагра"
-  hyperkalemia: "Гиперкалиемия"
-  hypokalemia: "Гипокалиемия"
-  hyponatremia: "Гипонатриемия"
-  hypernatremia: "Гипернатриемия"
-  hypercalcemia: "Гиперкальциемия"
-  hypocalcemia: "Гипокальциемия"
-  chronic_kidney_disease: "Хроническая болезнь почек"
-  anemia_male: "Анемия (мужчины)"
-  anemia_female: "Анемия (женщины)"
-  acute_kidney_injury: "Острое повреждение почек"
-  nonalcoholic_fatty_liver: "Неалкогольная жировая болезнь печени"
-  celiac_disease: "Целиакия"
-  anemia_chronic_disease: "Анемия хронического воспаления"
-  b12_deficiency: "Дефицит витамина B12"
-  folate_deficiency: "Дефицит фолиевой кислоты"
-  urinary_tract_infection: "Инфекция мочевыводящих путей"
-  lower_respiratory_infection: "Нижняя респираторная инфекция"
-  systemic_inflammation: "Системное воспаление"
-  metabolic_syndrome: "Метаболический синдром"
-  creatinine_high_male: "Повышенный креатинин (мужчины)"
-  creatinine_high_female: "Повышенный креатинин (женщины)"
-  alt_high_male: "Повышенная АЛТ (мужчины)"
-  alt_high_female: "Повышенная АЛТ (женщины)"
-  ast_high_male: "Повышенная АСТ (мужчины)"
-  ast_high_female: "Повышенная АСТ (женщины)"
-  ggt_high_male: "Повышенная ГГТ (мужчины)"
-  ggt_high_female: "Повышенная ГГТ (женщины)"
-  low_hdl_male: "Низкий ХС ЛПВП (мужчины)"
-  low_hdl_female: "Низкий ХС ЛПВП (женщины)"
-  ferritin_low_male: "Сниженный ферритин (мужчины)"
-  ferritin_low_female: "Сниженный ферритин (женщины)"
-  ferritin_high_male: "Повышенный ферритин (мужчины)"
-  ferritin_high_female: "Повышенный ферритин (женщины)"
-  serum_iron_low_male: "Сниженное железо сыворотки (мужчины)"
-  serum_iron_low_female: "Сниженное железо сыворотки (женщины)"
-  serum_iron_high_male: "Повышенное железо сыворотки (мужчины)"
-  serum_iron_high_female: "Повышенное железо сыворотки (женщины)"
-  rbc_low_male: "Сниженные эритроциты (мужчины)"
-  rbc_high_male: "Повышенные эритроциты (мужчины)"
-  rbc_low_female: "Сниженные эритроциты (женщины)"
-  rbc_high_female: "Повышенные эритроциты (женщины)"
-  hematocrit_low_male: "Сниженный гематокрит (мужчины)"
-  hematocrit_high_male: "Повышенный гематокрит (мужчины)"
-  hematocrit_low_female: "Сниженный гематокрит (женщины)"
-  hematocrit_high_female: "Повышенный гематокрит (женщины)"
-  esr_high_male: "Повышенная СОЭ (мужчины)"
-  esr_high_female: "Повышенная СОЭ (женщины)"
-
+  diabetes_mellitus_type_2: Сахарный диабет 2 типа
+  severe_hyperglycemia: Тяжёлая гипергликемия
+  hypoglycemia: Гипогликемия
+  prediabetes: Предиабет
+  hypercholesterolemia: Гиперхолестеринемия
+  hypertriglyceridemia: Гипертриглицеридемия
+  low_hdl: Низкий ХС ЛПВП
+  hypertension: Артериальная гипертензия
+  obesity: Ожирение
+  vitamin_d_deficiency: Дефицит витамина D
+  hypothyroidism: Гипотиреоз
+  hyperthyroidism: Гипертиреоз
+  iron_deficiency: Железодефицитная анемия
+  gout: Подагра
+  hyperkalemia: Гиперкалиемия
+  hypokalemia: Гипокалиемия
+  hyponatremia: Гипонатриемия
+  hypernatremia: Гипернатриемия
+  hypercalcemia: Гиперкальциемия
+  hypocalcemia: Гипокальциемия
+  chronic_kidney_disease: Хроническая болезнь почек
+  anemia_male: Анемия (мужчины)
+  anemia_female: Анемия (женщины)
+  acute_kidney_injury: Острое повреждение почек
+  nonalcoholic_fatty_liver: Неалкогольная жировая болезнь печени
+  celiac_disease: Целиакия
+  anemia_chronic_disease: Анемия хронического воспаления
+  b12_deficiency: Дефицит витамина B12
+  folate_deficiency: Дефицит фолиевой кислоты
+  urinary_tract_infection: Инфекция мочевыводящих путей
+  lower_respiratory_infection: Нижняя респираторная инфекция
+  systemic_inflammation: Системное воспаление
+  metabolic_syndrome: Метаболический синдром
+  creatinine_high_male: Повышенный креатинин (мужчины)
+  creatinine_high_female: Повышенный креатинин (женщины)
+  alt_high_male: Повышенная АЛТ (мужчины)
+  alt_high_female: Повышенная АЛТ (женщины)
+  ast_high_male: Повышенная АСТ (мужчины)
+  ast_high_female: Повышенная АСТ (женщины)
+  ggt_high_male: Повышенная ГГТ (мужчины)
+  ggt_high_female: Повышенная ГГТ (женщины)
+  low_hdl_male: Низкий ХС ЛПВП (мужчины)
+  low_hdl_female: Низкий ХС ЛПВП (женщины)
+  ferritin_low_male: Сниженный ферритин (мужчины)
+  ferritin_low_female: Сниженный ферритин (женщины)
+  ferritin_high_male: Повышенный ферритин (мужчины)
+  ferritin_high_female: Повышенный ферритин (женщины)
+  serum_iron_low_male: Сниженное железо сыворотки (мужчины)
+  serum_iron_low_female: Сниженное железо сыворотки (женщины)
+  serum_iron_high_male: Повышенное железо сыворотки (мужчины)
+  serum_iron_high_female: Повышенное железо сыворотки (женщины)
+  rbc_low_male: Сниженные эритроциты (мужчины)
+  rbc_high_male: Повышенные эритроциты (мужчины)
+  rbc_low_female: Сниженные эритроциты (женщины)
+  rbc_high_female: Повышенные эритроциты (женщины)
+  hematocrit_low_male: Сниженный гематокрит (мужчины)
+  hematocrit_high_male: Повышенный гематокрит (мужчины)
+  hematocrit_low_female: Сниженный гематокрит (женщины)
+  hematocrit_high_female: Повышенный гематокрит (женщины)
+  esr_high_male: Повышенная СОЭ (мужчины)
+  esr_high_female: Повышенная СОЭ (женщины)
 system_groups:
   Эндокринная система:
-    - vitamin_d_deficiency
-    - hypercalcemia
-    - hypocalcemia
-    - prediabetes
-    - hyperglycemia
-    - diabetes_mellitus_type_2
-    - hypothyroidism
-    - hyperthyroidism
-    - thyroid
-    - pcos
-    - glucagonoma
-    - somatostatinoma
-    - hypoglycemia
-    - severe_hyperglycemia
-  Почки и мочевыводящие пути:
-    - ckd_stage3
-    - ckd_stage4
-    - ckd_stage5
-    - acute_kidney_injury
-    - chronic_kidney_disease
-    - urinary_tract_infection
-    - creatinine_high_male
-    - creatinine_high_female
-  Печень и желчевыводящие пути:
-    - acute_hepatitis
-    - nonalcoholic_fatty_liver
-    - cholestasis
-    - hypoalbuminemia
-    - alt_high_male
-    - alt_high_female
-    - ast_high_male
-    - ast_high_female
-    - ggt_high_male
-    - ggt_high_female
-  Системное воспаление и инфекция:
-    - systemic_inflammation
-    - sepsis
-    - lower_respiratory_infection
-    - esr_high_male
-    - esr_high_female
-  Гематология:
-    - iron_deficiency
-    - b12_deficiency
-    - folate_deficiency
-    - macrocytic_anemia
-    - hemolytic_anemia
-    - anemia_chronic_disease
-    - anemia_male
-    - anemia_female
-    - ferritin_low_male
-    - ferritin_low_female
-    - ferritin_high_male
-    - ferritin_high_female
-    - serum_iron_low_male
-    - serum_iron_low_female
-    - serum_iron_high_male
-    - serum_iron_high_female
-    - rbc_low_male
-    - rbc_high_male
-    - rbc_low_female
-    - rbc_high_female
-    - hematocrit_low_male
-    - hematocrit_high_male
-    - hematocrit_low_female
-    - hematocrit_high_female
-  Липидный обмен и сердце:
-    - metabolic_syndrome
-    - hypertriglyceridemia
-    - low_hdl
-    - hypercholesterolemia
-    - hypertension
-    - low_hdl_male
-    - low_hdl_female
-  Кости:
-    - osteoporosis
-    - gout
-    - hyperuricemia
-  Обмен веществ:
-    - obesity
-  Электролиты:
-    - hyperkalemia
-    - hypokalemia
-    - hyponatremia
-    - hypernatremia
-
-allowed_primary:
-  - diabetes_mellitus_type_2
-  - severe_hyperglycemia
-  - hypoglycemia
-  - prediabetes
-  - hypercholesterolemia
-  - hypertriglyceridemia
-  - low_hdl
-  - hypertension
-  - obesity
   - vitamin_d_deficiency
-  - hypothyroidism
-  - hyperthyroidism
-  - iron_deficiency
-  - gout
-  - hyperkalemia
-  - hypokalemia
-  - hyponatremia
-  - hypernatremia
   - hypercalcemia
   - hypocalcemia
-  - chronic_kidney_disease
-  - anemia_male
-  - anemia_female
+  - prediabetes
+  - hyperglycemia
+  - diabetes_mellitus_type_2
+  - hypothyroidism
+  - hyperthyroidism
+  - thyroid
+  - pcos
+  - glucagonoma
+  - somatostatinoma
+  - hypoglycemia
+  - severe_hyperglycemia
+  Почки и мочевыводящие пути:
+  - ckd_stage3
+  - ckd_stage4
+  - ckd_stage5
   - acute_kidney_injury
-  - nonalcoholic_fatty_liver
-  - celiac_disease
-  - anemia_chronic_disease
-  - b12_deficiency
-  - folate_deficiency
+  - chronic_kidney_disease
   - urinary_tract_infection
-  - lower_respiratory_infection
-  - systemic_inflammation
-  - metabolic_syndrome
   - creatinine_high_male
   - creatinine_high_female
+  Печень и желчевыводящие пути:
+  - acute_hepatitis
+  - nonalcoholic_fatty_liver
+  - cholestasis
+  - hypoalbuminemia
   - alt_high_male
   - alt_high_female
   - ast_high_male
   - ast_high_female
   - ggt_high_male
   - ggt_high_female
-  - low_hdl_male
-  - low_hdl_female
+  Системное воспаление и инфекция:
+  - systemic_inflammation
+  - sepsis
+  - lower_respiratory_infection
+  - esr_high_male
+  - esr_high_female
+  Гематология:
+  - iron_deficiency
+  - b12_deficiency
+  - folate_deficiency
+  - macrocytic_anemia
+  - hemolytic_anemia
+  - anemia_chronic_disease
+  - anemia_male
+  - anemia_female
   - ferritin_low_male
   - ferritin_low_female
   - ferritin_high_male
@@ -217,152 +131,1304 @@ allowed_primary:
   - hematocrit_high_male
   - hematocrit_low_female
   - hematocrit_high_female
-  - esr_high_male
-  - esr_high_female
-
-# ===== ОСТАЛЬНЫЕ СЕКЦИИ (без изменений) =====
+  Липидный обмен и сердце:
+  - metabolic_syndrome
+  - hypertriglyceridemia
+  - low_hdl
+  - hypercholesterolemia
+  - hypertension
+  - low_hdl_male
+  - low_hdl_female
+  Кости:
+  - osteoporosis
+  - gout
+  - hyperuricemia
+  Обмен веществ:
+  - obesity
+  Электролиты:
+  - hyperkalemia
+  - hypokalemia
+  - hyponatremia
+  - hypernatremia
+allowed_primary:
+- diabetes_mellitus_type_2
+- severe_hyperglycemia
+- hypoglycemia
+- prediabetes
+- hypercholesterolemia
+- hypertriglyceridemia
+- low_hdl
+- hypertension
+- obesity
+- vitamin_d_deficiency
+- hypothyroidism
+- hyperthyroidism
+- iron_deficiency
+- gout
+- hyperkalemia
+- hypokalemia
+- hyponatremia
+- hypernatremia
+- hypercalcemia
+- hypocalcemia
+- chronic_kidney_disease
+- anemia_male
+- anemia_female
+- acute_kidney_injury
+- nonalcoholic_fatty_liver
+- celiac_disease
+- anemia_chronic_disease
+- b12_deficiency
+- folate_deficiency
+- urinary_tract_infection
+- lower_respiratory_infection
+- systemic_inflammation
+- metabolic_syndrome
+- creatinine_high_male
+- creatinine_high_female
+- alt_high_male
+- alt_high_female
+- ast_high_male
+- ast_high_female
+- ggt_high_male
+- ggt_high_female
+- low_hdl_male
+- low_hdl_female
+- ferritin_low_male
+- ferritin_low_female
+- ferritin_high_male
+- ferritin_high_female
+- serum_iron_low_male
+- serum_iron_low_female
+- serum_iron_high_male
+- serum_iron_high_female
+- rbc_low_male
+- rbc_high_male
+- rbc_low_female
+- rbc_high_female
+- hematocrit_low_male
+- hematocrit_high_male
+- hematocrit_low_female
+- hematocrit_high_female
+- esr_high_male
+- esr_high_female
 groups:
   kidney_disease:
-    - ckd_stage3
-    - ckd_stage4
-    - ckd_stage5
-    - acute_kidney_injury
-    - chronic_kidney_disease
+  - ckd_stage3
+  - ckd_stage4
+  - ckd_stage5
+  - acute_kidney_injury
+  - chronic_kidney_disease
   diabetes:
-    - prediabetes
-    - hyperglycemia
-    - diabetes_mellitus_type_2
+  - prediabetes
+  - hyperglycemia
+  - diabetes_mellitus_type_2
   liver_disease:
-    - acute_hepatitis
-    - nonalcoholic_fatty_liver
-    - cholestasis
+  - acute_hepatitis
+  - nonalcoholic_fatty_liver
+  - cholestasis
   inflammation:
-    - systemic_inflammation
-    - sepsis
+  - systemic_inflammation
+  - sepsis
   anemia:
-    - iron_deficiency
-    - b12_deficiency
-    - folate_deficiency
-    - macrocytic_anemia
-    - hemolytic_anemia
-    - anemia_chronic_disease
+  - iron_deficiency
+  - b12_deficiency
+  - folate_deficiency
+  - macrocytic_anemia
+  - hemolytic_anemia
+  - anemia_chronic_disease
   thyroid:
-    - hypothyroidism
-    - hyperthyroidism
-    - thyroid
-
+  - hypothyroidism
+  - hyperthyroidism
+  - thyroid
 priority:
   kidney_disease:
-    - ckd_stage5
-    - ckd_stage4
-    - ckd_stage3
-    - acute_kidney_injury
-    - chronic_kidney_disease
+  - ckd_stage5
+  - ckd_stage4
+  - ckd_stage3
+  - acute_kidney_injury
+  - chronic_kidney_disease
   diabetes:
-    - diabetes_mellitus_type_2
-    - hyperglycemia
-    - prediabetes
+  - diabetes_mellitus_type_2
+  - hyperglycemia
+  - prediabetes
   liver_disease:
-    - acute_hepatitis
-    - nonalcoholic_fatty_liver
-    - cholestasis
+  - acute_hepatitis
+  - nonalcoholic_fatty_liver
+  - cholestasis
   inflammation:
-    - sepsis
-    - systemic_inflammation
+  - sepsis
+  - systemic_inflammation
   anemia:
-    - iron_deficiency
-    - anemia_chronic_disease
-    - hemolytic_anemia
-    - macrocytic_anemia
-    - b12_deficiency
-    - folate_deficiency
+  - iron_deficiency
+  - anemia_chronic_disease
+  - hemolytic_anemia
+  - macrocytic_anemia
+  - b12_deficiency
+  - folate_deficiency
   thyroid:
-    - hyperthyroidism
-    - hypothyroidism
-    - thyroid
-
+  - hyperthyroidism
+  - hypothyroidism
+  - thyroid
 exclusions:
-  - if: ckd_stage5
-    then:
-      - ckd_stage4
-      - ckd_stage3
-      - chronic_kidney_disease
-  - if: diabetes_mellitus_type_2
-    then:
-      - prediabetes
-      - hyperglycemia
-  - if: iron_deficiency
-    then:
-      - anemia_chronic_disease
-      - b12_deficiency
-      - folate_deficiency
-      - macrocytic_anemia
-      - hemolytic_anemia
-  - if: sepsis
-    then:
-      - systemic_inflammation
-  - if: hypothyroidism
-    then:
-      - thyroid
-  - if: hyperthyroidism
-    then:
-      - thyroid
-  - if: gout
-    then:
-      - hyperuricemia
-
+- if: ckd_stage5
+  then:
+  - ckd_stage4
+  - ckd_stage3
+  - chronic_kidney_disease
+- if: diabetes_mellitus_type_2
+  then:
+  - prediabetes
+  - hyperglycemia
+- if: iron_deficiency
+  then:
+  - anemia_chronic_disease
+  - b12_deficiency
+  - folate_deficiency
+  - macrocytic_anemia
+  - hemolytic_anemia
+- if: sepsis
+  then:
+  - systemic_inflammation
+- if: hypothyroidism
+  then:
+  - thyroid
+- if: hyperthyroidism
+  then:
+  - thyroid
+- if: gout
+  then:
+  - hyperuricemia
+- if: diabetes_hba1c
+  then:
+  - prediabetes
+  - hyperglycemia
+- if: diabetes_glucose
+  then:
+  - prediabetes
+  - hyperglycemia
 combinations:
-  - id: primary_hyperparathyroidism
-    label: "Первичный гиперпаратиреоз (предположительно)"
-    conditions:
-      - hypercalcemia
-      - vitamin_d_deficiency
-    probability_factor: 0.8
-    recommendation: "Консультация эндокринолога, определение PTH, кальций суточной мочи, УЗИ паращитовидных желёз"
-    urgency: high
-    doctor_specialty: Endocrinologist
-    additional_tests:
-      - PTH
-      - Calcium 24h urine
-      - Parathyroid ultrasound
-
-  - id: septic_syndrome
-    label: "Септический синдром"
-    conditions:
-      - sepsis
-      - systemic_inflammation
-    probability_factor: 1.0
-    recommendation: "Госпитализация в ОРИТ, контроль гемодинамики, антибиотикотерапия, посев крови"
-    urgency: critical
-    doctor_specialty: Intensive Care Specialist
-    additional_tests:
-      - Blood culture
-      - Lactate
-      - Blood gas analysis
-
-  - id: hepatorenal_syndrome
-    label: "Гепаторенальный синдром (предположительно)"
-    conditions:
-      - acute_kidney_injury
-      - acute_hepatitis
-    probability_factor: 0.6
-    recommendation: "Оценка функции почек и печени, УЗИ органов брюшной полости, консультация гепатолога и нефролога"
-    urgency: high
-    doctor_specialty: Hepatologist
-    additional_tests:
-      - Renal ultrasound
-      - Liver ultrasound
-      - Urine sodium
-
-  - id: metabolic_bone_disease
-    label: "Метаболическое заболевание костей (дефицит витамина D + гиперкальциемия)"
-    conditions:
-      - vitamin_d_deficiency
-      - hypercalcemia
-    probability_factor: 0.7
-    recommendation: "Исследование костного метаболизма, DEXA-сканирование, консультация эндокринолога"
-    urgency: moderate
-    doctor_specialty: Rheumatologist
-    additional_tests:
-      - DEXA scan
-      - Bone turnover markers
+- id: primary_hyperparathyroidism
+  label: Первичный гиперпаратиреоз (предположительно)
+  conditions:
+  - hypercalcemia
+  - vitamin_d_deficiency
+  probability_factor: 0.8
+  recommendation: Консультация эндокринолога, определение PTH, кальций суточной мочи, УЗИ паращитовидных
+    желёз
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - PTH
+  - Calcium 24h urine
+  - Parathyroid ultrasound
+- id: septic_syndrome
+  label: Септический синдром
+  conditions:
+  - sepsis
+  - systemic_inflammation
+  probability_factor: 1.0
+  recommendation: Госпитализация в ОРИТ, контроль гемодинамики, антибиотикотерапия, посев крови
+  urgency: critical
+  doctor_specialty: Intensive Care Specialist
+  additional_tests:
+  - Blood culture
+  - Lactate
+  - Blood gas analysis
+- id: hepatorenal_syndrome
+  label: Гепаторенальный синдром (предположительно)
+  conditions:
+  - acute_kidney_injury
+  - acute_hepatitis
+  probability_factor: 0.6
+  recommendation: Оценка функции почек и печени, УЗИ органов брюшной полости, консультация гепатолога
+    и нефролога
+  urgency: high
+  doctor_specialty: Hepatologist
+  additional_tests:
+  - Renal ultrasound
+  - Liver ultrasound
+  - Urine sodium
+- id: metabolic_bone_disease
+  label: Метаболическое заболевание костей (дефицит витамина D + гиперкальциемия)
+  conditions:
+  - vitamin_d_deficiency
+  - hypercalcemia
+  probability_factor: 0.7
+  recommendation: Исследование костного метаболизма, DEXA-сканирование, консультация эндокринолога
+  urgency: moderate
+  doctor_specialty: Rheumatologist
+  additional_tests:
+  - DEXA scan
+  - Bone turnover markers
+- id: diabetes_mellitus_type_2
+  label: Сахарный диабет 2 типа
+  conditions:
+  - diabetes_glucose
+  - diabetes_hba1c
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Сахарный диабет 2 типа.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Метформин 500 мг × 2 раза в день
+  - Скрининг осложнений
+  - Обучение самоконтролю
+  - Контроль HbA1c
+- id: acute_pancreatitis
+  label: Острый панкреатит
+  conditions:
+  - acute_pancreatitis_amylase
+  - acute_pancreatitis_lipase
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Острый панкреатит.'
+  urgency: high
+  doctor_specialty: Gastroenterologist
+  additional_tests:
+  - УЗИ брюшной полости в первую очередь
+  - КТ с контрастом при тяжёлом течении или отсутствии улучшения через 48-72ч
+- id: alcoholic_liver_disease
+  label: Алкогольная болезнь печени
+  conditions:
+  - alcoholic_liver_disease_ggt
+  - alcoholic_liver_disease_ast
+  - alcoholic_liver_disease_alt
+  - alcoholic_liver_disease_ethanol_blood
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Алкогольная болезнь печени.'
+  urgency: high
+  doctor_specialty: Gastroenterologist
+  additional_tests:
+  - Полное прекращение употребления алкоголя
+  - УЗИ печени
+- id: celiac_disease
+  label: Целиакия (подозрение)
+  conditions:
+  - celiac_disease_tga_iga
+  - celiac_disease_total_iga
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Целиакия (подозрение).'
+  urgency: moderate
+  doctor_specialty: Gastroenterologist
+  additional_tests:
+  - Строгая аглютеновая диета
+  - Обследование у гастроэнтеролога
+- id: cholelithiasis
+  label: Желчнокаменная болезнь (возможный холедохолитиаз)
+  conditions:
+  - cholelithiasis_bilirubin_total
+  - cholelithiasis_alkaline_phosphatase
+  - cholelithiasis_ggt
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Желчнокаменная болезнь (возможный холедохолитиаз).'
+  urgency: high
+  doctor_specialty: Gastroenterologist
+  additional_tests:
+  - УЗИ брюшной полости — метод первой линии
+  - МРХПГ при подозрении на холедохолитиаз
+- id: crohns_disease
+  label: Болезнь Крона
+  conditions:
+  - crohns_disease_fecal_calprotectin
+  - crohns_disease_crp
+  - crohns_disease_albumin
+  - crohns_disease_ferritin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Болезнь Крона.'
+  urgency: high
+  doctor_specialty: Gastroenterologist
+  additional_tests:
+  - Колоноскопия с биопсией — золотой стандарт
+  - Исключить инфекционную причину перед иммуносупрессией
+- id: inflammatory_bowel_disease
+  label: Воспалительное заболевание кишечника (неуточнённое)
+  conditions:
+  - inflammatory_bowel_disease_calprotectin
+  - inflammatory_bowel_disease_albumin
+  - inflammatory_bowel_disease_ferritin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Воспалительное заболевание кишечника (неуточнённое).'
+  urgency: high
+  doctor_specialty: Gastroenterologist
+  additional_tests:
+  - Колоноскопия с биопсией
+  - Исключить инфекционную причину
+- id: ulcerative_colitis
+  label: Язвенный колит
+  conditions:
+  - ulcerative_colitis_fecal_calprotectin
+  - ulcerative_colitis_crp
+  - ulcerative_colitis_albumin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Язвенный колит.'
+  urgency: high
+  doctor_specialty: Gastroenterologist
+  additional_tests:
+  - Колоноскопия с биопсией
+  - При тяжёлой атаке — критерии Truelove-Witts и госпитализация
+- id: anemia_chronic_disease
+  label: Анемия хронического воспаления (подозрение)
+  conditions:
+  - anemia_chronic_disease_hemoglobin
+  - anemia_chronic_disease_ferritin
+  - anemia_chronic_disease_crp
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Анемия хронического воспаления (подозрение).'
+  urgency: moderate
+  doctor_specialty: Hematologist
+  additional_tests:
+  - Лечение основного заболевания
+  - Железо в/в (при дефиците)
+- id: hemolytic_anemia
+  label: Гемолитическая анемия (лабораторные признаки гемолиза)
+  conditions:
+  - hemolytic_anemia_ldh
+  - hemolytic_anemia_indirect_bilirubin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Гемолитическая анемия (лабораторные признаки гемолиза).'
+  urgency: high
+  doctor_specialty: Hematologist
+  additional_tests:
+  - Прямая проба Кумбса
+  - Мазок периферической крови
+  - Гаптоглобин
+- id: pancytopenia
+  label: Панцитопения
+  conditions:
+  - pancytopenia_hemoglobin
+  - pancytopenia_wbc
+  - pancytopenia_platelets
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Панцитопения.'
+  urgency: high
+  doctor_specialty: Hematologist
+  additional_tests:
+  - Мазок периферической крови
+  - Направление к гематологу для биопсии костного мозга
+- id: acute_hepatitis
+  label: Острый гепатит
+  conditions:
+  - acute_hepatitis_alt
+  - acute_hepatitis_ast
+  - acute_hepatitis_bilirubin_total
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Острый гепатит.'
+  urgency: high
+  doctor_specialty: Hepatologist
+  additional_tests:
+  - Серологическая панель вирусных гепатитов
+  - Собрать анамнез лекарств и алкоголя
+  - Коагулограмма (МНО)
+- id: cholestasis
+  label: Холестаз
+  conditions:
+  - cholestasis_alkaline_phosphatase
+  - cholestasis_ggt
+  - cholestasis_bilirubin_direct
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Холестаз.'
+  urgency: high
+  doctor_specialty: Hepatologist
+  additional_tests:
+  - УЗИ брюшной полости в первую очередь
+  - При подозрении на обструкцию — МРХПГ
+  - Антимитохондриальные антитела
+- id: bacterial_infection_risk
+  label: Признаки вероятной бактериальной инфекции
+  conditions:
+  - bacterial_infection_risk_crp
+  - bacterial_infection_risk_wbc
+  - bacterial_infection_risk_neutrophils_percent
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Признаки вероятной бактериальной инфекции.'
+  urgency: high
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Искать очаг инфекции
+  - Прокальцитонин
+- id: hepatitis_b_active
+  label: Активный гепатит B
+  conditions:
+  - hepatitis_b_active_hbsag
+  - hepatitis_b_active_hbv_dna
+  - hepatitis_b_active_alt
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Активный гепатит B.'
+  urgency: high
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - HBeAg/anti-HBe
+  - Эластография (фиброскан)
+  - Скрининг гепатоцеллюлярной карциномы
+- id: hepatitis_c_active
+  label: Активный гепатит C
+  conditions:
+  - hepatitis_c_active_anti_hcv
+  - hepatitis_c_active_hcv_rna
+  - hepatitis_c_active_alt
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Активный гепатит C.'
+  urgency: high
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Эластография
+  - Направление на противовирусную терапию
+- id: infectious_mononucleosis
+  label: Инфекционный мононуклеоз
+  conditions:
+  - infectious_mononucleosis_ebv_vca_igm
+  - infectious_mononucleosis_lymphocytes_percent
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Инфекционный мононуклеоз.'
+  urgency: high
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Осмотр на спленомегалию перед разрешением физической активности
+  - Избегать ампициллина/амоксициллина при подозрении на мононуклеоз
+- id: lower_respiratory_infection
+  label: Нижняя респираторная инфекция (подозрение)
+  conditions:
+  - lower_respiratory_infection_crp
+  - lower_respiratory_infection_wbc
+  - lower_respiratory_infection_procalcitonin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Нижняя респираторная инфекция (подозрение).'
+  urgency: moderate
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Антибиотикотерапия
+- id: postoperative_inflammation
+  label: Послеоперационное воспаление
+  conditions:
+  - postoperative_inflammation_crp
+  - postoperative_inflammation_esr
+  - postoperative_inflammation_wbc
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Послеоперационное воспаление.'
+  urgency: high
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Оценивать в динамике, не по одному значению
+  - Осмотр операционной раны
+- id: sepsis
+  label: Сепсис
+  conditions:
+  - sepsis_procalcitonin
+  - sepsis_crp
+  - sepsis_wbc
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Сепсис.'
+  urgency: high
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Посев крови до начала антибиотикотерапии
+  - Лактат
+  - Эмпирическая антибиотикотерапия широкого спектра немедленно
+- id: syphilis_active
+  label: Активный сифилис (серологически)
+  conditions:
+  - syphilis_active_rpr_syphilis
+  - syphilis_active_tpha_syphilis
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Активный сифилис (серологически).'
+  urgency: high
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Количественный титр RPR
+  - Тестирование на ВИЧ и другие ИППП
+  - Уведомление и лечение партнёров
+- id: systemic_inflammation
+  label: Системное воспаление
+  conditions:
+  - systemic_inflammation_crp
+  - systemic_inflammation_wbc
+  - systemic_inflammation_esr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Системное воспаление.'
+  urgency: moderate
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Поиск причины
+- id: urinary_tract_infection
+  label: Инфекция мочевыводящих путей (подозрение)
+  conditions:
+  - urinary_tract_infection_urine_leukocytes
+  - urinary_tract_infection_urine_protein
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Инфекция мочевыводящих путей (подозрение).'
+  urgency: moderate
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Антибиотики
+- id: viral_infection_suspect
+  label: Подозрение на вирусную инфекцию
+  conditions:
+  - viral_infection_suspect_lymphocytes_percent
+  - viral_infection_suspect_crp
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Подозрение на вирусную инфекцию.'
+  urgency: high
+  doctor_specialty: Infectious Disease Specialist
+  additional_tests:
+  - Оценить клиническую картину (острое начало, лихорадка, катаральные симптомы)
+- id: osteomalacia
+  label: Остеомаляция
+  conditions:
+  - osteomalacia_vitamin_d
+  - osteomalacia_phosphate
+  - osteomalacia_calcium_total
+  - osteomalacia_alkaline_phosphatase
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Остеомаляция.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - ПТГ
+  - Денситометрия (DXA)
+  - Рентген
+- id: osteoporosis
+  label: Остеопороз (вторичный, по лабораторным маркерам)
+  conditions:
+  - osteoporosis_vitamin_d
+  - osteoporosis_calcium_total
+  - osteoporosis_pth
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Остеопороз (вторичный, по лабораторным маркерам).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Денситометрия (DXA)
+  - FRAX
+  - Скрининг вторичных причин
+- id: ankylosing_spondylitis
+  label: Анкилозирующий спондилит
+  conditions:
+  - ankylosing_spondylitis_hla_b27
+  - ankylosing_spondylitis_crp
+  - ankylosing_spondylitis_esr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Анкилозирующий спондилит.'
+  urgency: high
+  doctor_specialty: Rheumatologist
+  additional_tests:
+  - МРТ или рентген крестцово-подвздошных суставов
+  - Направление к ревматологу при воспалительном характере боли
+- id: rheumatoid_arthritis
+  label: Ревматоидный артрит
+  conditions:
+  - rheumatoid_arthritis_rheumatoid_factor
+  - rheumatoid_arthritis_anti_ccp
+  - rheumatoid_arthritis_crp
+  - rheumatoid_arthritis_esr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Ревматоидный артрит.'
+  urgency: high
+  doctor_specialty: Rheumatologist
+  additional_tests:
+  - Рентген кистей и стоп
+  - Раннее начало БПВП (метотрексат)
+- id: systemic_lupus
+  label: Системная красная волчанка
+  conditions:
+  - systemic_lupus_ana_screening
+  - systemic_lupus_anti_ds_dna
+  - systemic_lupus_complement_c3
+  - systemic_lupus_complement_c4
+  - systemic_lupus_urine_protein
+  - systemic_lupus_urine_erythrocytes
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Системная красная волчанка.'
+  urgency: high
+  doctor_specialty: Rheumatologist
+  additional_tests:
+  - Мониторинг анти-дсДНК и комплемента C3/C4 в динамике
+  - Биопсия почки при подозрении на нефрит
+- id: vasculitis
+  label: Системный васкулит (предположительно)
+  conditions:
+  - vasculitis_urine_protein
+  - vasculitis_urine_erythrocytes
+  - vasculitis_crp
+  - vasculitis_esr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Системный васкулит (предположительно).'
+  urgency: high
+  doctor_specialty: Rheumatologist
+  additional_tests:
+  - ANCA (антитела к протеиназе-3 и миелопероксидазе)
+  - Креатинин и СКФ
+  - Биопсия поражённого органа
+- id: acromegaly
+  label: Акромегалия
+  conditions:
+  - acromegaly_igf1
+  - acromegaly_growth_hormone
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Акромегалия.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - МРТ гипофиза
+  - Пероральный глюкозотолерантный тест с определением гормона роста
+- id: acute_glomerulonephritis
+  label: Острый гломерулонефрит (предположительно)
+  conditions:
+  - acute_glomerulonephritis_urine_protein
+  - acute_glomerulonephritis_urine_erythrocytes
+  - acute_glomerulonephritis_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Острый гломерулонефрит (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Уточнить недавнюю инфекцию (горло, кожа)
+  - Титр АСЛ-О, комплемент C3
+- id: acute_kidney_injury_stage2
+  label: Острое повреждение почек, стадия 2
+  conditions:
+  - acute_kidney_injury_stage2_creatinine
+  - acute_kidney_injury_stage2_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Острое повреждение почек, стадия 2.'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Определить преренальную/ренальную/постренальную причину
+  - Отменить нефротоксичные препараты
+- id: acute_kidney_injury_stage3
+  label: Острое повреждение почек, стадия 3
+  conditions:
+  - acute_kidney_injury_stage3_creatinine
+  - acute_kidney_injury_stage3_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Острое повреждение почек, стадия 3.'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Оценить показания к экстренному диализу
+- id: acute_pyelonephritis
+  label: Острый пиелонефрит (предположительно)
+  conditions:
+  - acute_pyelonephritis_urine_leukocytes
+  - acute_pyelonephritis_urine_nitrites
+  - acute_pyelonephritis_crp
+  - acute_pyelonephritis_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Острый пиелонефрит (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Посев мочи до начала антибиотикотерапии
+  - УЗИ почек при тяжёлом течении или отсутствии улучшения через 48-72ч
+- id: acute_tubulointerstitial_nephritis
+  label: Острый тубулоинтерстициальный нефрит (предположительно)
+  conditions:
+  - acute_tubulointerstitial_nephritis_urine_leukocytes
+  - acute_tubulointerstitial_nephritis_creatinine
+  - acute_tubulointerstitial_nephritis_eosinophils_percent
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Острый тубулоинтерстициальный нефрит (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Тщательный пересмотр всех принимаемых препаратов
+  - Биопсия почки при неясности или отсутствии улучшения после отмены
+- id: adpkd
+  label: Аутосомно-доминантная поликистозная болезнь почек (предположительно)
+  conditions:
+  - adpkd_blood_pressure_systolic
+  - adpkd_egfr
+  - adpkd_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Аутосомно-доминантная поликистозная болезнь почек (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - УЗИ почек — основной диагностический метод
+  - Контроль артериального давления
+- id: adrenal_insufficiency
+  label: Надпочечниковая недостаточность
+  conditions:
+  - adrenal_insufficiency_cortisol_serum
+  - adrenal_insufficiency_acth
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Надпочечниковая недостаточность.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Уточнить анамнез приёма глюкокортикоидов
+  - Стимуляционный тест с АКТГ (синактеном)
+- id: alport_syndrome
+  label: Синдром Альпорта (предположительно)
+  conditions:
+  - alport_syndrome_urine_erythrocytes
+  - alport_syndrome_urine_protein
+  - alport_syndrome_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Синдром Альпорта (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Уточнить семейный анамнез ХБП и тугоухости
+  - Аудиометрия
+- id: atheroembolic_kidney_disease
+  label: Атероэмболическая болезнь почек (предположительно)
+  conditions:
+  - atheroembolic_kidney_disease_eosinophils_percent
+  - atheroembolic_kidney_disease_creatinine
+  - atheroembolic_kidney_disease_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Атероэмболическая болезнь почек (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Осмотр кожи нижних конечностей
+  - Эозинофилы крови
+- id: chronic_interstitial_nephritis
+  label: Хронический интерстициальный нефрит (предположительно)
+  conditions:
+  - chronic_interstitial_nephritis_egfr
+  - chronic_interstitial_nephritis_bicarbonate
+  - chronic_interstitial_nephritis_sodium
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Хронический интерстициальный нефрит (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Тщательный пересмотр длительно принимаемых препаратов
+- id: chronic_pyelonephritis
+  label: Хронический пиелонефрит (предположительно)
+  conditions:
+  - chronic_pyelonephritis_egfr
+  - chronic_pyelonephritis_urine_leukocytes
+  - chronic_pyelonephritis_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Хронический пиелонефрит (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - УЗИ мочевых путей
+- id: chronic_rejection
+  label: Хроническое отторжение трансплантата (предположительно)
+  conditions:
+  - chronic_rejection_egfr
+  - chronic_rejection_creatinine
+  - chronic_rejection_urine_protein
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Хроническое отторжение трансплантата (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Биопсия трансплантата
+  - Донор-специфичные антитела
+- id: ckd_stage4
+  label: Хроническая болезнь почек, стадия 4 (по креатинину/мочевине)
+  conditions:
+  - ckd_stage4_egfr
+  - ckd_stage4_creatinine
+  - ckd_stage4_urea
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Хроническая болезнь почек, стадия 4 (по креатинину/мочевине).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Направление к нефрологу для планирования ЗПТ
+- id: ckd_stage5
+  label: Хроническая болезнь почек, стадия 5 (терминальная)
+  conditions:
+  - ckd_stage5_egfr
+  - ckd_stage5_creatinine
+  - ckd_stage5_urea
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Хроническая болезнь почек, стадия 5 (терминальная).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Заместительная почечная терапия
+- id: contrast_nephropathy
+  label: Контраст-индуцированная нефропатия (предположительно)
+  conditions:
+  - contrast_nephropathy_creatinine
+  - contrast_nephropathy_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Контраст-индуцированная нефропатия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Уточнить время и объём введённого контраста
+  - Адекватная гидратация перед плановыми контрастными исследованиями у пациентов группы риска
+- id: cushing_syndrome
+  label: Синдром/болезнь Кушинга
+  conditions:
+  - cushing_syndrome_cortisol_serum
+  - cushing_syndrome_acth
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Синдром/болезнь Кушинга.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - МРТ гипофиза
+  - При отрицательной МРТ — поиск эктопического источника
+- id: cystinuria
+  label: Цистинурия (предположительно)
+  conditions:
+  - cystinuria_urine_erythrocytes
+  - cystinuria_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Цистинурия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Анализ состава удалённого/отошедшего камня
+  - Обильное потребление жидкости и ощелачивание мочи
+- id: diabetes_insipidus
+  label: Несахарный диабет (предположительно)
+  conditions:
+  - diabetes_insipidus_sodium
+  - diabetes_insipidus_osmolality_serum
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Несахарный диабет (предположительно).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Проба с водной депривацией и десмопрессином
+- id: endocrine_infertility
+  label: Эндокринные причины бесплодия (скрининг)
+  conditions:
+  - endocrine_infertility_fsh
+  - endocrine_infertility_lh
+  - endocrine_infertility_estradiol
+  - endocrine_infertility_testosterone_total
+  - endocrine_infertility_prolactin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Эндокринные причины бесплодия (скрининг).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Интерпретировать каждый гормон в контексте пола и дня цикла
+- id: fabry_disease
+  label: Болезнь Фабри (предположительно)
+  conditions:
+  - fabry_disease_urine_protein
+  - fabry_disease_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Болезнь Фабри (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Активность альфа-галактозидазы А
+- id: focal_segmental_glomerulosclerosis
+  label: Фокально-сегментарный гломерулосклероз (предположительно)
+  conditions:
+  - focal_segmental_glomerulosclerosis_urine_protein
+  - focal_segmental_glomerulosclerosis_egfr
+  - focal_segmental_glomerulosclerosis_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Фокально-сегментарный гломерулосклероз (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Биопсия почки обязательна
+- id: goodpasture_syndrome
+  label: Синдром Гудпасчера (предположительно)
+  conditions:
+  - goodpasture_syndrome_urine_erythrocytes
+  - goodpasture_syndrome_urine_protein
+  - goodpasture_syndrome_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Синдром Гудпасчера (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Антитела к базальной мембране клубочков (анти-GBM)
+  - Срочная биопсия почки
+- id: gouty_nephropathy
+  label: Подагрическая нефропатия (предположительно)
+  conditions:
+  - gouty_nephropathy_uric_acid
+  - gouty_nephropathy_egfr
+  - gouty_nephropathy_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Подагрическая нефропатия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Уточнить анамнез подагры и недавней химиотерапии
+- id: graves_disease
+  label: Болезнь Грейвса (предположительно)
+  conditions:
+  - graves_disease_tsh
+  - graves_disease_free_t4
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Болезнь Грейвса (предположительно).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Антитела к рецептору ТТГ (TRAb)
+  - Сцинтиграфия щитовидной железы при неясной этиологии
+- id: gynecomastia
+  label: Гормональный профиль, характерный для гинекомастии
+  conditions:
+  - gynecomastia_estradiol
+  - gynecomastia_prolactin
+  - gynecomastia_testosterone_total
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Гормональный профиль, характерный для гинекомастии.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Пальпация яичек и УЗИ мошонки при подозрении на опухоль
+- id: hyperandrogenism_female
+  label: Гиперандрогения у женщин
+  conditions:
+  - hyperandrogenism_female_testosterone_total
+  - hyperandrogenism_female_dhea_s
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Гиперандрогения у женщин.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - УЗИ яичников и надпочечников при значительном повышении или быстром начале
+- id: hypertensive_nephropathy
+  label: Гипертензивная нефропатия (предположительно)
+  conditions:
+  - hypertensive_nephropathy_blood_pressure_systolic
+  - hypertensive_nephropathy_urine_protein
+  - hypertensive_nephropathy_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Гипертензивная нефропатия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Оптимизация контроля артериального давления
+- id: hypogonadism_male
+  label: Гипогонадизм у мужчин (первичный, по лабораторным маркерам)
+  conditions:
+  - hypogonadism_male_testosterone_total
+  - hypogonadism_male_lh
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Гипогонадизм у мужчин (первичный, по лабораторным маркерам).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Повторное измерение тестостерона утром
+- id: hypoparathyroidism
+  label: Гипопаратиреоз
+  conditions:
+  - hypoparathyroidism_calcium_total
+  - hypoparathyroidism_phosphate
+  - hypoparathyroidism_pth
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Гипопаратиреоз.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Уточнить анамнез операций на шее
+- id: hypopituitarism
+  label: Гипопитуитаризм
+  conditions:
+  - hypopituitarism_tsh
+  - hypopituitarism_cortisol_serum
+  - hypopituitarism_testosterone_total
+  - hypopituitarism_estradiol
+  - hypopituitarism_igf1
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Гипопитуитаризм.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - МРТ гипофиза
+  - Начинать заместительную терапию с кортизола
+- id: iga_nephropathy
+  label: IgA-нефропатия (предположительно)
+  conditions:
+  - iga_nephropathy_urine_erythrocytes
+  - iga_nephropathy_urine_protein
+  - iga_nephropathy_immunoglobulin_a
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: IgA-нефропатия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Биопсия почки
+  - Контроль артериального давления и ингибиторы РААС
+- id: insulinoma
+  label: Инсулинома (предположительно)
+  conditions:
+  - insulinoma_glucose
+  - insulinoma_insulin
+  - insulinoma_c_peptide
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Инсулинома (предположительно).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Проба с 72-часовым голоданием под наблюдением
+  - Визуализация поджелудочной железы (КТ/МРТ/эндо-УЗИ)
+- id: lithium_nephropathy
+  label: Литий-индуцированная нефропатия (предположительно)
+  conditions:
+  - lithium_nephropathy_egfr
+  - lithium_nephropathy_sodium
+  - lithium_nephropathy_potassium
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Литий-индуцированная нефропатия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Уровень лития в крови
+  - Мониторинг функции почек в динамике при длительной терапии литием
+- id: lupus_nephritis
+  label: Волчаночный нефрит (предположительно)
+  conditions:
+  - lupus_nephritis_urine_protein
+  - lupus_nephritis_urine_erythrocytes
+  - lupus_nephritis_immunoglobulin_g
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Волчаночный нефрит (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Проверить серологию СКВ (анти-дсДНК, комплемент C3/C4)
+  - Биопсия почки
+- id: membranous_nephropathy
+  label: Мембранозная нефропатия (предположительно)
+  conditions:
+  - membranous_nephropathy_urine_protein
+  - membranous_nephropathy_albumin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Мембранозная нефропатия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Антитела к рецептору фосфолипазы A2 (анти-PLA2R)
+  - Скрининг вторичных причин у пациентов старшего возраста
+- id: men1
+  label: Множественная эндокринная неоплазия 1 типа (МЭН1, предположительно)
+  conditions:
+  - men1_calcium_total
+  - men1_prolactin
+  - men1_insulin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Множественная эндокринная неоплазия 1 типа (МЭН1, предположительно).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Семейный анамнез эндокринных опухолей
+  - Генетическое тестирование при подозрении
+- id: men2
+  label: Множественная эндокринная неоплазия 2 типа (МЭН2, предположительно)
+  conditions:
+  - men2_calcitonin
+  - men2_metanephrines
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Множественная эндокринная неоплазия 2 типа (МЭН2, предположительно).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Генетическое тестирование на мутацию RET
+- id: minimal_change_disease
+  label: Болезнь минимальных изменений (предположительно)
+  conditions:
+  - minimal_change_disease_urine_protein
+  - minimal_change_disease_albumin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Болезнь минимальных изменений (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - У детей — пробная терапия кортикостероидами часто предшествует биопсии
+- id: myeloma_kidney
+  label: Миеломная нефропатия (предположительно)
+  conditions:
+  - myeloma_kidney_urine_protein
+  - myeloma_kidney_creatinine
+  - myeloma_kidney_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Миеломная нефропатия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Электрофорез белков сыворотки и мочи с иммунофиксацией
+  - Свободные лёгкие цепи сыворотки (соотношение каппа/лямбда)
+- id: nsaid_nephropathy
+  label: НПВС-индуцированная нефропатия (предположительно)
+  conditions:
+  - nsaid_nephropathy_egfr
+  - nsaid_nephropathy_sodium
+  - nsaid_nephropathy_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: НПВС-индуцированная нефропатия (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Отмена НПВС
+- id: pcos
+  label: Синдром поликистозных яичников (СПКЯ, по лабораторным маркерам)
+  conditions:
+  - pcos_glucose
+  - pcos_insulin
+  - pcos_testosterone_total
+  - pcos_lh
+  - pcos_fsh
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Синдром поликистозных яичников (СПКЯ, по лабораторным маркерам).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - УЗИ органов малого таза
+  - Оценка инсулинорезистентности (HOMA-IR)
+- id: pheochromocytoma
+  label: Феохромоцитома (предположительно)
+  conditions:
+  - pheochromocytoma_metanephrines
+  - pheochromocytoma_normetanephrine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Феохромоцитома (предположительно).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - КТ/МРТ надпочечников
+  - Альфа-адреноблокада перед любым инвазивным вмешательством
+- id: primary_hyperaldosteronism
+  label: Первичный гиперальдостеронизм (предположительно)
+  conditions:
+  - primary_hyperaldosteronism_potassium
+  - primary_hyperaldosteronism_aldosterone
+  - primary_hyperaldosteronism_renin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Первичный гиперальдостеронизм (предположительно).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Соотношение альдостерон/ренин
+  - КТ надпочечников и, при показаниях, селективный забор крови из надпочечниковых вен
+- id: primary_hypogonadism_female
+  label: Первичный гипогонадизм у женщин
+  conditions:
+  - primary_hypogonadism_female_estradiol
+  - primary_hypogonadism_female_fsh
+  - primary_hypogonadism_female_lh
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Первичный гипогонадизм у женщин.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Уточнить возраст и репродуктивный анамнез
+- id: pseudohypoparathyroidism
+  label: Псевдогипопаратиреоз
+  conditions:
+  - pseudohypoparathyroidism_calcium_total
+  - pseudohypoparathyroidism_phosphate
+  - pseudohypoparathyroidism_pth
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Псевдогипопаратиреоз.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Оценить фенотипические признаки (рост, кисти рук)
+- id: rapidly_progressive_glomerulonephritis
+  label: Быстропрогрессирующий гломерулонефрит (предположительно)
+  conditions:
+  - rapidly_progressive_glomerulonephritis_creatinine
+  - rapidly_progressive_glomerulonephritis_urine_protein
+  - rapidly_progressive_glomerulonephritis_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Быстропрогрессирующий гломерулонефрит (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Экстренная биопсия почки
+  - ANCA, анти-GBM, анти-дсДНК/комплемент
+- id: renal_amyloidosis
+  label: Почечный амилоидоз (предположительно)
+  conditions:
+  - renal_amyloidosis_urine_protein
+  - renal_amyloidosis_egfr
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Почечный амилоидоз (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Биопсия почки с окраской конго красным
+  - Электрофорез белков сыворотки и мочи с иммунофиксацией
+- id: renal_artery_stenosis
+  label: Стеноз почечной артерии (предположительно)
+  conditions:
+  - renal_artery_stenosis_blood_pressure_systolic
+  - renal_artery_stenosis_egfr
+  - renal_artery_stenosis_creatinine
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Стеноз почечной артерии (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - УЗИ почечных артерий с допплерографией
+  - Уточнить временную связь с началом ингибитора АПФ/БРА
+- id: renal_sarcoidosis
+  label: Почечное поражение при саркоидозе (предположительно)
+  conditions:
+  - renal_sarcoidosis_calcium_total
+  - renal_sarcoidosis_egfr
+  - renal_sarcoidosis_alkaline_phosphatase
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Почечное поражение при саркоидозе (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - Ангиотензинпревращающий фермент сыворотки
+  - КТ грудной клетки
+- id: renal_vein_thrombosis
+  label: Тромбоз почечной вены (предположительно)
+  conditions:
+  - renal_vein_thrombosis_urine_erythrocytes
+  - renal_vein_thrombosis_creatinine
+  - renal_vein_thrombosis_d_dimer
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Тромбоз почечной вены (предположительно).'
+  urgency: high
+  doctor_specialty: Nephrologist
+  additional_tests:
+  - КТ или МР-венография почек
+  - Антикоагуляция при подтверждении
+- id: secondary_hyperparathyroidism
+  label: Вторичный гиперпаратиреоз
+  conditions:
+  - secondary_hyperparathyroidism_calcium_total
+  - secondary_hyperparathyroidism_vitamin_d
+  - secondary_hyperparathyroidism_pth
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Вторичный гиперпаратиреоз.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Оценить функцию почек (креатинин, СКФ)
+  - Восполнение витамина D
+- id: secondary_hypogonadism_female
+  label: Вторичный гипогонадизм у женщин
+  conditions:
+  - secondary_hypogonadism_female_estradiol
+  - secondary_hypogonadism_female_fsh
+  - secondary_hypogonadism_female_lh
+  - secondary_hypogonadism_female_prolactin
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Вторичный гипогонадизм у женщин.'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Оценить пищевое поведение, физическую активность, стресс
+  - МРТ гипофиза при значительном повышении пролактина
+- id: subacute_thyroiditis
+  label: Подострый тиреоидит (предположительно)
+  conditions:
+  - subacute_thyroiditis_esr
+  - subacute_thyroiditis_crp
+  - subacute_thyroiditis_tsh
+  - subacute_thyroiditis_free_t4
+  probability_factor: 1.0
+  recommendation: 'См. клинические инсайты: Подострый тиреоидит (предположительно).'
+  urgency: high
+  doctor_specialty: Endocrinologist
+  additional_tests:
+  - Сцинтиграфия щитовидной железы при неясности
+  - Течение обычно трёхфазное

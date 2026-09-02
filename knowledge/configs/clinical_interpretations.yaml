@@ -1,4 +1,4 @@
-nterpretations:
+interpretations:
   diabetes_mellitus_type_2:
     id: diabetes_mellitus_type_2
     label: Сахарный диабет 2 типа
@@ -56,7 +56,7 @@ nterpretations:
       - condition: value >= 0.8
         text: Сохранная секреция инсулина – характерно для СД2.
     differentials:
-    - condition: age < 45 AND c_peptide < 0.8
+    - condition: age < 45 and c_peptide < 0.8
       text: Заподозрить LADA (латентный аутоиммунный диабет взрослых) или СД1 типа. Проверить антитела
         к GAD, IA-2, ZnT8.
     - condition: glucocorticoids_use == true
@@ -67,7 +67,7 @@ nterpretations:
         старт инсулина.'
     - condition: glucose_fasting > 15.0
       text: '**Угроза гиперосмолярного состояния.** Срочно проверить осмолярность, кетоны, электролиты.'
-    - condition: age > 65 AND hba1c < 6.5
+    - condition: age > 65 and hba1c < 6.5
       text: Пожилой возраст + низкий HbA1c – возможны частые гипогликемии. Пересмотреть целевые уровни
         (индивидуализация).
     treatment_hints:
@@ -145,21 +145,21 @@ nterpretations:
           ХЗП).
       optional: true
     differentials:
-    - condition: ferritin > 100 AND crp > 5
+    - condition: ferritin > 100 and crp > 5
       text: Анемия хронического воспаления (АХВ). Ферритин высокий, CRP повышен. Проверить трансферрин,
         железо сыворотки.
-    - condition: mcv < 75 AND erythrocytes > 5.0
+    - condition: mcv < 75 and erythrocytes > 5.0
       text: Талассемия (особенно малая). Исследовать гемоглобин A2 и F.
-    - condition: hemoglobin < 100 AND reticulocytes < 1%
+    - condition: hemoglobin < 100 and reticulocytes < 1
       text: Апластическая анемия или гипоплазия костного мозга. Провести стернальную пункцию.
     red_flags:
-    - condition: gender == 'male' AND hemoglobin < 110
+    - condition: gender == 'male' and hemoglobin < 110
       text: У мужчин анемия любой степени требует исключения скрытого кровотечения (ЖКТ). Провести колоноскопию,
         ФГДС.
-    - condition: age > 50 AND hemoglobin < 100
+    - condition: age > 50 and hemoglobin < 100
       text: У пациентов старше 50 лет – риск онкозаболеваний. Обязательно исключить колоректальный рак,
         рак желудка.
-    - condition: ferritin < 15 AND hb < 80
+    - condition: ferritin < 15 and hb < 80
       text: Критическая анемия на фоне истощения запасов. Рассмотреть парентеральное введение железа (в/в),
         а не пероральное.
     treatment_hints:
@@ -1318,7 +1318,7 @@ nterpretations:
     red_flags:
     - condition: glucose < 3.0
       text: Тяжёлая гипогликемия! Требуется немедленное введение глюкозы (в/в 40% раствор) или глюкагон.
-    - condition: glucose < 2.2 AND patient_age > 65
+    - condition: glucose < 2.2 and patient_age > 65
       text: Пожилой возраст + тяжёлая гипогликемия – высокий риск неврологических осложнений.
     treatment_hints:
     - step: Приём быстрых углеводов (15–20 г глюкозы)
@@ -1495,7 +1495,7 @@ nterpretations:
     - condition: glucose >= 16.7
       text: '**Угроза гиперосмолярной комы.** Срочно проверить осмолярность, кетоны, электролиты, газовый
         состав крови.'
-    - condition: glucose >= 13.9 AND ketone_bodies > 0
+    - condition: glucose >= 13.9 and ketone_bodies > 0
       text: '**Риск диабетического кетоацидоза.** Требуется экстренная госпитализация, инфузионная терапия,
         инсулин.'
     treatment_hints:
@@ -1621,12 +1621,12 @@ nterpretations:
       condition: <
       comment_template: Витамин D {value} нг/мл снижен (< 30).
     differentials:
-    - condition: pth > 6.9 AND calcium_ionized > 1.33
+    - condition: pth > 6.9 and calcium_ionized > 1.33
       text: Подтверждает первичный гиперпаратиреоз. Необходимо провести УЗИ паращитовидных желёз.
     - condition: creatinine_high_male OR creatinine_high_female
       text: Исключить вторичный гиперпаратиреоз на фоне ХБП.
     red_flags:
-    - condition: calcium_total > 3.0 AND pth > 10
+    - condition: calcium_total > 3.0 and pth > 10
       text: Гиперкальциемический криз – требует экстренного лечения, возможно хирургического вмешательства.
     treatment_hints:
     - step: Консультация эндокринолога
@@ -1657,7 +1657,7 @@ nterpretations:
     red_flags:
     - condition: lactate > 2.0
       text: Гиперлактатемия указывает на септический шок. Срочная госпитализация в ОРИТ.
-    - condition: systolic_bp < 90 OR diastolic_bp < 60
+    - condition: systolic_bp < 90 or diastolic_bp < 60
       text: Гипотензия – признак шока. Немедленная инфузионная терапия и вазопрессоры.
     treatment_hints:
     - step: Госпитализация в ОРИТ
@@ -1688,7 +1688,7 @@ nterpretations:
     - condition: acute_hepatitis == true AND acute_kidney_injury == true
       text: Гепаторенальный синдром – исключить преренальную азотемию, обструкцию мочевыводящих путей.
     red_flags:
-    - condition: creatinine > 2.0 AND bilirubin_total > 50
+    - condition: creatinine > 2.0 and bilirubin_total > 50
       text: Тяжёлая печёночно-почечная недостаточность – требует заместительной терапии.
     treatment_hints:
     - step: Оценка функции почек и печени
@@ -1719,7 +1719,7 @@ nterpretations:
     - condition: pth > 6.9
       text: Исключить первичный гиперпаратиреоз.
     red_flags:
-    - condition: calcium_total > 3.0 AND alkaline_phosphatase > 300
+    - condition: calcium_total > 3.0 and alkaline_phosphatase > 300
       text: Агрессивное метаболическое заболевание костей – риск переломов.
     treatment_hints:
     - step: Исследование костного метаболизма

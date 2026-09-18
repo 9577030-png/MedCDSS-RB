@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
 from enum import IntEnum, Enum
 
@@ -58,7 +58,7 @@ class RuleVersion:
             priority=RulePriority[yaml_data.get("priority", "MEDIUM").upper()],
             conflicts_with=yaml_data.get("conflicts_with", []),
             supports=yaml_data.get("supports", []),
-            created_at=datetime.utcnow(),
+            created_at=datetime.now(timezone.UTC),
             created_by=created_by,
             is_active=False,
             comment=yaml_data.get("comment"),

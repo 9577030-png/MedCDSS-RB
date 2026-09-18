@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock
-from datetime import datetime
+from datetime import datetime, timezone
 from domain.entities.patient import PatientProfile
 from domain.entities.parameter import Parameter
 from domain.value_objects.unit import Unit
@@ -32,7 +32,7 @@ def rule_repo_mock():
         priority=RulePriority.MEDIUM,
         conflicts_with=[],
         supports=[],
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
         created_by="test",
         is_active=True,
         comment=None

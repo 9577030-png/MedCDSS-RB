@@ -22,7 +22,8 @@ def test_combination_hepatorenal_syndrome():
     acute_hepatitis - multi-condition файл (alt/ast/bilirubin_total), поэтому
     finding.id для него - это id конкретного условия (acute_hepatitis_bilirubin_total),
     а не имя файла. acute_kidney_injury - single-condition, id совпадает с именем файла.
-    См. combinations в clinical_logic.yaml и DATA_REVIEW_NEEDED.md, раздел 15.
+    См. combinations в clinical_logic.yaml и DATA_REVIEW_NEEDED.md,
+    раздел "Исправлено и подтверждено" (fix подтверждён 2026-09-19).
     """
     container = DIContainer()
     findings = [
@@ -41,7 +42,8 @@ def test_combination_septic_syndrome():
     с суффиксом параметра (sepsis_crp, systemic_inflammation_esr и т.п.), не имя файла.
     Exclusion 'sepsis -> systemic_inflammation' был убран из clinical_logic.yaml,
     так как он противоречил этой же комбинации (гасил один из компонентов раньше,
-    чем комбинация успевала его использовать) - см. DATA_REVIEW_NEEDED.md, раздел 15.
+    чем комбинация успевала его использовать) - см. DATA_REVIEW_NEEDED.md,
+    раздел "Исправлено и подтверждено" (fix подтверждён 2026-09-19).
     Комбинация теперь ДОЛЖНА срабатывать при наличии обоих атомарных признаков.
     """
     container = DIContainer()

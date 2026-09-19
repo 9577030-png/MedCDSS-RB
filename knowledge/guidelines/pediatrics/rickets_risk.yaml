@@ -2,7 +2,7 @@ id: rickets_risk
 conditions:
 - id: rickets_risk_vitamin_d
   label: Vitamin d — отклонение от нормы
-  parameter: vitamin_d
+  parameter: vitamin_d_25oh
   scoring: 5
   risk: MEDIUM
   recommendations:

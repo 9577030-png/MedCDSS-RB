@@ -2,7 +2,7 @@ id: osteoporosis
 conditions:
 - id: osteoporosis_vitamin_d
   label: Vitamin d — отклонение от нормы
-  parameter: vitamin_d
+  parameter: vitamin_d_25oh
   scoring: 5
   risk: MEDIUM
   recommendations:

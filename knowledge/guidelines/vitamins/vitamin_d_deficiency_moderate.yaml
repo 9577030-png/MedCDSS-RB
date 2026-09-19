@@ -2,7 +2,7 @@ id: vitamin_d_deficiency_moderate
 conditions:
 - id: vitamin_d_deficiency_moderate
   label: Vitamin d deficiency moderate
-  parameter: vitamin_d
+  parameter: vitamin_d_25oh
   scoring: 5
   risk: MEDIUM
   recommendations:

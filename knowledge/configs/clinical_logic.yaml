@@ -287,9 +287,6 @@ exclusions:
   - folate_deficiency
   - macrocytic_anemia
   - hemolytic_anemia
-- if: sepsis
-  then:
-  - systemic_inflammation
 - if: hypothyroidism
   then:
   - thyroid
@@ -325,8 +322,8 @@ combinations:
 - id: septic_syndrome
   label: Септический синдром
   conditions:
-  - sepsis
-  - systemic_inflammation
+  - sepsis_crp
+  - systemic_inflammation_esr
   probability_factor: 1.0
   recommendation: Госпитализация в ОРИТ, контроль гемодинамики, антибиотикотерапия, посев крови
   urgency: critical
@@ -339,7 +336,7 @@ combinations:
   label: Гепаторенальный синдром (предположительно)
   conditions:
   - acute_kidney_injury
-  - acute_hepatitis
+  - acute_hepatitis_bilirubin_total
   probability_factor: 0.6
   recommendation: Оценка функции почек и печени, УЗИ органов брюшной полости, консультация гепатолога
     и нефролога

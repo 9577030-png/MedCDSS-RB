@@ -10,7 +10,7 @@ conditions:
   min: 5.0
 - id: atherogenic_index_high_hdl
   label: Hdl — отклонение от нормы
-  parameter: hdl
+  parameter: hdl_cholesterol
   scoring: 5
   risk: MEDIUM
   recommendations:

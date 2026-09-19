@@ -1,7 +1,7 @@
-id: vitamin_d_deficiency_severe
+id: vitamin_d_deficiency_children
 conditions:
-- id: vitamin_d_deficiency_severe
-  label: Vitamin d deficiency severe
+- id: vitamin_d_deficiency_children
+  label: Vitamin d deficiency children
   parameter: vitamin_d_25oh
   scoring: 5
   risk: MEDIUM

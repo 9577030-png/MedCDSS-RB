@@ -2,7 +2,7 @@ id: vitamin_d_deficiency_children
 conditions:
 - id: vitamin_d_deficiency_children
   label: Vitamin d deficiency children
-  parameter: vitamin_d
+  parameter: vitamin_d_25oh
   scoring: 5
   risk: MEDIUM
   recommendations:

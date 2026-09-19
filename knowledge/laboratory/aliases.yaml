@@ -1429,3 +1429,93 @@
   - INR
   - МНО
   - международное нормализованное отношение
+  amylase:
+  - amylase
+  - Amylase
+  - амилаза
+  - Амилаза
+  lipase:
+  - lipase
+  - Lipase
+  - липаза
+  - Липаза
+  calcitonin:
+  - calcitonin
+  - Calcitonin
+  - кальцитонин
+  - Кальцитонин
+  aldosterone:
+  - aldosterone
+  - Aldosterone
+  - альдостерон
+  - Альдостерон
+  renin:
+  - renin
+  - Renin
+  - ренин
+  - Ренин
+  growth_hormone:
+  - growth_hormone
+  - Growth_hormone
+  - соматотропный гормон
+  - Соматотропный гормон
+  - гормон роста
+  - Гормон роста
+  - GH
+  - СТГ
+  - стг
+  17_oh_progesterone:
+  - 17_oh_progesterone
+  - 17-OHP
+  - 17-ОН-прогестерон
+  - 17-он-прогестерон
+  - 17-гидроксипрогестерон
+  - 17-Гидроксипрогестерон
+  metanephrines:
+  - metanephrines
+  - Metanephrines
+  - метанефрины
+  - Метанефрины
+  normetanephrine:
+  - normetanephrine
+  - Normetanephrine
+  - норметанефрин
+  - Норметанефрин
+  indirect_bilirubin:
+  - indirect_bilirubin
+  - Indirect_bilirubin
+  - непрямой билирубин
+  - Непрямой билирубин
+  - билирубин непрямой
+  - Билирубин непрямой
+  glucose_random:
+  - glucose_random
+  - Glucose_random
+  - глюкоза случайная
+  - Глюкоза случайная
+  - случайная глюкоза
+  - Случайная глюкоза
+  tga_iga:
+  - tga_iga
+  - TGA_IgA
+  - антитела к тканевой трансглутаминазе IgA
+  - Антитела к тканевой трансглутаминазе IgA
+  - анти-ттг IgA
+  - анти-tTG IgA
+  total_iga:
+  - total_iga
+  - Total_IgA
+  - иммуноглобулин A общий
+  - Иммуноглобулин A общий
+  - общий IgA
+  - IgA общий
+  urine_eosinophils:
+  - urine_eosinophils
+  - Urine_eosinophils
+  - эозинофилы мочи
+  - Эозинофилы мочи
+  waist_circumference:
+  - waist_circumference
+  - Waist_circumference
+  - окружность талии
+  - Окружность талии

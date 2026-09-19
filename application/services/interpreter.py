@@ -135,7 +135,7 @@ class ClinicalInterpreter:
 
         for rule in crit_config.get('additional_rules', []):
             condition = rule.get('condition', '')
-            if self._check_condition(condition, {crit_config['parameter']: value}, patient_info):
+            if self._check_condition(condition, {'value': value}, patient_info):
                 comment += ' ' + rule.get('text', '')
 
         return comment

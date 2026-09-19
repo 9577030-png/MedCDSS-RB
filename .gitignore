@@ -1,4 +1,3 @@
-@"
 # Python
 __pycache__/
 *.pyc
@@ -40,8 +39,3 @@ error_*.txt
 .pytest_cache/
 .coverage
 htmlcov/
-
-# Docker
-.pytest_cache/
-"@ | Out-File -FilePath .gitignore -Encoding utf8
- 
